@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="theme-color" content="#FAF8F3">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- v28 網站作品兩個案例改為同寬 -->
+<!-- v30 攝影卡加註原民優惠 -->
 <title>AMEI 阿梅 | 標案企劃撰寫・網站製作・活動攝影</title>
 <meta name="description" content="AMEI 阿梅，六年標案企劃經驗：寫過 50 場以上標案、執行過 100 場以上活動、地方機關服務 2 年，持採購專業人員基礎訓練及格證書。政府標案與社區發展企劃撰寫，網站、互動遊戲與 app 製作，懂核銷的活動攝影。">
 <meta name="keywords" content="標案企劃, 服務建議書, 企劃書撰寫, 社區發展協會, 補助案, 活動攝影, 活動網站, 報名頁, 結案報告, 核銷, 高雄, 屏東, AMEI">
@@ -705,11 +705,12 @@ footer a{color:#9ED0BB}
       <span class="service-subtitle">加值服務</span>
       <h3 class="service-title">懂核銷的活動攝影</h3>
       <ul class="pts service-desc"><li>活動紀錄與成果報告用照片</li><li>不追求極致藝術</li><li>保證長官有氣勢、人潮盛大、結案順利</li></ul>
-      <div class="detail-item"><span>地區</span><span>高屏地區</span></div>
+      <div class="detail-item"><span>地區</span><span>南高屏地區</span></div>
       <div class="detail-item"><span>可搭配</span><span>成果／結案報告協助</span></div>
       <div class="price">
         <span class="price-label">活動紀錄攝影</span>
         <b class="price-main">NT$4,000<small>起／場</small></b>
+        <span class="price-note">原民文化活動另有優惠方案</span>
       </div>
       <a href="#contact" class="btn-lively" onclick="selectService('活動攝影')">預約諮詢</a>
     </article>
@@ -1013,8 +1014,6 @@ function loadSheet(){
       /* 上方的攝影卡改成摘要，連到下方方案 */
       const st = $('#static-photo');
       if (st){
-        const nums = services.map(sv => priceParts(sv.price)).filter(Boolean).map(p => +p.n.replace(/,/g,''));
-        if (nums.length){ const min = Math.min(...nums); const pm = $('.price-main', st); if (pm) pm.innerHTML = 'NT$' + min.toLocaleString('en-US') + '<small>起／場</small>'; }
         const lbl = $('.price-label', st); if (lbl) lbl.textContent = '共 ' + services.length + ' 種攝影方案';
         const go = $('.btn-lively', st); if (go){ go.textContent = '看攝影方案'; go.setAttribute('href', '#photo-svc-wrap'); go.removeAttribute('onclick'); }
       }
