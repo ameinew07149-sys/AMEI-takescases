@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="theme-color" content="#FAF8F3">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- v30 攝影卡加註原民優惠 -->
+<!-- v31 拿掉攝影方案區塊 -->
 <title>AMEI 阿梅 | 標案企劃撰寫・網站製作・活動攝影</title>
 <meta name="description" content="AMEI 阿梅，六年標案企劃經驗：寫過 50 場以上標案、執行過 100 場以上活動、地方機關服務 2 年，持採購專業人員基礎訓練及格證書。政府標案與社區發展企劃撰寫，網站、互動遊戲與 app 製作，懂核銷的活動攝影。">
 <meta name="keywords" content="標案企劃, 服務建議書, 企劃書撰寫, 社區發展協會, 補助案, 活動攝影, 活動網站, 報名頁, 結案報告, 核銷, 高雄, 屏東, AMEI">
@@ -715,7 +715,7 @@ footer a{color:#9ED0BB}
       <a href="#contact" class="btn-lively" onclick="selectService('活動攝影')">預約諮詢</a>
     </article>
   </div>
-  <div id="photo-svc-wrap" hidden><h3 class="sub-title">攝影方案</h3><div class="plan-grid" id="photo-services"></div></div>
+  
 </div></section>
 
 <section><div class="container">
@@ -1002,22 +1002,6 @@ function loadSheet(){
       $('#hero-shots').hidden = false; $('#hero-grid').classList.remove('hero-solo');
     }
     grid.innerHTML = projectsData.map((p,i)=>`<button type="button" class="card photo-card" onclick="openProject(${i})"><div class="card-image-wrapper">${p.cover ? `<img src="${esc(p.cover)}" alt="${esc(p.title)}" loading="lazy">` : `<span class="no-cover">照片整理中</span>`}</div><div class="card-info"><span class="card-meta">${esc(p.category)}</span><h3 class="card-title">${esc(p.title)}</h3><p class="card-desc">${esc(p.description)}</p></div></button>`).join('');
-    if (services.length){
-      /* 攝影方案：精簡卡片，不放照片 */
-      const priceParts = s => { const m = String(s||'').match(/NT\$\s*([\d,]+)\s*(?:\/|／)?\s*(.*)$/); return m ? { n: m[1], unit: m[2] ? '／' + m[2].trim() : '' } : null; };
-      $('#photo-services').innerHTML = services.map(sv => {
-        const pp = priceParts(sv.price);
-        const price = pp ? `<b class="price-main">NT$${esc(pp.n)}<small>${esc(pp.unit)}</small></b>` : `<b class="price-main">${esc(sv.price)}</b>`;
-        return `<article class="card plan-card"><span class="service-subtitle">${esc(sv.subtitle)}</span><h3 class="plan-title">${esc(sv.title)}</h3><p class="plan-desc">${esc(sv.description)}</p>${sv.details.map(d=>{ const p = d.split(/[:：]/); return `<div class="detail-item"><span>${esc(p[0].trim())}</span><span>${esc((p.slice(1).join('：')||'').trim())}</span></div>`; }).join('')}<div class="price">${price}</div><a href="#contact" class="btn-lively" onclick="selectService('活動攝影')">預約諮詢</a></article>`;
-      }).join('');
-      $('#photo-svc-wrap').hidden = false;
-      /* 上方的攝影卡改成摘要，連到下方方案 */
-      const st = $('#static-photo');
-      if (st){
-        const lbl = $('.price-label', st); if (lbl) lbl.textContent = '共 ' + services.length + ' 種攝影方案';
-        const go = $('.btn-lively', st); if (go){ go.textContent = '看攝影方案'; go.setAttribute('href', '#photo-svc-wrap'); go.removeAttribute('onclick'); }
-      }
-    }
   }});
 }
 const modal = $('#project-modal');
