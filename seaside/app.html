@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#E8EDE9">
+<title>茄萣海邊剪貼簿｜市集互動示範</title>
+<meta name="description" content="市集與走讀小旅行的手機互動示範：拾海集貼紙、照片剪貼簿、瓶中信，最後生成可分享的 9:16 圖卡。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Layout: one-screen phone app, four steps (拾海 → 剪貼 → 瓶中信 → 完成), paper card on a sea-mist ground. Single deliberate light "paper" look. */
+:root{
+  --paper:#E8EDE9;      /* 海霧紙 */
+  --sheet:#F8F8F2;      /* 筆記紙 */
+  --ink:#22313A;        /* 墨 */
+  --ink-soft:#5E6E73;
+  --sea:#3D7585;        /* 潮色 */
+  --sea-deep:#1C3F4B;
+  --sun:#E4A04A;        /* 夕照 */
+  --roe:#B4613A;        /* 烏魚子 */
+  --line:#C9D3CF;
+  --hand:"LXGW WenKai TC","Kaiti TC","BiauKai","STKaiti",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--hand);font-size:17px;line-height:1.6;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
+button,input,textarea{font:inherit;color:inherit}
+.app{max-width:440px;margin:0 auto;min-height:100%;padding-inline:16px;padding-block:14px 28px;display:flex;flex-direction:column;gap:14px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.brand{font-weight:700;font-size:18px;letter-spacing:.06em}
+.steps{display:flex;gap:6px;font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
+.steps span{padding:2px 7px;border:1px solid var(--line);border-radius:20px}
+.steps span.on{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.screen[hidden]{display:none!important}
+.screen{display:flex;flex-direction:column;gap:14px;animation:rise .35s ease}
+@keyframes rise{from{transform:translateY(8px);opacity:.4}to{transform:none;opacity:1}}
+h1,h2{font-weight:700;margin:0;text-wrap:balance;line-height:1.3}
+h1{font-size:40px;letter-spacing:.04em}
+h2{font-size:26px}
+p{margin:0}
+.soft{color:var(--ink-soft)}
+.small{font-size:14px}
+.stamp{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--roe)}
+.btn{appearance:none;border:2px solid var(--ink);background:var(--ink);color:var(--sheet);border-radius:14px;padding:13px 18px;font-size:18px;font-weight:700;cursor:pointer;text-align:center;width:100%}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.sea{background:var(--sea);border-color:var(--sea)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn:focus-visible,.link:focus-visible,input:focus-visible,textarea:focus-visible,.tray button:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.link{background:none;border:0;padding:0;color:var(--sea);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:14px}
+.row{display:flex;gap:10px}
+.row>*{flex:1;min-width:0}
+
+/* cover */
+.cover{background:var(--sheet);border-radius:6px;padding:22px 20px 18px;position:relative;box-shadow:0 1px 0 var(--line),0 14px 30px -18px rgba(28,63,75,.45)}
+.cover .tape{position:absolute;top:-10px;left:50%;width:96px;height:24px;transform:translateX(-50%) rotate(-3deg);background:rgba(228,160,74,.55)}
+.cover-art{width:100%;aspect-ratio:4/3;border-radius:4px;display:block;margin-block:14px}
+.cover ol{margin:10px 0 0;padding-left:1.3em;display:grid;gap:4px}
+
+/* collect */
+.cards{display:grid;gap:12px}
+.card{background:var(--sheet);border-radius:6px;padding:14px;display:grid;grid-template-columns:76px minmax(0,1fr);gap:12px;align-items:start;box-shadow:0 1px 0 var(--line)}
+.card img{width:76px;height:76px;object-fit:contain}
+.card.locked img{filter:grayscale(1) brightness(1.15) contrast(.5);opacity:.55}
+.card h3{margin:0;font-size:20px}
+.card .body{display:grid;gap:6px;min-width:0}
+.unlock{display:flex;gap:8px}
+.unlock input{flex:1;min-width:0;width:0;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;padding:8px 10px;font-size:16px}
+.unlock button{border:0;background:var(--sea);color:var(--sheet);border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
+.demo{font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
+.err{color:var(--roe);font-size:14px}
+.got{font-family:var(--mono);font-size:11px;color:var(--sea);letter-spacing:.1em}
+.count{font-size:15px}
+
+/* scrapbook editor */
+.polaroid{background:#fff;padding:12px 12px 14px;border-radius:3px;box-shadow:0 14px 26px -16px rgba(28,63,75,.6);transform:rotate(-1.2deg);position:relative}
+.polaroid .tape{position:absolute;top:-11px;left:24px;width:80px;height:22px;transform:rotate(-8deg);background:rgba(61,117,133,.35)}
+.stage{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:var(--paper);touch-action:none;border-radius:2px}
+.stage>img.photo{width:100%;height:100%;object-fit:cover;display:block}
+.empty{position:absolute;inset:0;display:grid;place-content:center;gap:10px;text-align:center;padding:20px;color:var(--ink-soft)}
+.pl{position:absolute;width:28%;transform:translate(-50%,-50%);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.pl img{width:100%;display:block;pointer-events:none}
+.pl .x{position:absolute;top:-6px;right:-6px;width:26px;height:26px;border-radius:50%;border:0;background:var(--ink);color:var(--sheet);font-size:15px;line-height:26px;padding:0;cursor:pointer}
+.caption{width:100%;border:0;border-bottom:1.5px dashed var(--line);background:transparent;margin-top:10px;font-size:20px;padding:4px 2px;font-family:var(--hand)}
+.tray{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.tray button{flex:0 0 64px;height:64px;border-radius:12px;border:1.5px solid var(--line);background:var(--sheet);padding:4px;cursor:pointer}
+.tray button img{width:100%;height:100%;object-fit:contain}
+.tray .none{font-size:14px;color:var(--ink-soft)}
+.filebtn{position:relative;overflow:hidden}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+
+/* sea + bottle */
+.seawrap{position:relative;border-radius:6px;overflow:hidden;background:var(--sea-deep)}
+#sea{display:block;width:100%;height:230px}
+.bottle{position:absolute;width:42px;height:auto;left:50%;top:62%;transform:translate(-50%,-50%);pointer-events:none;opacity:0}
+.bottle.throw{animation:throw 1.5s cubic-bezier(.3,.1,.4,1) forwards}
+@keyframes throw{0%{opacity:1;transform:translate(-50%,120%) rotate(0) scale(1.2)}50%{transform:translate(-30%,-140%) rotate(260deg) scale(.9)}100%{opacity:0;transform:translate(10%,-30%) rotate(520deg) scale(.5)}}
+.bottle.arrive{opacity:1;pointer-events:auto;cursor:pointer;animation:bob 2.4s ease-in-out infinite;left:30%;top:58%}
+@keyframes bob{0%,100%{transform:translate(-50%,-50%) rotate(-12deg)}50%{transform:translate(-50%,-62%) rotate(10deg)}}
+.seamsg{position:absolute;left:0;right:0;bottom:10px;text-align:center;color:#EAF2EF;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,.4);padding-inline:12px}
+.letter{background:var(--sheet);border-radius:4px;padding:16px 16px 14px;background-image:repeating-linear-gradient(transparent 0 31px,var(--line) 31px 32px);display:grid;gap:8px}
+.letter textarea{width:100%;min-height:128px;border:0;background:transparent;resize:none;font-family:var(--hand);font-size:19px;line-height:32px;padding:0}
+.letter input{border:0;border-bottom:1.5px dashed var(--line);background:transparent;font-size:16px;padding:2px}
+.received{background:var(--sheet);border-radius:4px;padding:18px;transform:rotate(.8deg);box-shadow:0 12px 24px -16px rgba(28,63,75,.6);display:grid;gap:10px}
+.received .msg{font-size:22px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+.received .from{text-align:right;color:var(--ink-soft)}
+
+/* final */
+.final img{width:100%;border-radius:6px;display:block;box-shadow:0 18px 30px -18px rgba(28,63,75,.7);-webkit-touch-callout:default}
+.hint{background:var(--sheet);border-radius:10px;padding:10px 12px;font-size:15px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--sheet);padding:9px 16px;border-radius:20px;font-size:15px;opacity:0;transition:opacity .25s;pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.screen,.bottle.throw,.bottle.arrive{animation:none}.bottle.throw{opacity:0}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">茄萣海邊剪貼簿</div>
+    <nav class="steps" aria-label="進度"><span data-s="collect">拾海</span><span data-s="book">剪貼</span><span data-s="bottle">瓶中信</span><span data-s="final">完成</span></nav>
+  </header>
+
+  <!-- cover -->
+  <section class="screen" id="s-cover">
+    <div class="cover">
+      <div class="tape"></div>
+      <p class="stamp">Qieding · Seaside Market</p>
+      <h1>茄萣海邊<br>剪貼簿</h1>
+      <canvas class="cover-art" id="coverArt" width="800" height="600" aria-label="茄萣海岸的夕陽與魚"></canvas>
+      <p>今天在海岸公園，邊逛市集邊做一本只屬於你的剪貼簿。</p>
+      <ol class="small">
+        <li>在攤位立牌找到暗號，拾回 5 種茄萣的海邊記憶</li>
+        <li>拍一張今天的照片，貼上拾到的貼紙</li>
+        <li>寫一封瓶中信丟進海裡，也撿一封別人的</li>
+      </ol>
+    </div>
+    <button class="btn" id="go">開始拾海</button>
+  </section>
+
+  <!-- collect -->
+  <section class="screen" id="s-collect" hidden>
+    <div><h2>拾回茄萣的海</h2><p class="soft small">每個攤位立牌上藏著一個暗號，輸入就能拾到貼紙和故事。</p></div>
+    <p class="count" id="count"></p>
+    <div class="cards" id="cards"></div>
+    <button class="btn" id="toBook">去做剪貼簿</button>
+  </section>
+
+  <!-- book -->
+  <section class="screen" id="s-book" hidden>
+    <div><h2>貼上今天</h2><p class="soft small">拍一張照片，點下方貼紙貼上去，可以拖曳移動。</p></div>
+    <div class="polaroid">
+      <div class="tape"></div>
+      <div class="stage" id="stage">
+        <div class="empty" id="empty"><span>還沒有照片</span></div>
+      </div>
+      <input class="caption" id="caption" maxlength="18" placeholder="寫一句今天的話……" aria-label="照片的手寫標題">
+    </div>
+    <div class="row">
+      <label class="btn sea filebtn">拍照／選照片<input type="file" id="file" accept="image/*" capture="environment"></label>
+    </div>
+    <button class="link" id="demoPhoto" type="button">沒有照片？用示範照片試試</button>
+    <div>
+      <p class="small soft">我拾到的貼紙</p>
+      <div class="tray" id="tray"></div>
+    </div>
+    <button class="btn" id="toBottle">下一步：寫瓶中信</button>
+  </section>
+
+  <!-- bottle -->
+  <section class="screen" id="s-bottle" hidden>
+    <div><h2>瓶中信</h2><p class="soft small">寫一句話給大海。它會漂到下一位來茄萣的人手上。</p></div>
+    <div class="seawrap">
+      <canvas id="sea" aria-label="游著魚的海"></canvas>
+      <img class="bottle" id="bottle" alt="漂來的瓶子，點一下打開">
+      <p class="seamsg" id="seamsg">海浪在等你的信</p>
+    </div>
+    <div id="writeBox" class="letter">
+      <textarea id="letterText" maxlength="80" placeholder="例如：今天的夕陽很好，希望你也看到了。" aria-label="瓶中信內容"></textarea>
+      <input id="pen" maxlength="10" placeholder="署名（可以用筆名）" aria-label="署名">
+    </div>
+    <button class="btn sea" id="throw">放進瓶子，丟向大海</button>
+    <div id="recvBox" class="received" hidden>
+      <p class="stamp">海浪送來的信</p>
+      <p class="msg" id="recvMsg"></p>
+      <p class="from" id="recvFrom"></p>
+    </div>
+    <button class="btn" id="toFinal" hidden>完成我的剪貼簿</button>
+  </section>
+
+  <!-- final -->
+  <section class="screen final" id="s-final" hidden>
+    <div><h2>今天的海邊</h2><p class="soft small">把這一頁存起來，分享到限時動態。</p></div>
+    <img id="out" alt="完成的剪貼簿頁面">
+    <p class="hint">長按圖片，選「儲存影像」或「加入照片」即可存到手機。</p>
+    <button class="btn" id="save" hidden>下載圖片</button>
+    <button class="btn ghost" id="again">回去改剪貼簿</button>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const C={paper:'#E8EDE9',sheet:'#F8F8F2',ink:'#22313A',soft:'#5E6E73',sea:'#3D7585',deep:'#1C3F4B',sun:'#E4A04A',roe:'#B4613A'};
+const HAND='"LXGW WenKai TC","Kaiti TC",serif';
+
+/* ---------- stations (content to be checked by local partners) ---------- */
+const ST=[
+ {id:'wuyu',name:'烏魚',code:'烏金',where:'烏魚子攤立牌',story:'冬至前後，烏魚隨寒流南下經過西南沿海。茄萣人把魚卵鹽漬、壓平、日曬，做成被稱為「烏金」的烏魚子。'},
+ {id:'pipi',name:'黑面琵鷺',code:'琵琶',where:'市集服務台',story:'冬天的茄萣濕地是黑面琵鷺的落腳處。牠們把湯匙狀的嘴伸進淺水，左右掃動找魚蝦。'},
+ {id:'sampan',name:'舢筏',code:'竹筏',where:'手作攤立牌',story:'平底的舢筏吃水淺，適合在二仁溪口和濕地水道撐行。現在也能搭舢筏進濕地看候鳥。'},
+ {id:'mazu',name:'海上遶境',code:'平安',where:'咖啡攤立牌',story:'茄萣金鑾宮的媽祖會乘船出海遶境，船隊沿著海面巡行，為討海人祈求出入平安、滿載而歸。'},
+ {id:'sunset',name:'夕陽',code:null,where:'傍晚的堤岸',story:'茄萣的海岸面向台灣海峽，天氣好的傍晚，太陽會直接沉進海裡。這張貼紙只在日落時分出現。'}
+];
+const SEA_LETTERS=[
+ {t:'海浪每天都把東西送回岸邊。\n今天，它把你送來茄萣。',f:'茄萣的海'},
+ {t:'冬天的風很大，\n但堤岸上的夕陽一點都不冷。',f:'茄萣的海'},
+ {t:'如果你聞到鹹鹹的味道，\n那是烏魚子正在曬太陽。',f:'茄萣的海'},
+ {t:'黑面琵鷺每年都會回來。\n希望你也是。',f:'茄萣的海'},
+ {t:'退潮的時候，濕地會露出一整片發亮的泥灘。\n下次來，記得看看腳邊。',f:'茄萣的海'},
+ {t:'謝謝你來市集走走。\n風很大的日子，烏魚就快要來了。',f:'茄萣的海'}
+];
+
+/* ---------- state (per-viewer, optional) ---------- */
+const KEY='qd-scrap-v1';
+let S={unlocked:[],caption:'',placed:[],letter:'',pen:'',received:null,thrown:false};
+try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v)S=Object.assign(S,v)}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+let photo=null; // HTMLImageElement, kept in memory only
+
+/* ---------- hand-drawn stickers ---------- */
+function sketch(ctx,draw){draw(ctx);ctx.save();ctx.globalAlpha=.35;ctx.translate(1.4,-1);draw(ctx,true);ctx.restore();}
+function art(id){
+  const c=document.createElement('canvas');c.width=c.height=220;const x=c.getContext('2d');
+  x.lineCap=x.lineJoin='round';x.lineWidth=5;x.strokeStyle=C.ink;
+  if(id==='wuyu'){
+    sketch(x,(x,ghost)=>{x.beginPath();x.moveTo(30,112);x.bezierCurveTo(60,62,150,62,176,104);x.bezierCurveTo(150,150,64,150,30,112);
+      if(!ghost){const g=x.createLinearGradient(0,70,0,150);g.addColorStop(0,'#5E7480');g.addColorStop(.6,'#9FB2B6');g.addColorStop(1,'#E9EEEA');x.fillStyle=g;x.fill();}x.stroke();
+      x.beginPath();x.moveTo(174,104);x.lineTo(206,78);x.lineTo(198,108);x.lineTo(206,138);x.closePath();if(!ghost){x.fillStyle='#5E7480';x.fill()}x.stroke();
+      x.beginPath();x.moveTo(98,74);x.quadraticCurveTo(112,52,132,76);x.stroke();});
+    x.fillStyle=C.ink;x.beginPath();x.arc(56,104,6,0,7);x.fill();
+    x.lineWidth=2.5;for(let i=0;i<4;i++){x.beginPath();x.arc(90+i*20,108,10,-1,1);x.stroke();}
+    x.fillStyle=C.roe;x.beginPath();x.ellipse(110,174,34,12,-.1,0,7);x.fill();x.lineWidth=3;x.stroke();
+  }else if(id==='pipi'){
+    sketch(x,(x,ghost)=>{x.beginPath();x.ellipse(118,120,52,34,-.2,0,7);if(!ghost){x.fillStyle='#FBFBF7';x.fill()}x.stroke();
+      x.beginPath();x.moveTo(80,104);x.bezierCurveTo(64,70,74,46,92,42);x.stroke();
+      x.beginPath();x.arc(96,44,15,0,7);if(!ghost){x.fillStyle='#FBFBF7';x.fill()}x.stroke();
+      x.beginPath();x.moveTo(84,42);x.lineTo(30,58);x.stroke();});
+    x.fillStyle=C.ink;x.beginPath();x.ellipse(28,60,10,7,-.3,0,7);x.fill();
+    x.beginPath();x.moveTo(82,36);x.quadraticCurveTo(96,30,100,46);x.quadraticCurveTo(88,52,82,48);x.fill();
+    x.fillStyle='#fff';x.beginPath();x.arc(93,41,2.6,0,7);x.fill();
+    x.lineWidth=4;x.beginPath();x.moveTo(112,152);x.lineTo(108,198);x.moveTo(132,150);x.lineTo(138,198);x.stroke();
+    x.strokeStyle=C.sea;x.lineWidth=3;x.beginPath();x.moveTo(70,200);x.quadraticCurveTo(100,190,130,200);x.quadraticCurveTo(160,210,184,198);x.stroke();
+  }else if(id==='sampan'){
+    const tubes=['#C9A46A','#B78F55','#D6B57D','#BE9860'];
+    tubes.forEach((col,i)=>{sketch(x,(x,ghost)=>{x.beginPath();x.roundRect(26,108+i*15,168,15,8);if(!ghost){x.fillStyle=col;x.fill()}x.lineWidth=3.5;x.stroke();});});
+    x.lineWidth=3;x.strokeStyle=C.ink;[60,110,160].forEach(px=>{x.beginPath();x.moveTo(px,104);x.lineTo(px,172);x.stroke()});
+    x.lineWidth=5;x.strokeStyle='#7A5A35';x.beginPath();x.moveTo(150,22);x.lineTo(96,196);x.stroke();
+    x.strokeStyle=C.sea;x.lineWidth=3;for(let i=0;i<2;i++){x.beginPath();x.moveTo(20,188+i*14);x.quadraticCurveTo(70,176+i*14,110,188+i*14);x.quadraticCurveTo(150,200+i*14,200,186+i*14);x.stroke();}
+  }else if(id==='mazu'){
+    sketch(x,(x,ghost)=>{x.beginPath();x.moveTo(24,128);x.lineTo(196,128);x.lineTo(172,170);x.lineTo(48,170);x.closePath();if(!ghost){x.fillStyle='#C6463A';x.fill()}x.stroke();
+      x.beginPath();x.rect(80,98,64,30);if(!ghost){x.fillStyle='#F2E3BF';x.fill()}x.stroke();
+      x.beginPath();x.moveTo(112,98);x.lineTo(112,30);x.stroke();
+      x.beginPath();x.moveTo(112,32);x.lineTo(166,48);x.lineTo(112,66);x.closePath();if(!ghost){x.fillStyle=C.sun;x.fill()}x.stroke();});
+    x.fillStyle='#C6463A';x.beginPath();x.moveTo(114,38);x.lineTo(150,48);x.lineTo(114,60);x.fill();
+    x.fillStyle=C.sun;x.font='bold 22px '+HAND;x.textAlign='center';x.fillText('平安',112,158);
+    x.strokeStyle=C.sea;x.lineWidth=3;x.beginPath();x.moveTo(14,186);x.quadraticCurveTo(60,172,110,186);x.quadraticCurveTo(160,200,206,184);x.stroke();
+  }else if(id==='sunset'){
+    x.save();x.beginPath();x.rect(0,0,220,128);x.clip();
+    sketch(x,(x,ghost)=>{x.beginPath();x.arc(110,128,58,0,7);if(!ghost){const g=x.createLinearGradient(0,70,0,128);g.addColorStop(0,'#F1B75A');g.addColorStop(1,'#E07A3F');x.fillStyle=g;x.fill()}x.stroke();});
+    x.restore();
+    x.strokeStyle=C.sun;x.lineWidth=4;for(let i=0;i<7;i++){const a=Math.PI+(i+.5)*Math.PI/7;x.beginPath();x.moveTo(110+Math.cos(a)*72,128+Math.sin(a)*72);x.lineTo(110+Math.cos(a)*92,128+Math.sin(a)*92);x.stroke();}
+    x.lineWidth=5;x.strokeStyle=C.ink;x.beginPath();x.moveTo(16,130);x.lineTo(204,130);x.stroke();
+    ['#E4A04A','#3D7585','#3D7585'].forEach((col,i)=>{x.strokeStyle=col;x.lineWidth=4;x.beginPath();x.moveTo(60-i*14,150+i*18);x.lineTo(160+i*14,150+i*18);x.stroke();});
+  }
+  // die-cut white sticker border
+  const o=document.createElement('canvas');o.width=o.height=220;const ox=o.getContext('2d');
+  const w=document.createElement('canvas');w.width=w.height=220;const wx=w.getContext('2d');
+  wx.drawImage(c,0,0);wx.globalCompositeOperation='source-in';wx.fillStyle='#fff';wx.fillRect(0,0,220,220);
+  ox.shadowColor='rgba(28,63,75,.25)';ox.shadowBlur=6;ox.shadowOffsetY=2;
+  for(let a=0;a<16;a++){const r=7;ox.drawImage(w,Math.cos(a/16*6.283)*r,Math.sin(a/16*6.283)*r);}
+  ox.shadowColor='transparent';ox.drawImage(c,0,0);
+  return o;
+}
+function bottleArt(){
+  const c=document.createElement('canvas');c.width=90;c.height=180;const x=c.getContext('2d');x.lineWidth=4;x.strokeStyle=C.ink;x.lineJoin='round';
+  x.beginPath();x.moveTo(36,10);x.lineTo(54,10);x.lineTo(54,46);x.quadraticCurveTo(80,60,80,90);x.lineTo(80,160);x.quadraticCurveTo(80,172,66,172);x.lineTo(24,172);x.quadraticCurveTo(10,172,10,160);x.lineTo(10,90);x.quadraticCurveTo(10,60,36,46);x.closePath();
+  x.fillStyle='rgba(190,226,222,.85)';x.fill();x.stroke();
+  x.fillStyle='#B78F55';x.fillRect(34,4,22,14);x.strokeRect(34,4,22,14);
+  x.save();x.translate(45,118);x.rotate(.15);x.fillStyle='#F8F2DF';x.fillRect(-20,-30,40,60);x.strokeStyle=C.roe;x.lineWidth=2;x.beginPath();for(let i=0;i<4;i++){x.moveTo(-13,-18+i*12);x.lineTo(13,-18+i*12)}x.stroke();x.restore();
+  return c.toDataURL();
+}
+const STK={};
+
+/* ---------- navigation ---------- */
+const screens=['cover','collect','book','bottle','final'];
+let current='cover';
+function show(n){current=n;screens.forEach(s=>$('#s-'+s).hidden=s!==n);
+  document.querySelectorAll('.steps span').forEach(sp=>sp.classList.toggle('on',sp.dataset.s===n));
+  if(n==='collect')renderCards();if(n==='book')renderBook();if(n==='bottle')enterBottle();if(n==='final')renderFinal();
+  window.scrollTo(0,0);}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>el.classList.remove('on'),2200);}
+
+/* ---------- collect ---------- */
+const isSunsetTime=()=>{const d=new Date(),m=d.getHours()*60+d.getMinutes();return m>=16*60+30&&m<=18*60+30};
+function unlock(id){if(!S.unlocked.includes(id)){S.unlocked.push(id);save();toast('拾到了：'+ST.find(s=>s.id===id).name);}renderCards();}
+function renderCards(){
+  $('#count').textContent=`已拾到 ${S.unlocked.length} / ${ST.length}`;
+  const box=$('#cards');box.textContent='';
+  ST.forEach(st=>{
+    const got=S.unlocked.includes(st.id);
+    const card=document.createElement('article');card.className='card'+(got?'':' locked');
+    const img=new Image();img.src=STK[st.id];img.alt=st.name+'貼紙';
+    const body=document.createElement('div');body.className='body';
+    const h=document.createElement('h3');h.textContent=st.name;body.append(h);
+    if(got){
+      const tag=document.createElement('p');tag.className='got';tag.textContent='已拾到';
+      const p=document.createElement('p');p.className='small';p.textContent=st.story;body.append(tag,p);
+    }else if(st.code){
+      const p=document.createElement('p');p.className='small soft';p.textContent='暗號在「'+st.where+'」';
+      const f=document.createElement('form');f.className='unlock';
+      const inp=document.createElement('input');inp.id='code-'+st.id;inp.placeholder='輸入暗號';inp.setAttribute('aria-label',st.name+'的暗號');inp.autocomplete='off';
+      const b=document.createElement('button');b.textContent='拾起';
+      const er=document.createElement('p');er.className='err';er.hidden=true;
+      f.append(inp,b);
+      f.addEventListener('submit',e=>{e.preventDefault();if(inp.value.trim()===st.code)unlock(st.id);else{er.hidden=false;er.textContent='暗號不對，再看一次立牌上的字';}});
+      const d=document.createElement('p');d.className='demo';d.textContent='示範暗號：'+st.code;
+      body.append(p,f,er,d);
+    }else{
+      const p=document.createElement('p');p.className='small soft';
+      const open=isSunsetTime();
+      p.textContent=open?'夕陽正在下沉，現在就能拾起。':'傍晚 16:30–18:30 才會出現，記得留下來看夕陽。';
+      const b=document.createElement('button');b.className='btn sea';b.style.padding='8px';b.style.fontSize='16px';b.textContent='拾起夕陽';b.disabled=!open;b.onclick=()=>unlock(st.id);
+      const d=document.createElement('button');d.className='link';d.textContent='示範：略過時間限制';d.onclick=()=>unlock(st.id);
+      body.append(p,b,d);
+    }
+    card.append(img,body);box.append(card);
+  });
+}
+
+/* ---------- book ---------- */
+const stage=$('#stage');
+function renderBook(){
+  $('#caption').value=S.caption||'';
+  const tray=$('#tray');tray.textContent='';
+  if(!S.unlocked.length){const p=document.createElement('p');p.className='none';p.textContent='還沒拾到貼紙，回上一步找暗號吧。';tray.append(p);}
+  S.unlocked.forEach(id=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','貼上'+ST.find(s=>s.id===id).name);
+    const i=new Image();i.src=STK[id];i.alt='';b.append(i);
+    b.onclick=()=>{if(!photo){toast('先放一張照片');return}S.placed.push({id,x:.3+Math.random()*.4,y:.55+Math.random()*.3,r:(Math.random()-.5)*.5});save();renderPlaced();};tray.append(b);});
+  renderPhoto();renderPlaced();
+}
+function renderPhoto(){
+  stage.querySelectorAll('img.photo').forEach(e=>e.remove());
+  $('#empty').hidden=!!photo;
+  if(photo){const i=new Image();i.className='photo';i.src=photo.src;i.alt='你的照片';stage.prepend(i);}
+}
+function renderPlaced(){
+  stage.querySelectorAll('.pl').forEach(e=>e.remove());
+  if(!photo)return;
+  S.placed.forEach((p,idx)=>{
+    const d=document.createElement('div');d.className='pl';d.style.left=p.x*100+'%';d.style.top=p.y*100+'%';d.style.transform=`translate(-50%,-50%) rotate(${p.r}rad)`;
+    const i=new Image();i.src=STK[p.id];i.alt=ST.find(s=>s.id===p.id).name;
+    const x=document.createElement('button');x.className='x';x.textContent='×';x.setAttribute('aria-label','移除貼紙');
+    x.addEventListener('pointerdown',e=>e.stopPropagation());
+    x.onclick=e=>{e.stopPropagation();S.placed.splice(idx,1);save();renderPlaced();};
+    d.append(i,x);stage.append(d);
+    d.addEventListener('pointerdown',e=>{
+      d.setPointerCapture(e.pointerId);d.style.cursor='grabbing';
+      const r=stage.getBoundingClientRect();
+      const mv=ev=>{p.x=Math.min(1,Math.max(0,(ev.clientX-r.left)/r.width));p.y=Math.min(1,Math.max(0,(ev.clientY-r.top)/r.height));d.style.left=p.x*100+'%';d.style.top=p.y*100+'%';};
+      const up=()=>{d.removeEventListener('pointermove',mv);d.removeEventListener('pointerup',up);d.removeEventListener('pointercancel',up);d.style.cursor='';save();};
+      d.addEventListener('pointermove',mv);d.addEventListener('pointerup',up);d.addEventListener('pointercancel',up);
+    });
+  });
+}
+function loadPhoto(src){const i=new Image();i.onload=()=>{photo=i;renderPhoto();renderPlaced();};i.src=src;}
+$('#file').addEventListener('change',e=>{
+  const f=e.target.files&&e.target.files[0];if(!f)return;
+  const rd=new FileReader();rd.onload=()=>{
+    // downscale big phone photos
+    const im=new Image();im.onload=()=>{const m=1600,sc=Math.min(1,m/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=im.width*sc;c.height=im.height*sc;c.getContext('2d').drawImage(im,0,0,c.width,c.height);loadPhoto(c.toDataURL('image/jpeg',.88));};
+    im.onerror=()=>toast('這張照片讀不出來，換一張試試');im.src=rd.result;};
+  rd.readAsDataURL(f);
+});
+$('#demoPhoto').onclick=()=>{const c=document.createElement('canvas');c.width=1200;c.height=1500;drawSeascape(c.getContext('2d'),1200,1500,0,true);loadPhoto(c.toDataURL('image/jpeg',.9));};
+$('#caption').addEventListener('input',e=>{S.caption=e.target.value;save();});
+
+/* ---------- sea scene ---------- */
+function drawSeascape(x,W,H,t,still){
+  const hz=H*.48;
+  let g=x.createLinearGradient(0,0,0,hz);g.addColorStop(0,'#8FB3BC');g.addColorStop(.6,'#E9C892');g.addColorStop(1,'#EFA866');x.fillStyle=g;x.fillRect(0,0,W,hz);
+  x.fillStyle='#F2B460';x.beginPath();x.arc(W*.62,hz,W*.11,Math.PI,0);x.fill();
+  g=x.createLinearGradient(0,hz,0,H);g.addColorStop(0,'#5D8E98');g.addColorStop(1,C.deep);x.fillStyle=g;x.fillRect(0,hz,W,H-hz);
+  x.globalAlpha=.55;x.fillStyle='#F6C379';for(let i=0;i<9;i++){const w=W*(.2-i*.018),y=hz+12+i*i*5;x.fillRect(W*.62-w/2,y,w,3+i*.4);}x.globalAlpha=1;
+  x.strokeStyle='rgba(233,242,239,.35)';x.lineWidth=Math.max(2,W/400);
+  for(let r=0;r<6;r++){const y=hz+(H-hz)*(.18+r*.15);x.beginPath();for(let px=0;px<=W;px+=W/40){const yy=y+Math.sin(px/W*12+t*1.4+r)*W*.008;px?x.lineTo(px,yy):x.moveTo(px,yy);}x.stroke();}
+  if(still){x.fillStyle='#2D4650';x.fillRect(0,H*.84,W,H*.16);x.fillStyle='#3B5A63';for(let i=0;i<5;i++)x.fillRect(i*W*.22,H*.82,W*.16,H*.03);}
+}
+function fish(x,cx,cy,s,dir,col){
+  x.save();x.translate(cx,cy);x.scale(dir*s,s);x.fillStyle=col;x.beginPath();x.moveTo(-20,0);x.bezierCurveTo(-8,-11,12,-11,20,0);x.bezierCurveTo(12,11,-8,11,-20,0);x.fill();
+  x.beginPath();x.moveTo(-18,0);x.lineTo(-30,-9);x.lineTo(-27,0);x.lineTo(-30,9);x.closePath();x.fill();
+  x.fillStyle='rgba(255,255,255,.8)';x.beginPath();x.arc(12,-2,1.8,0,7);x.fill();x.restore();
+}
+let seaRun=false,seaT0=0,fishes=[];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function seaLoop(ts){
+  const cv=$('#sea');if(!cv||current!=='bottle'){seaRun=false;return}
+  const dpr=Math.min(2,devicePixelRatio||1),W=cv.clientWidth,H=cv.clientHeight;
+  if(cv.width!==W*dpr){cv.width=W*dpr;cv.height=H*dpr;}
+  const x=cv.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);
+  const t=(ts-seaT0)/1000;
+  // night-ish sea with shoal of fish
+  let g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#E9B66E');g.addColorStop(.28,'#7FA6AE');g.addColorStop(.3,'#4B7F8B');g.addColorStop(1,C.deep);x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle='#F3BC63';x.beginPath();x.arc(W*.78,H*.29,26,Math.PI,0);x.fill();
+  fishes.forEach(f=>{const px=((f.x+f.v*t)%(W+80)+W+80)%(W+80)-40;fish(x,f.d>0?px:W-px,f.y+Math.sin(t*2+f.p)*4,f.s,f.d,f.c);});
+  x.strokeStyle='rgba(233,242,239,.4)';x.lineWidth=2;
+  for(let r=0;r<4;r++){const y=H*.3+r*H*.18;x.beginPath();for(let px=0;px<=W;px+=8){const yy=y+Math.sin(px/38+t*1.6+r*1.3)*4;px?x.lineTo(px,yy):x.moveTo(px,yy);}x.stroke();}
+  if(!reduce)requestAnimationFrame(seaLoop);else seaRun=false;
+}
+function startSea(){const cv=$('#sea');const W=cv.clientWidth||360,H=230;
+  fishes=Array.from({length:9},(_,i)=>({x:Math.random()*W,y:H*.42+Math.random()*H*.48,v:14+Math.random()*22,s:.6+Math.random()*.6,d:i%3?1:-1,p:Math.random()*6,c:['#A9C9C6','#E4A04A','#D7E4DF','#8DB3B8'][i%4]}));
+  if(!seaRun){seaRun=true;seaT0=performance.now();requestAnimationFrame(seaLoop);}}
+
+/* ---------- bottle letters (shared pool when available) ---------- */
+/* 示範版：沒有連後端，瓶中信從預設信件池抽。
+   正式活動版改接 Firebase 或 Google 試算表，就能讓參加者互相收到彼此的信。 */
+const MY_KEY='qd-my-bottles';
+function enterBottle(){
+  startSea();
+  $('#letterText').value=S.letter||'';$('#pen').value=S.pen||'';
+  const done=S.thrown&&S.received;
+  $('#writeBox').hidden=!!S.thrown;$('#throw').hidden=!!S.thrown;
+  $('#recvBox').hidden=!done;$('#toFinal').hidden=!done;
+  if(done)showReceived();
+  $('#seamsg').textContent=done?'這封信是海浪送來給你的':'海浪在等你的信';
+  $('#bottle').className='bottle';
+}
+$('#letterText').addEventListener('input',e=>{S.letter=e.target.value;save()});
+$('#pen').addEventListener('input',e=>{S.pen=e.target.value;save()});
+async function pickLetter(){
+  const l=SEA_LETTERS[Math.floor(Math.random()*SEA_LETTERS.length)];return{t:l.t,f:l.f};
+}
+async function sendLetter(){
+  try{const a=JSON.parse(localStorage.getItem(MY_KEY)||'[]');a.push({text:S.letter.trim().slice(0,80),pen:(S.pen.trim()||'一位旅人').slice(0,10),at:Date.now()});localStorage.setItem(MY_KEY,JSON.stringify(a.slice(-20)));}catch(e){}
+}
+$('#throw').onclick=async()=>{
+  if(!S.letter.trim()){toast('先寫一句話吧');$('#letterText').focus();return}
+  const b=$('#bottle');b.className='bottle';void b.offsetWidth;b.classList.add('throw');
+  $('#throw').disabled=true;$('#seamsg').textContent='瓶子漂走了……';
+  const [rec]=await Promise.all([pickLetter(),sendLetter(),new Promise(r=>setTimeout(r,reduce?300:1700))]);
+  S.thrown=true;S.received=rec;save();
+  $('#writeBox').hidden=true;$('#throw').hidden=true;$('#throw').disabled=false;
+  $('#seamsg').textContent='另一個瓶子漂過來了，點一下打開';
+  b.className='bottle arrive';
+};
+$('#bottle').onclick=()=>{if(!S.received)return;$('#bottle').className='bottle';$('#seamsg').textContent='這封信是海浪送來給你的';showReceived();$('#recvBox').hidden=false;$('#toFinal').hidden=false;$('#recvBox').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});};
+function showReceived(){$('#recvMsg').textContent=S.received.t;$('#recvFrom').textContent='—— '+S.received.f;}
+
+/* ---------- final 9:16 card ---------- */
+function wrap(x,text,maxW){const out=[];text.split('\n').forEach(par=>{let line='';for(const ch of par){if(x.measureText(line+ch).width>maxW&&line){out.push(line);line=ch}else line+=ch}out.push(line)});return out;}
+async function renderFinal(){
+  const W=1080,H=1920,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  try{await document.fonts.load('700 80px "LXGW WenKai TC"','茄萣海邊剪貼簿'+(S.caption||'')+(S.received?S.received.t+S.received.f:''));}catch(e){}
+  // paper ground with grain
+  x.fillStyle=C.paper;x.fillRect(0,0,W,H);
+  x.fillStyle='rgba(34,49,58,.035)';for(let i=0;i<2600;i++)x.fillRect(Math.random()*W,Math.random()*H,2,2);
+  // header
+  x.fillStyle=C.ink;x.font='700 92px '+HAND;x.textBaseline='alphabetic';x.fillText('茄萣海邊剪貼簿',80,190);
+  const d=new Date();const ds=`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+  x.font='500 30px "IBM Plex Mono",monospace';x.fillStyle=C.roe;x.fillText('QIEDING SEASIDE · '+ds,84,248);
+  // polaroid
+  x.save();x.translate(540,735);x.rotate(-.035);
+  const pw=680,ph=850,pad=34;
+  x.shadowColor='rgba(28,63,75,.35)';x.shadowBlur=40;x.shadowOffsetY=18;x.fillStyle='#fff';x.fillRect(-pw/2-pad,-ph/2-pad,pw+pad*2,ph+pad*2+120);x.shadowColor='transparent';
+  const ix=-pw/2,iy=-ph/2;
+  if(photo){const r=Math.max(pw/photo.width,ph/photo.height),sw=pw/r,sh=ph/r;x.drawImage(photo,(photo.width-sw)/2,(photo.height-sh)/2,sw,sh,ix,iy,pw,ph);}
+  else{x.save();x.translate(ix,iy);drawSeascape(x,pw,ph,0,true);x.restore();}
+  // stickers mapped from 4:5 stage into pw x ph frame (crop-center equivalent)
+  const sx0=ix,sy0=iy;
+  if(photo)S.placed.forEach(p=>{const s=pw*.28;x.save();x.translate(sx0+p.x*pw,sy0+p.y*ph);x.rotate(p.r);x.drawImage(STK.cv[p.id],-s/2,-s/2,s,s);x.restore();});
+  x.fillStyle=C.ink;x.font='400 56px '+HAND;x.textAlign='center';x.fillText(S.caption||'今天的海風很好',0,ph/2+pad+78);x.textAlign='left';
+  // tape
+  x.fillStyle='rgba(228,160,74,.6)';x.save();x.translate(-pw/2+60,-ph/2-pad-6);x.rotate(-.18);x.fillRect(-90,-22,180,44);x.restore();
+  x.fillStyle='rgba(61,117,133,.4)';x.save();x.translate(pw/2-40,-ph/2-pad);x.rotate(.22);x.fillRect(-80,-20,160,40);x.restore();
+  x.restore();
+  // collected row
+  const got=S.unlocked;x.fillStyle=C.soft;x.font='400 34px '+HAND;x.fillText(`今天拾到 ${got.length} 種海邊記憶`,84,1372);
+  got.forEach((id,i)=>x.drawImage(STK.cv[id],70+i*130,1385,128,128));
+  // sea band with fish + letter slip
+  const sy=1545;
+  let g=x.createLinearGradient(0,sy,0,H);g.addColorStop(0,'#5D8E98');g.addColorStop(1,C.deep);
+  x.fillStyle=g;x.beginPath();x.moveTo(0,sy);for(let px=0;px<=W;px+=20)x.lineTo(px,sy+Math.sin(px/70)*14);x.lineTo(W,H);x.lineTo(0,H);x.closePath();x.fill();
+  x.strokeStyle='rgba(233,242,239,.35)';x.lineWidth=4;for(let r=1;r<4;r++){x.beginPath();for(let px=0;px<=W;px+=20){const yy=sy+r*110+Math.sin(px/60+r)*10;px?x.lineTo(px,yy):x.moveTo(px,yy)}x.stroke();}
+  [[110,1640,1.8,1,'#E4A04A'],[220,1600,1.2,1,'#A9C9C6'],[960,1860,1.8,-1,'#D7E4DF'],[1000,1610,1.3,-1,'#E4A04A'],[70,1870,1.1,1,'#8DB3B8']].forEach(f=>fish(x,f[0],f[1],f[2],f[3],f[4]));
+  if(S.received){
+    x.save();x.translate(560,1710);x.rotate(.025);
+    x.font='400 40px '+HAND;const lines=wrap(x,S.received.t,640).slice(0,4);
+    const bh=96+lines.length*58;x.shadowColor='rgba(0,0,0,.3)';x.shadowBlur=24;x.shadowOffsetY=10;x.fillStyle='#F8F2DF';x.fillRect(-370,-bh/2,740,bh);x.shadowColor='transparent';
+    x.fillStyle=C.roe;x.font='500 24px "IBM Plex Mono",monospace';x.fillText('A LETTER FROM THE SEA',-330,-bh/2+44);
+    x.fillStyle=C.ink;x.font='400 40px '+HAND;lines.forEach((l,i)=>x.fillText(l,-330,-bh/2+100+i*58));
+    x.fillStyle=C.soft;x.font='400 30px '+HAND;x.textAlign='right';x.fillText('—— '+S.received.f,330,bh/2-20);x.restore();
+  }
+  x.fillStyle='rgba(248,248,242,.8)';x.font='400 28px '+HAND;x.textAlign='center';x.fillText('茄萣海岸公園 · 海邊文青市集',W/2,H-36);
+  const url=c.toDataURL('image/jpeg',.9);$('#out').src=url;finalUrl=url;
+}
+let finalUrl='';
+$('#save').hidden=false;
+$('#save').onclick=()=>{if(!finalUrl)return;const a=document.createElement('a');a.href=finalUrl;a.download='茄萣海邊剪貼簿.jpg';document.body.append(a);a.click();a.remove();toast('已下載，iPhone 請改用長按圖片儲存');};
+
+/* ---------- cover art ---------- */
+function cover(){const cv=$('#coverArt'),x=cv.getContext('2d');drawSeascape(x,800,600,0,false);
+  [[180,470,1.6,1,'#E4A04A'],[300,520,1.1,1,'#D7E4DF'],[620,500,1.4,-1,'#A9C9C6'],[700,550,1,-1,'#E4A04A']].forEach(f=>fish(x,...f));
+  x.drawImage(STK.cv.pipi,560,150,170,170);}
+
+/* ---------- boot ---------- */
+STK.cv={};ST.forEach(s=>{const c=art(s.id);STK.cv[s.id]=c;STK[s.id]=c.toDataURL();});
+$('#bottle').src=bottleArt();
+cover();
+$('#go').onclick=()=>show('collect');
+$('#toBook').onclick=()=>show('book');
+$('#toBottle').onclick=()=>show('bottle');
+$('#toFinal').onclick=()=>show('final');
+$('#again').onclick=()=>show('book');
+document.querySelectorAll('.steps span').forEach(sp=>{sp.style.cursor='pointer';sp.onclick=()=>{if(current!=='cover')show(sp.dataset.s)}});
+show('cover');
+})();
+</script>
+
+</body></html>
