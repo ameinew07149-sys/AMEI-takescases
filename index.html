@@ -766,6 +766,18 @@ footer a{color:#9ED0BB}
 
 <footer><p>&copy; 2026 AMEI 阿梅<br>標案企劃・網站製作・活動影像紀錄</p></footer>
 <button type="button" id="to-top" aria-label="回到頁首">↑</button>
+<a class="line-fab" href="https://lin.ee/y8NnuAy" target="_blank" rel="noopener" aria-label="用 LINE 線上詢問">
+  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5 1.1-.5 5.9-3.5 8-6C21.4 14.3 22 12.7 22 11c0-4.4-4.5-8-10-8z"/></svg>
+  <span>LINE 詢問</span>
+</a>
+<style>
+.line-fab{position:fixed;right:1.2rem;bottom:4.6rem;z-index:95;display:inline-flex;align-items:center;gap:.45rem;padding:.7rem 1.1rem;border-radius:999px;background:#06C755;color:#fff;font:700 .95rem/1 'Noto Sans TC','Microsoft JhengHei',sans-serif;letter-spacing:.04em;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.22);transition:transform .2s,box-shadow .2s}
+.line-fab:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.28);color:#fff}
+.line-fab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media (max-width:600px){.line-fab{padding:.8rem}.line-fab span{display:none}}
+@media (prefers-reduced-motion:reduce){.line-fab{transition:none}}
+@media print{.line-fab{display:none}}
+</style>
 
 <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
   <button class="modal-close" onclick="closeModal()" aria-label="關閉">&times;</button>
