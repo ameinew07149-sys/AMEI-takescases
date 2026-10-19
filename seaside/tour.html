@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#EFE7DE">
+<title>老街散步導覽｜走讀導覽示範</title>
+<meta name="description" content="走讀導覽的手機互動示範：路線地圖、逐站語音解說、今昔對比、解說牌打卡與完走證書。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+/* Layout: walking-tour guide — route map → stop (compare, story, voice, check-in) → certificate. */
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.meta span{font-family:var(--mono);font-size:12px;padding:3px 9px;border-radius:20px;background:var(--paper);color:var(--ink-soft)}
+.mapwrap{position:relative;background:var(--sheet);border-radius:8px;box-shadow:0 1px 0 var(--line),0 14px 30px -20px rgba(60,40,30,.5);overflow:hidden}
+.mapwrap canvas{display:block;width:100%;aspect-ratio:6/5}
+.pin{position:absolute;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;border:3px solid var(--ink);background:var(--sheet);font-family:var(--mono);font-weight:700;font-size:15px;display:grid;place-items:center;cursor:pointer;padding:0;color:var(--ink)}
+.pin.done{background:var(--sea);color:var(--sheet);border-color:var(--sea-deep)}
+.pin.now{box-shadow:0 0 0 0 rgba(217,161,62,.7);animation:pulse 1.6s infinite;background:var(--sun)}
+@keyframes pulse{to{box-shadow:0 0 0 16px rgba(217,161,62,0)}}
+.legend{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft);padding:8px 12px;border-top:1px dashed var(--line)}
+.stops{display:grid;gap:10px}
+.stoprow{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;background:var(--sheet);border-radius:8px;padding:10px 12px;box-shadow:0 1px 0 var(--line);cursor:pointer;border:0;text-align:left;width:100%;font:inherit;color:inherit}
+.stoprow img{width:56px}
+.stoprow.locked img{filter:grayscale(1);opacity:.5}
+.stoprow b{font-size:19px;display:block}
+.stoprow small{font-size:13px;color:var(--ink-soft)}
+.stoprow em{font-style:normal;font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:20px;border:1px solid var(--line);color:var(--ink-soft)}
+.stoprow em.ok{background:var(--sea);color:var(--sheet);border-color:var(--sea)}
+.dots{display:flex;gap:6px}.dots i{width:22px;height:5px;border-radius:3px;background:var(--line)}.dots i.done{background:var(--sea)}.dots i.now{background:var(--sun)}
+.compare{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:4/3;background:var(--paper);touch-action:pan-y}
+.compare canvas{position:absolute;inset:0;width:100%;height:100%}
+.compare .old{clip-path:inset(0 calc(100% - var(--cut,50%)) 0 0)}
+.compare .bar{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:3px;background:#fff;transform:translateX(-50%);box-shadow:0 0 6px rgba(0,0,0,.4);pointer-events:none}
+.compare .bar::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.compare input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.compare .lb{position:absolute;top:10px;font-family:var(--mono);font-size:12px;background:rgba(0,0,0,.55);color:#fff;padding:2px 9px;border-radius:20px;pointer-events:none}
+.cap{font-size:14px;color:var(--ink-soft)}
+.story{background:var(--sheet);border-radius:8px;padding:16px;display:grid;gap:10px;box-shadow:0 1px 0 var(--line)}
+.story p{font-size:17px;line-height:1.75}
+.voice{display:flex;align-items:center;gap:10px}
+.voice .btn{width:auto;padding:9px 16px;font-size:16px}
+.voice small{font-size:13px;color:var(--ink-soft)}
+.check{background:var(--sheet);border-radius:8px;padding:14px;display:grid;gap:8px;border:2px dashed var(--line)}
+.check form{display:flex;gap:8px}
+.check input{flex:1;min-width:0;width:0;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;padding:8px 10px;font-size:16px}
+.check button{border:0;background:var(--sea);color:var(--sheet);border-radius:10px;padding:8px 14px;font-weight:700;cursor:pointer}
+.stamped{display:flex;align-items:center;gap:12px}
+.stamped img{width:64px;animation:stamp .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes stamp{from{transform:scale(2) rotate(-20deg);opacity:0}to{transform:none;opacity:1}}
+.next{background:rgba(217,161,62,.16);border-radius:8px;padding:12px 14px;font-size:16px}
+.next b{display:block;font-size:13px;font-family:var(--mono);letter-spacing:.1em;color:var(--roe)}
+.namebox{display:grid;gap:6px}
+.namebox input{border:0;border-bottom:1.5px dashed var(--line);background:transparent;font-size:20px;padding:4px 2px;font-family:var(--hand)}
+@media (prefers-reduced-motion:reduce){.pin.now,.stamped img{animation:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">老街散步導覽</div>
+    <nav class="steps" aria-label="進度"><span data-s="map">路線</span><span data-s="stop">解說</span><span data-s="cert">證書</span></nav>
+  </header>
+
+  <section class="screen" id="s-cover">
+    <div class="cover">
+      <div class="tape"></div>
+      <p class="stamp">Old Street · Walking Tour</p>
+      <h1>老街散步<br>導覽</h1>
+      <canvas class="cover-art" id="coverArt" width="800" height="600" aria-label="紅磚老街與燈籠"></canvas>
+      <p>跟著手機上的路線散步老街，每一站都有語音解說和今昔對比。</p>
+      <div class="meta"><span>5 站</span><span>約 1.2 公里</span><span>約 60 分鐘</span><span>語音導覽</span></div>
+      <ol class="small">
+        <li>看地圖走到下一站，聽語音解說</li>
+        <li>拉動滑桿，比較這裡以前和現在的樣子</li>
+        <li>輸入解說牌上的暗號打卡，集滿 5 站領完走證書</li>
+      </ol>
+    </div>
+    <button class="btn" id="go">開始走讀</button>
+  </section>
+
+  <section class="screen" id="s-map" hidden>
+    <div><h2>今天的路線</h2><p class="soft small" id="mapHint"></p></div>
+    <div class="mapwrap" id="mapwrap"><canvas id="map" width="720" height="600" aria-label="走讀路線地圖"></canvas>
+      <div class="legend"><span>● 已打卡　● 下一站</span><span>示意地圖</span></div></div>
+    <div class="stops" id="stops"></div>
+    <button class="btn" id="toCert" hidden>領取完走證書</button>
+  </section>
+
+  <section class="screen" id="s-stop" hidden>
+    <div class="dots" id="dots"></div>
+    <div><p class="stamp" id="stopNo"></p><h2 id="stopName"></h2></div>
+    <div class="compare" id="compare" style="--cut:50%">
+      <canvas id="cNow" width="800" height="600"></canvas>
+      <canvas id="cOld" class="old" width="800" height="600"></canvas>
+      <span class="lb" style="left:10px">昔</span><span class="lb" style="right:10px">今</span>
+      <div class="bar"></div>
+      <input type="range" min="0" max="100" value="50" id="cut" aria-label="拉動比較今昔">
+    </div>
+    <p class="cap" id="thenCap"></p>
+    <div class="story">
+      <div class="voice"><button class="btn sea" id="speak" type="button">▶ 播放語音導覽</button><small id="voiceNote">建議戴耳機</small></div>
+      <div id="storyText"></div>
+    </div>
+    <div class="check" id="checkBox">
+      <p><b>抵達打卡</b>　<span class="small soft" id="codeWhere"></span></p>
+      <form id="checkForm"><input id="code" placeholder="輸入解說牌上的暗號" aria-label="解說牌暗號" autocomplete="off"><button>打卡</button></form>
+      <p class="err" id="codeErr" hidden>暗號不對，再看一次解說牌</p>
+      <p class="demo" id="codeDemo"></p>
+      <p class="small soft">正式版也可以改用 GPS 定位，走到定點自動打卡。</p>
+    </div>
+    <div class="stamped" id="stamped" hidden><img id="stampImg" alt=""><div><b>打卡成功！</b><p class="small soft" id="stampTxt"></p></div></div>
+    <div class="next" id="nextBox" hidden><b>NEXT STOP</b><span id="nextTxt"></span></div>
+    <button class="btn" id="back">回到路線地圖</button>
+  </section>
+
+  <section class="screen final" id="s-cert" hidden>
+    <div><h2>完走證書</h2><p class="soft small">寫上名字，存下今天走過的老街。</p></div>
+    <div class="namebox"><label class="small soft" for="nm">證書上的名字</label><input id="nm" maxlength="10" placeholder="例如：小美"></div>
+    <button class="btn sea" id="makeCert">產生證書</button>
+    <img id="out" alt="完走證書" hidden>
+    <p class="hint" id="certHint" hidden>長按圖片，選「儲存影像」即可存到手機。</p>
+    <button class="btn" id="save" hidden>下載證書</button>
+    <button class="btn ghost" id="again">回到路線地圖</button>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="kit.js"></script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const C=PAL.street;applyPal(C);
+/* 內容為示範用通用情境，正式活動依在地文史資料撰寫 */
+const STOPS=[
+ {id:'arcade',name:'亭仔腳',code:'騎樓',where:'第 1 站解說牌（老店門口）',xy:[.14,.78],
+  story:['老街的店屋前面，都留出一段有屋頂的走廊，台語叫「亭仔腳」，也就是騎樓。','它讓路人可以遮陽、躲雨，店家也能把貨擺出來。以前到了傍晚，鄰居會搬椅子坐在這裡聊天，騎樓就是整條街的客廳。'],
+  then:'昔：騎樓下擺滿攤販和腳踏車（示意）',next:'沿著亭仔腳往前走約 100 公尺，在茶行門口找到第 2 站的古井。'},
+ {id:'well',name:'古井',code:'甘泉',where:'第 2 站解說牌（茶行旁）',xy:[.36,.56],
+  story:['自來水普及以前，街坊共用一口井挑水、洗菜、洗衣服。','井邊常常是一條街最熱鬧的地方，大家一邊等水一邊交換消息。現在井已經不用了，但老一輩還是習慣在這裡停下來聊兩句。'],
+  then:'昔：街坊排隊挑水的井邊（示意）',next:'走過古井後右轉進小巷，抬頭找一塊黑底金字的老招牌。'},
+ {id:'sign',name:'老招牌',code:'百年',where:'第 3 站解說牌（書店門口）',xy:[.3,.22],
+  story:['手寫字、磨石子、鐵皮漆字……老店的招牌，常常就寫著一家人好幾代的故事。','仔細看招牌上的字，有些是第一代老闆親手寫的。招牌舊了捨不得換，因為熟客都是認這塊招牌回來的。'],
+  then:'昔：剛掛上的新招牌（示意）',next:'回到大街往廟口方向走，糕餅店飄出的香味就是第 4 站。'},
+ {id:'kueh',name:'紅龜粿',code:'祝壽',where:'第 4 站解說牌（糕餅店）',xy:[.64,.3],
+  story:['紅龜粿用刻著龜紋的木頭粿印壓出花樣，象徵長壽平安。','逢年過節、拜拜和做壽的時候，供桌上一定少不了它。糕餅店裡還留著好幾代傳下來的粿印，可以請老闆拿出來看看。'],
+  then:'昔：手工壓製粿印的糕餅舖（示意）',next:'最後一站在老街盡頭，傍晚會亮起一整排燈籠。'},
+ {id:'lantern',name:'燈籠街',code:'點燈',where:'第 5 站解說牌（老街盡頭）',xy:[.86,.66],
+  story:['天色暗下來以後，老街一盞盞燈籠亮起來，整條街換上另一種表情。','燈籠上的字，有些是店名，有些是祝福的話。走完全程了，回頭再看一次這條街吧。'],
+  then:'昔：節慶時掛滿燈籠的老街（示意）',next:''}
+];
+const KEY='tour-street-v1';
+let S={done:[],name:''};
+try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v)S=Object.assign(S,v)}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const STK={};STOPS.forEach(s=>{const c=makeSticker(s.id,C);STK[s.id]={cv:c,url:c.toDataURL()}});
+const nextIdx=()=>STOPS.findIndex(s=>!S.done.includes(s.id));
+let cur=0,current='cover';
+
+function show(n){current=n;['cover','map','stop','cert'].forEach(s=>$('#s-'+s).hidden=s!==n);
+  document.querySelectorAll('.steps span').forEach(sp=>sp.classList.toggle('on',sp.dataset.s===n));
+  if(n==='map')renderMap();if(n==='stop')renderStop();if(n!=='stop')stopVoice();window.scrollTo(0,0);}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>el.classList.remove('on'),2200);}
+
+/* ---------- map ---------- */
+function drawMap(){
+  const cv=$('#map'),x=cv.getContext('2d'),W=cv.width,H=cv.height;
+  x.fillStyle=C.sheet;x.fillRect(0,0,W,H);
+  x.fillStyle=rgba(C.ink,.03);for(let i=0;i<900;i++)x.fillRect(Math.random()*W,Math.random()*H,2,2);
+  // blocks
+  x.fillStyle='rgba(194,90,64,.12)';[[.04,.04,.2,.36],[.42,.04,.18,.14],[.74,.06,.22,.12],[.04,.88,.4,.1],[.5,.44,.22,.28],[.78,.8,.18,.16]].forEach(([a,b,c,d])=>{x.beginPath();x.roundRect(a*W,b*H,c*W,d*H,10);x.fill();});
+  // streets
+  x.strokeStyle='#E6D8C6';x.lineCap='round';x.lineJoin='round';
+  x.lineWidth=46;x.beginPath();x.moveTo(-20,H*.82);x.bezierCurveTo(W*.3,H*.7,W*.6,H*.82,W+20,H*.6);x.stroke();
+  x.lineWidth=30;x.beginPath();x.moveTo(W*.36,H*.56);x.lineTo(W*.3,H*.04);x.stroke();
+  x.beginPath();x.moveTo(W*.3,H*.22);x.lineTo(W*.95,H*.28);x.stroke();
+  x.beginPath();x.moveTo(W*.64,H*.3);x.lineTo(W*.86,H*.66);x.stroke();
+  x.fillStyle=C.soft;x.font='400 22px '+HAND;x.fillText('老街大路',W*.08,H*.93);x.fillText('廟口',W*.88,H*.22);x.fillText('小巷',W*.37,H*.12);
+  // route
+  x.strokeStyle=C.sea;x.lineWidth=6;x.setLineDash([14,12]);x.beginPath();
+  STOPS.forEach((s,i)=>{const px=s.xy[0]*W,py=s.xy[1]*H;i?x.lineTo(px,py):x.moveTo(px,py);});x.stroke();x.setLineDash([]);
+  // done part solid
+  const n=S.done.length;if(n>1){x.strokeStyle=C.sea;x.lineWidth=8;x.beginPath();STOPS.slice(0,n).forEach((s,i)=>{const px=s.xy[0]*W,py=s.xy[1]*H;i?x.lineTo(px,py):x.moveTo(px,py);});x.stroke();}
+  // compass
+  x.save();x.translate(W*.9,H*.1);x.strokeStyle=C.ink;x.lineWidth=3;x.beginPath();x.moveTo(0,-26);x.lineTo(9,8);x.lineTo(0,2);x.lineTo(-9,8);x.closePath();x.stroke();x.fillStyle=C.ink;x.font='700 20px '+HAND;x.textAlign='center';x.fillText('北',0,34);x.restore();
+}
+function renderMap(){
+  drawMap();
+  const wrap=$('#mapwrap');wrap.querySelectorAll('.pin').forEach(p=>p.remove());
+  const ni=nextIdx();
+  STOPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pin'+(S.done.includes(s.id)?' done':'')+(i===ni?' now':'');
+    b.textContent=i+1;b.style.left=s.xy[0]*100+'%';b.style.top=`calc(${s.xy[1]} * (100% - 37px))`;b.setAttribute('aria-label',`第 ${i+1} 站 ${s.name}`);
+    b.onclick=()=>openStop(i);wrap.append(b);});
+  $('#mapHint').textContent=ni<0?'5 站都走完了，領取你的完走證書吧！':`下一站：第 ${ni+1} 站「${STOPS[ni].name}」，點地圖上的站點看解說。`;
+  const box=$('#stops');box.textContent='';
+  STOPS.forEach((s,i)=>{const ok=S.done.includes(s.id);const r=document.createElement('button');r.type='button';r.className='stoprow'+(ok||i===ni?'':' locked');
+    r.innerHTML=`<img src="${STK[s.id].url}" alt=""><span><b>${i+1}. ${s.name}</b><small>${ok?'已打卡':(i===ni?'下一站':'還沒到')}</small></span><em class="${ok?'ok':''}">${ok?'✓ 打卡':'STOP '+(i+1)}</em>`;
+    r.onclick=()=>openStop(i);box.append(r);});
+  $('#toCert').hidden=ni>=0;
+}
+function openStop(i){cur=i;show('stop');}
+
+/* ---------- stop ---------- */
+function drawCompare(s){
+  const now=$('#cNow'),old=$('#cOld'),W=800,H=600;
+  const x=now.getContext('2d');SCENE.street.draw(x,W,H,0,true,C);
+  x.drawImage(STK[s.id].cv,W/2-150,H*.36,300,300);
+  const o=old.getContext('2d');o.filter='grayscale(1) sepia(.75) contrast(.85) brightness(1.05)';o.drawImage(now,0,0);o.filter='none';
+  o.fillStyle='rgba(60,40,20,.08)';for(let i=0;i<5000;i++)o.fillRect(Math.random()*W,Math.random()*H,2,2);
+  o.strokeStyle='rgba(255,250,235,.35)';o.lineWidth=1.5;for(let i=0;i<9;i++){const px=Math.random()*W;o.beginPath();o.moveTo(px,0);o.lineTo(px+Math.random()*20-10,H);o.stroke();}
+  const g=o.createRadialGradient(W/2,H/2,H*.3,W/2,H/2,H*.75);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(50,30,10,.45)');o.fillStyle=g;o.fillRect(0,0,W,H);
+}
+function renderStop(){
+  const s=STOPS[cur],ok=S.done.includes(s.id),ni=nextIdx();
+  $('#dots').innerHTML=STOPS.map((t,i)=>`<i class="${S.done.includes(t.id)?'done':(i===cur?'now':'')}"></i>`).join('');
+  $('#stopNo').textContent=`STOP ${cur+1} / ${STOPS.length}`;$('#stopName').textContent=s.name;
+  drawCompare(s);$('#cut').value=50;$('#compare').style.setProperty('--cut','50%');
+  $('#thenCap').textContent=s.then+'。正式版放入地方提供的老照片。';
+  $('#storyText').innerHTML=s.story.map(p=>`<p></p>`).join('');[...$('#storyText').children].forEach((p,i)=>p.textContent=s.story[i]);
+  $('#codeWhere').textContent='暗號在「'+s.where+'」';$('#codeDemo').textContent='示範暗號：'+s.code;
+  $('#code').value='';$('#codeErr').hidden=true;
+  $('#checkBox').hidden=ok;$('#stamped').hidden=!ok;$('#stampImg').src=STK[s.id].url;$('#stampTxt').textContent=`已收集 ${S.done.length} / ${STOPS.length} 站`;
+  $('#nextBox').hidden=!ok;$('#nextTxt').textContent=s.next||'5 站都走完了！回到路線地圖領取完走證書。';
+  $('#speak').textContent='▶ 播放語音導覽';
+}
+$('#cut').addEventListener('input',e=>$('#compare').style.setProperty('--cut',e.target.value+'%'));
+$('#checkForm').addEventListener('submit',e=>{e.preventDefault();const s=STOPS[cur];
+  if($('#code').value.trim()!==s.code){$('#codeErr').hidden=false;return}
+  if(!S.done.includes(s.id)){S.done.push(s.id);S.done.sort((a,b)=>STOPS.findIndex(t=>t.id===a)-STOPS.findIndex(t=>t.id===b));save();}
+  toast('打卡成功：'+s.name);renderStop();$('#stamped').scrollIntoView({behavior:'smooth',block:'center'});});
+
+/* ---------- voice guide (Web Speech API) ---------- */
+const canSpeak='speechSynthesis' in window;let speaking=false;
+if(!canSpeak){$('#speak').disabled=true;$('#voiceNote').textContent='這支手機的瀏覽器不支援語音朗讀';}
+function stopVoice(){if(canSpeak){speechSynthesis.cancel();}speaking=false;const b=$('#speak');if(b)b.textContent='▶ 播放語音導覽';}
+$('#speak').onclick=()=>{
+  if(!canSpeak)return;if(speaking){stopVoice();return}
+  const s=STOPS[cur];const u=new SpeechSynthesisUtterance(`第${cur+1}站，${s.name}。`+s.story.join(''));
+  u.lang='zh-TW';u.rate=.95;const v=speechSynthesis.getVoices().find(v=>/zh[-_]TW/i.test(v.lang));if(v)u.voice=v;
+  u.onend=()=>stopVoice();speechSynthesis.cancel();speechSynthesis.speak(u);speaking=true;$('#speak').textContent='■ 停止語音';
+};
+
+/* ---------- certificate ---------- */
+let certUrl='';
+async function makeCert(){
+  const name=($('#nm').value.trim()||'一位旅人').slice(0,10);S.name=name;save();
+  const W=1080,H=1920,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  try{await document.fonts.load('700 80px "LXGW WenKai TC"','老街散步完走證書'+name+STOPS.map(s=>s.name).join(''));}catch(e){}
+  paperGround(x,W,H,C);
+  x.strokeStyle=C.sea;x.lineWidth=10;x.strokeRect(50,50,W-100,H-100);x.lineWidth=3;x.strokeRect(70,70,W-140,H-140);
+  x.textAlign='center';x.fillStyle=C.roe;x.font='500 30px "IBM Plex Mono",monospace';x.fillText('OLD STREET WALKING TOUR',W/2,190);
+  x.fillStyle=C.ink;x.font='700 110px '+HAND;x.fillText('完走證書',W/2,330);
+  x.font='400 44px '+HAND;x.fillStyle=C.soft;x.fillText('茲證明',W/2,450);
+  x.fillStyle=C.ink;x.font='700 96px '+HAND;x.fillText(name,W/2,580);x.fillRect(W/2-260,610,520,4);
+  x.font='400 42px '+HAND;x.fillStyle=C.soft;['走完老街散步導覽全程 5 站','約 1.2 公里，收集了每一站的故事'].forEach((t,i)=>x.fillText(t,W/2,700+i*64));
+  // street scene band
+  x.save();x.beginPath();x.roundRect(130,820,W-260,520,16);x.clip();x.translate(130,820);SCENE.street.draw(x,W-260,520,0,false,C);x.restore();
+  // stamps
+  STOPS.forEach((s,i)=>{const cx=180+i*180,cy=1460;x.save();x.translate(cx,cy);x.rotate((i%2?1:-1)*.12);
+    x.strokeStyle=C.roe;x.lineWidth=5;x.beginPath();x.arc(0,0,78,0,7);x.stroke();x.drawImage(STK[s.id].cv,-62,-70,124,124);
+    x.fillStyle=C.roe;x.font='700 26px '+HAND;x.fillText(s.name,0,118);x.restore();});
+  x.fillStyle=C.ink;x.font='500 34px "IBM Plex Mono",monospace';x.fillText(todayStr(),W/2,1680);
+  x.fillStyle=C.soft;x.font='400 30px '+HAND;x.fillText('紅磚老街走讀 · 示範模板',W/2,1770);
+  certUrl=c.toDataURL('image/jpeg',.9);$('#out').src=certUrl;$('#out').hidden=false;$('#certHint').hidden=false;$('#save').hidden=false;
+  $('#out').scrollIntoView({behavior:'smooth',block:'start'});
+}
+$('#makeCert').onclick=makeCert;
+$('#save').onclick=()=>{if(certUrl){downloadURL(certUrl,'老街散步完走證書.jpg');toast('已下載，iPhone 請改用長按圖片儲存');}};
+
+/* ---------- boot ---------- */
+(function cover(){const x=$('#coverArt').getContext('2d');SCENE.street.draw(x,800,600,0,false,C);SCENE.street.cover(x,C,{lantern:STK.lantern.cv});})();
+$('#nm').value=S.name||'';
+$('#go').onclick=()=>show('map');$('#back').onclick=()=>show('map');$('#again').onclick=()=>show('map');
+$('#toCert').onclick=()=>show('cert');
+document.querySelectorAll('.steps span').forEach(sp=>{sp.style.cursor='pointer';sp.onclick=()=>{if(current==='cover')return;const t=sp.dataset.s;if(t==='stop')openStop(Math.max(0,nextIdx()));else if(t==='cert'&&nextIdx()>=0)toast('走完 5 站才能領證書喔');else show(t);}});
+show('cover');
+})();
+</script>
+</body></html>

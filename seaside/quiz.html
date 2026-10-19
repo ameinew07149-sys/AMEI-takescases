@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#EDEBDC">
+<title>稻田小學堂｜教學問答示範</title>
+<meta name="description" content="教學問答闖關的手機互動示範：定點關卡牌、限時作答、即時解說、計分排行與成績單。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+/* Layout: station quiz — stations → code → timed question → explanation → result card. */
+.who{display:grid;gap:6px;margin-top:12px}
+.who input{border:0;border-bottom:1.5px dashed var(--line);background:transparent;font-size:20px;padding:4px 2px;font-family:var(--hand)}
+.score{display:flex;justify-content:space-between;align-items:center;background:var(--sheet);border-radius:10px;padding:10px 14px;box-shadow:0 1px 0 var(--line)}
+.score b{font-family:var(--mono);font-size:26px;color:var(--sea-deep)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.st{background:var(--sheet);border-radius:10px;padding:12px;display:grid;justify-items:center;gap:4px;box-shadow:0 1px 0 var(--line);border:2px solid transparent;cursor:pointer;font:inherit;color:inherit}
+.st img{width:78px}
+.st b{font-size:18px}
+.st small{font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
+.st.ok{border-color:var(--sea)}.st.ng{border-color:var(--roe)}
+.st.ok small{color:var(--sea)}.st.ng small{color:var(--roe)}
+.st:last-child:nth-child(odd){grid-column:1/-1}
+.qhead{display:flex;align-items:center;gap:12px}
+.qhead img{width:70px}
+.timer{height:8px;border-radius:5px;background:var(--line);overflow:hidden}
+.timer i{display:block;height:100%;background:var(--sun);width:100%;transition:width .2s linear}
+.q{font-size:22px;line-height:1.5;font-weight:700}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;width:100%;border:2px solid var(--line);background:var(--sheet);border-radius:12px;padding:12px 14px;font-size:18px;cursor:pointer;color:var(--ink)}
+.opt i{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-style:normal;font-family:var(--mono);font-size:15px;color:#fff}
+.opt:nth-child(1) i{background:#C9563C}.opt:nth-child(2) i{background:#3D7FA8}.opt:nth-child(3) i{background:#D9A13E}.opt:nth-child(4) i{background:#5B7F3A}
+.opt.right{border-color:var(--sea);background:rgba(91,127,58,.14)}
+.opt.wrong{border-color:var(--roe);background:rgba(181,86,47,.12)}
+.opt:disabled{cursor:default}
+.fb{border-radius:12px;padding:14px;display:grid;gap:6px}
+.fb.ok{background:rgba(91,127,58,.14)}.fb.ng{background:rgba(181,86,47,.12)}
+.fb b{font-size:20px}
+.fb .pt{font-family:var(--mono);font-size:22px;color:var(--sea-deep)}
+.gate{background:var(--sheet);border-radius:10px;padding:14px;display:grid;gap:8px;border:2px dashed var(--line)}
+.gate form{display:flex;gap:8px}
+.gate input{flex:1;min-width:0;width:0;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;padding:8px 10px;font-size:16px}
+.gate button{border:0;background:var(--sea);color:var(--sheet);border-radius:10px;padding:8px 14px;font-weight:700;cursor:pointer}
+.big{text-align:center;display:grid;gap:4px;background:var(--sheet);border-radius:12px;padding:18px;box-shadow:0 1px 0 var(--line)}
+.big b{font-family:var(--mono);font-size:56px;color:var(--sea-deep);line-height:1.1}
+.big .badge{font-size:24px;font-weight:700;color:var(--roe)}
+.rank{display:grid;gap:6px}
+.rank div{display:grid;grid-template-columns:32px 1fr auto;gap:8px;align-items:center;background:var(--sheet);border-radius:10px;padding:8px 12px;font-size:17px}
+.rank div.me{outline:2px solid var(--sun)}
+.rank span:first-child{font-family:var(--mono);color:var(--ink-soft)}
+.rank span:last-child{font-family:var(--mono)}
+.teacher{font-size:14px;color:var(--ink-soft);background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:10px 12px}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">稻田小學堂</div>
+    <nav class="steps" aria-label="進度"><span data-s="map">關卡</span><span data-s="q">作答</span><span data-s="result">成績</span></nav>
+  </header>
+
+  <section class="screen" id="s-cover">
+    <div class="cover">
+      <div class="tape"></div>
+      <p class="stamp">Rice Field · Food Education Quiz</p>
+      <h1>稻田小學堂<br>食農闖關</h1>
+      <canvas class="cover-art" id="coverArt" width="800" height="600" aria-label="稻田與白鷺鷥"></canvas>
+      <p>沿著田邊走，找到 5 塊關卡牌，回答問題、聽解說，看看你是不是稻田博士。</p>
+      <ol class="small">
+        <li>在關卡牌找到暗號，打開這一關的題目</li>
+        <li>20 秒內作答，越快答對分數越高</li>
+        <li>每題都有解說，闖完 5 關拿成績單</li>
+      </ol>
+      <div class="who"><label class="small soft" for="nm">隊名或名字</label><input id="nm" maxlength="10" placeholder="例如：第 2 組、小明"></div>
+    </div>
+    <button class="btn" id="go">開始闖關</button>
+  </section>
+
+  <section class="screen" id="s-map" hidden>
+    <div><h2>選一關開始</h2><p class="soft small">每塊關卡牌上有一個暗號，輸入後才能作答，每關只能答一次。</p></div>
+    <div class="score"><span id="who"></span><span>總分 <b id="total">0</b></span></div>
+    <div class="grid" id="grid"></div>
+    <button class="btn" id="toResult" hidden>看成績單</button>
+  </section>
+
+  <section class="screen" id="s-q" hidden>
+    <div class="qhead"><img id="qImg" alt=""><div><p class="stamp" id="qNo"></p><h2 id="qName"></h2></div></div>
+    <div class="gate" id="gate">
+      <p><b>關卡暗號</b>　<span class="small soft" id="gateWhere"></span></p>
+      <form id="gateForm"><input id="gateCode" placeholder="輸入關卡牌上的暗號" aria-label="關卡暗號" autocomplete="off"><button>開始</button></form>
+      <p class="err" id="gateErr" hidden>暗號不對，再看一次關卡牌</p>
+      <p class="demo" id="gateDemo"></p>
+    </div>
+    <div id="qBox" hidden>
+      <div class="timer" aria-hidden="true"><i id="bar"></i></div>
+      <p class="small soft" id="sec" style="text-align:right;margin-top:4px"></p>
+      <p class="q" id="qText"></p>
+      <div class="opts" id="opts" style="margin-top:12px"></div>
+    </div>
+    <div class="fb" id="fb" hidden><b id="fbT"></b><span class="pt" id="fbP"></span><p id="fbE"></p></div>
+    <button class="btn" id="back" hidden>回到關卡</button>
+  </section>
+
+  <section class="screen final" id="s-result" hidden>
+    <div><h2>成績單</h2><p class="soft small">把成績單存起來，回到教室跟大家比一比。</p></div>
+    <div class="big"><span class="small soft" id="rWho"></span><b id="rScore">0</b><span id="rCount"></span><span class="badge" id="rBadge"></span></div>
+    <div><p class="small soft" style="margin-bottom:6px">今天的排行（示意）</p><div class="rank" id="rank"></div></div>
+    <p class="teacher">正式版的老師後台可以看到每一題的全班答對率，帶隊老師馬上知道哪個觀念需要再講一次。</p>
+    <img id="out" alt="成績單圖卡">
+    <p class="hint">長按圖片，選「儲存影像」即可存到手機。</p>
+    <button class="btn" id="save">下載成績單</button>
+    <button class="btn ghost" id="again">回到關卡</button>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="kit.js"></script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const C=PAL.farm;applyPal(C);
+/* 題目為示範內容，正式活動依課程目標與在地農友、老師確認 */
+const QS=[
+ {id:'rice',name:'稻穗',code:'金黃',where:'第 1 關關卡牌（田埂入口）',q:'稻子從插秧到收割，大約需要多久？',o:['約 1 個月','約 4 個月','約 1 年','約 3 年'],a:1,
+  e:'一期稻作從插秧到收割大約 110 到 130 天，也就是 4 個月左右。台灣中南部一年可以種兩期稻。'},
+ {id:'egret',name:'白鷺鷥',code:'跟班',where:'第 2 關關卡牌（水圳旁）',q:'白鷺鷥常跟在耕耘機後面，是為了什麼？',o:['跟農夫玩','吃被翻出來的蟲子','躲太陽','找地方睡覺'],a:1,
+  e:'翻土的時候，藏在土裡的蟲子會被翻出來，白鷺鷥就跟在後面撿食，所以被叫做「農夫的跟班」。'},
+ {id:'hat',name:'斗笠',code:'遮日',where:'第 3 關關卡牌（工具間）',q:'傳統斗笠主要是用什麼材料做的？',o:['塑膠','竹子和葉片','鐵絲','棉布'],a:1,
+  e:'斗笠用竹篾編出骨架，中間夾葉片防水，輕巧、透氣，又能遮陽擋雨。'},
+ {id:'veg',name:'當季菜籃',code:'當季',where:'第 4 關關卡牌（菜園）',q:'買在地、當季的蔬菜，可以減少什麼？',o:['食物里程','營養','口感','價格標籤'],a:0,
+  e:'食物從產地運到餐桌的距離叫「食物里程」。在地當季的蔬菜運送距離短，能減少運輸的耗能和碳排放。'},
+ {id:'firefly',name:'螢火蟲',code:'夜光',where:'第 5 關關卡牌（生態池）',q:'螢火蟲發光，最主要是為了什麼？',o:['照亮回家的路','求偶和溝通','取暖','嚇跑青蛙'],a:1,
+  e:'螢火蟲用閃光的節奏和同伴溝通、尋找伴侶。牠們只在水質乾淨、少用農藥的環境出現，是環境好壞的指標。'}
+];
+const TIME=20,KEY='quiz-farm-v1';
+let S={name:'',ans:{}}; // ans[id]={pick,ok,pt}
+try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v)S=Object.assign(S,v)}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const STK={};QS.forEach(q=>{const c=makeSticker(q.id,C);STK[q.id]={cv:c,url:c.toDataURL()}});
+let cur=0,current='cover',tick=null,t0=0;
+const total=()=>Object.values(S.ans).reduce((a,b)=>a+b.pt,0);
+const correct=()=>Object.values(S.ans).filter(a=>a.ok).length;
+const badge=n=>n>=5?'稻田博士':n>=4?'小農達人':n>=2?'田邊小幫手':'稻草人見習生';
+
+function show(n){current=n;['cover','map','q','result'].forEach(s=>$('#s-'+s).hidden=s!==n);
+  document.querySelectorAll('.steps span').forEach(sp=>sp.classList.toggle('on',sp.dataset.s===n));
+  if(n!=='q')clearInterval(tick);if(n==='map')renderMap();if(n==='result')renderResult();window.scrollTo(0,0);}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>el.classList.remove('on'),2200);}
+
+function renderMap(){
+  $('#who').textContent=S.name||'闖關者';$('#total').textContent=total();
+  const g=$('#grid');g.textContent='';
+  QS.forEach((q,i)=>{const a=S.ans[q.id];const b=document.createElement('button');b.type='button';b.className='st'+(a?(a.ok?' ok':' ng'):'');
+    b.innerHTML=`<img src="${STK[q.id].url}" alt=""><b>第 ${i+1} 關</b><small>${a?(a.ok?'答對 +'+a.pt:'答錯'):q.name}</small>`;
+    b.onclick=()=>{cur=i;openQ();};g.append(b);});
+  $('#toResult').hidden=Object.keys(S.ans).length<QS.length;
+}
+function openQ(){
+  const q=QS[cur],a=S.ans[q.id];show('q');
+  $('#qImg').src=STK[q.id].url;$('#qNo').textContent=`STAGE ${cur+1} / ${QS.length}`;$('#qName').textContent=q.name;
+  $('#gateWhere').textContent='暗號在「'+q.where+'」';$('#gateDemo').textContent='示範暗號：'+q.code;$('#gateCode').value='';$('#gateErr').hidden=true;
+  $('#gate').hidden=!!a;$('#qBox').hidden=!a;$('#fb').hidden=!a;$('#back').hidden=!a;
+  if(a){renderQ(true);feedback(a);}
+}
+$('#gateForm').addEventListener('submit',e=>{e.preventDefault();const q=QS[cur];
+  if($('#gateCode').value.trim()!==q.code){$('#gateErr').hidden=false;return}
+  $('#gate').hidden=true;$('#qBox').hidden=false;renderQ(false);startTimer();});
+function renderQ(locked){
+  const q=QS[cur],a=S.ans[q.id];$('#qText').textContent=q.q;
+  const box=$('#opts');box.textContent='';
+  q.o.forEach((t,i)=>{const b=document.createElement('button');b.type='button';b.className='opt';b.innerHTML=`<i>${'ABCD'[i]}</i><span></span>`;b.querySelector('span').textContent=t;
+    if(locked){b.disabled=true;if(i===q.a)b.classList.add('right');else if(a&&i===a.pick)b.classList.add('wrong');}
+    b.onclick=()=>answer(i);box.append(b);});
+  if(locked){$('#bar').style.width='0%';$('#sec').textContent='';}
+}
+function startTimer(){t0=performance.now();clearInterval(tick);
+  tick=setInterval(()=>{const left=Math.max(0,TIME-(performance.now()-t0)/1000);$('#bar').style.width=left/TIME*100+'%';$('#sec').textContent=`剩 ${Math.ceil(left)} 秒`;if(left<=0)answer(-1);},200);}
+function answer(i){
+  const q=QS[cur];if(S.ans[q.id])return;clearInterval(tick);
+  const left=Math.max(0,TIME-(performance.now()-t0)/1000),ok=i===q.a,pt=ok?100+Math.round(left*5):0;
+  S.ans[q.id]={pick:i,ok,pt};save();renderQ(true);feedback(S.ans[q.id]);$('#back').hidden=false;
+  setTimeout(()=>$('#fb').scrollIntoView({behavior:'smooth',block:'center'}),100);
+}
+function feedback(a){const q=QS[cur];$('#fb').hidden=false;$('#fb').className='fb '+(a.ok?'ok':'ng');
+  $('#fbT').textContent=a.ok?'答對了！':(a.pick<0?'時間到！':'差一點！答案是 '+'ABCD'[q.a]);$('#fbP').textContent=a.ok?'+'+a.pt+' 分':'+0 分';$('#fbE').textContent=q.e;}
+
+let outUrl='';
+async function renderResult(){
+  const n=correct(),sc=total(),name=S.name||'闖關者';
+  $('#rWho').textContent=name;$('#rScore').textContent=sc;$('#rCount').textContent=`答對 ${n} / ${QS.length} 題`;$('#rBadge').textContent='稱號：'+badge(n);
+  const others=[['第 3 組',880],['小芸',790],['阿哲',705],['第 1 組',620],['Ruby',540],['第 5 組',430]];
+  const list=[...others.map(([a,b])=>({a,b})),{a:name,b:sc,me:1}].sort((x,y)=>y.b-x.b).slice(0,6);
+  if(!list.some(r=>r.me))list[5]={a:name,b:sc,me:1};
+  $('#rank').innerHTML='';list.forEach((r,i)=>{const d=document.createElement('div');if(r.me)d.className='me';d.innerHTML=`<span>${i+1}</span><span></span><span>${r.b}</span>`;d.children[1].textContent=r.a+(r.me?'（你）':'');$('#rank').append(d);});
+  const W=1080,H=1920,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  try{await document.fonts.load('700 80px "LXGW WenKai TC"','稻田小學堂成績單'+name+badge(n)+QS.map(q=>q.name).join(''));}catch(e){}
+  paperGround(x,W,H,C);
+  x.save();x.beginPath();x.rect(0,0,W,620);x.clip();SCENE.farm.draw(x,W,620,0,false,C);x.restore();
+  [[160,150,2,1,1],[320,110,1.5,1,3]].forEach(f=>bird(x,f[0],f[1],f[2],f[3],'#FDFDF8',f[4]));
+  x.textAlign='center';x.fillStyle=C.ink;x.font='700 104px '+HAND;x.fillText('稻田小學堂',W/2,780);
+  x.fillStyle=C.roe;x.font='500 30px "IBM Plex Mono",monospace';x.fillText('FOOD EDUCATION QUIZ · '+todayStr(),W/2,840);
+  x.fillStyle=C.soft;x.font='400 44px '+HAND;x.fillText(name,W/2,940);
+  x.fillStyle=C.deep;x.font='700 200px "IBM Plex Mono",monospace';x.fillText(sc,W/2,1140);
+  x.fillStyle=C.soft;x.font='400 40px '+HAND;x.fillText(`分　·　答對 ${n} / ${QS.length} 題`,W/2,1210);
+  x.fillStyle=C.sea;x.beginPath();x.roundRect(W/2-260,1260,520,110,55);x.fill();x.fillStyle='#fff';x.font='700 56px '+HAND;x.fillText(badge(n),W/2,1335);
+  QS.forEach((q,i)=>{const a=S.ans[q.id],cx=160+i*190,cy=1530;x.globalAlpha=a&&a.ok?1:.35;x.drawImage(STK[q.id].cv,cx-75,cy-75,150,150);x.globalAlpha=1;
+    x.fillStyle=a&&a.ok?C.sea:C.roe;x.beginPath();x.arc(cx+52,cy+52,26,0,7);x.fill();x.fillStyle='#fff';x.font='700 32px sans-serif';x.fillText(a&&a.ok?'✓':'✗',cx+52,cy+63);
+    x.fillStyle=C.ink;x.font='400 28px '+HAND;x.fillText(q.name,cx,cy+120);});
+  x.fillStyle=C.soft;x.font='400 30px '+HAND;x.fillText('田中央食農教育 · 示範模板',W/2,1820);
+  outUrl=c.toDataURL('image/jpeg',.9);$('#out').src=outUrl;
+}
+$('#save').onclick=()=>{if(outUrl){downloadURL(outUrl,'稻田小學堂成績單.jpg');toast('已下載，iPhone 請改用長按圖片儲存');}};
+
+(function cover(){const x=$('#coverArt').getContext('2d');SCENE.farm.draw(x,800,600,0,false,C);SCENE.farm.cover(x,C,{egret:STK.egret.cv});})();
+$('#nm').value=S.name||'';$('#nm').addEventListener('input',e=>{S.name=e.target.value.trim();save();});
+$('#go').onclick=()=>show('map');$('#back').onclick=()=>show('map');$('#again').onclick=()=>show('map');$('#toResult').onclick=()=>show('result');
+document.querySelectorAll('.steps span').forEach(sp=>{sp.style.cursor='pointer';sp.onclick=()=>{if(current==='cover')return;const t=sp.dataset.s;
+  if(t==='q'){const i=QS.findIndex(q=>!S.ans[q.id]);cur=i<0?0:i;openQ();}else if(t==='result'&&Object.keys(S.ans).length<QS.length)toast('闖完 5 關才有成績單喔');else show(t);}});
+show('cover');
+})();
+</script>
+</body></html>

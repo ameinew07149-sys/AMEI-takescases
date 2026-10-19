@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#E7E5EF">
+<title>社區燈節 填問卷抽好禮｜問卷抽獎示範</title>
+<meta name="description" content="活動滿意度問卷與抽獎的手機互動示範：一題一頁的問卷、填完才能抽獎、燈籠輪盤與兌獎碼。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+/* Layout: survey (one question per step) → lucky wheel → prize code. */
+.prizes{display:grid;gap:8px;margin-top:12px}
+.prizes div{display:flex;justify-content:space-between;gap:10px;background:var(--paper);border-radius:10px;padding:8px 12px;font-size:16px}
+.prizes b{color:var(--roe)}
+.prog{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+.prog .tr{flex:1;height:8px;border-radius:5px;background:var(--line);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--sea);transition:width .3s}
+.qcard{background:var(--sheet);border-radius:10px;padding:18px;box-shadow:0 1px 0 var(--line);display:grid;gap:14px;min-height:300px;align-content:start}
+.qcard h2{font-size:24px}
+.qcard .hint2{font-size:14px;color:var(--ink-soft);margin-top:-8px}
+.stars{display:flex;justify-content:space-between;gap:6px}
+.stars button{flex:1;aspect-ratio:1;border:2px solid var(--line);background:var(--paper);border-radius:12px;font-size:30px;cursor:pointer;color:var(--line);padding:0}
+.stars button.on{color:var(--sun);border-color:var(--sun);background:rgba(240,180,60,.12)}
+.starlab{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft)}
+.choices{display:grid;gap:8px}
+.choice{display:flex;align-items:center;gap:10px;border:2px solid var(--line);background:var(--paper);border-radius:12px;padding:12px 14px;font-size:18px;cursor:pointer;text-align:left;width:100%;color:var(--ink)}
+.choice::before{content:"";width:20px;height:20px;border-radius:50%;border:2px solid var(--ink-soft);flex:none}
+.choice.multi::before{border-radius:6px}
+.choice.on{border-color:var(--sea);background:rgba(62,74,140,.1)}
+.choice.on::before{background:var(--sea);border-color:var(--sea);box-shadow:inset 0 0 0 3px var(--paper)}
+.qcard textarea{width:100%;min-height:120px;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;padding:10px;font-family:var(--hand);font-size:18px;resize:vertical}
+.wheelwrap{position:relative;width:min(340px,100%);margin:0 auto}
+.wheelwrap canvas{display:block;width:100%;aspect-ratio:1}
+.wheelwrap .ptr{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:30px solid var(--roe);filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
+.ticket{background:var(--sheet);border-radius:12px;padding:20px 18px;text-align:center;display:grid;gap:6px;border:2px dashed var(--sun);position:relative}
+.ticket .pz{font-size:30px;font-weight:700;color:var(--roe)}
+.ticket .code{font-family:var(--mono);font-size:30px;letter-spacing:.14em;background:var(--paper);border-radius:10px;padding:6px 0;margin:6px 0}
+.ticket small{font-size:13px;color:var(--ink-soft)}
+.thanks{font-size:15px;color:var(--ink-soft);background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:10px 12px}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">社區燈節</div>
+    <nav class="steps" aria-label="進度"><span data-s="survey">問卷</span><span data-s="draw">抽獎</span><span data-s="prize">兌獎</span></nav>
+  </header>
+
+  <section class="screen" id="s-cover">
+    <div class="cover">
+      <div class="tape"></div>
+      <p class="stamp">Community · Lantern Festival</p>
+      <h1>填問卷<br>抽好禮</h1>
+      <canvas class="cover-art" id="coverArt" width="800" height="600" aria-label="燈節夜空與天燈"></canvas>
+      <p>花 1 分鐘告訴我們今晚的感想，就能轉一次燈籠輪盤，人人有獎。</p>
+      <div class="prizes">
+        <div><span>頭獎</span><b>在地伴手禮禮盒</b></div>
+        <div><span>二獎</span><b>手作蓮花燈</b></div>
+        <div><span>三獎</span><b>市集 100 元抵用券</b></div>
+        <div><span>參加獎</span><b>燈節紀念徽章</b></div>
+      </div>
+    </div>
+    <button class="btn" id="go">開始填問卷</button>
+  </section>
+
+  <section class="screen" id="s-survey" hidden>
+    <div class="prog"><span id="pn">1 / 6</span><span class="tr"><i id="pbar"></i></span></div>
+    <div class="qcard" id="qcard"></div>
+    <p class="err" id="qErr" hidden></p>
+    <div class="row"><button class="btn ghost" id="prev">上一題</button><button class="btn" id="next">下一題</button></div>
+  </section>
+
+  <section class="screen" id="s-draw" hidden>
+    <div><h2>轉動燈籠輪盤</h2><p class="soft small">謝謝你填完問卷！每支手機可以抽一次。</p></div>
+    <div class="wheelwrap"><span class="ptr"></span><canvas id="wheel" width="680" height="680" aria-label="抽獎輪盤"></canvas></div>
+    <button class="btn sea" id="spin">轉動輪盤</button>
+  </section>
+
+  <section class="screen" id="s-prize" hidden>
+    <div><h2>恭喜你！</h2><p class="soft small">請到服務台出示這個畫面兌換獎品。</p></div>
+    <div class="ticket"><small>你抽中了</small><span class="pz" id="pz"></span><span class="code" id="pcode"></span><small id="ptime"></small><small>兌換後由工作人員按下「已兌換」，同一組號碼不能重複使用</small></div>
+    <p class="thanks">正式版後台可以即時看到問卷統計、中獎名單與剩餘獎品數量，結案時直接匯出滿意度報表。</p>
+    <button class="link" id="reset" type="button">示範：清除紀錄，重新填寫</button>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="kit.js"></script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const C=PAL.lantern;applyPal(C);
+const QS=[
+ {k:'sat',type:'star',q:'今晚的燈節，整體來說你滿意嗎？',lab:['不滿意','非常滿意']},
+ {k:'fav',type:'multi',q:'今晚你最喜歡哪些活動？',hint:'可以複選',o:['鑼鼓表演','童玩 DIY','美食攤位','花燈展示','煙火']},
+ {k:'from',type:'one',q:'你是從哪裡知道這場活動的？',o:['社區公告欄','LINE 群組','Facebook','親友推薦','剛好路過']},
+ {k:'age',type:'one',q:'你的年齡層是？',o:['12 歲以下','13–24 歲','25–44 歲','45–64 歲','65 歲以上']},
+ {k:'again',type:'one',q:'明年還想再來嗎？',o:['一定會','可能會','還不一定']},
+ {k:'say',type:'text',q:'有什麼想對主辦單位說的？',hint:'選填，也可以直接按完成'}
+];
+const PRIZES=[{n:'頭獎',p:'在地伴手禮禮盒',w:3,c:'#C2463A'},{n:'參加獎',p:'燈節紀念徽章',w:24,c:'#3E4A8C'},{n:'三獎',p:'市集 100 元抵用券',w:20,c:'#F0B43C'},{n:'參加獎',p:'燈節紀念徽章',w:23,c:'#5A63A8'},{n:'二獎',p:'手作蓮花燈',w:7,c:'#E8574A'},{n:'參加獎',p:'燈節紀念徽章',w:23,c:'#2E3778'}];
+const KEY='survey-lantern-v1';
+let S={a:{},step:0,prize:null};
+try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v)S=Object.assign(S,v)}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+let current='cover';
+function show(n){current=n;['cover','survey','draw','prize'].forEach(s=>$('#s-'+s).hidden=s!==n);
+  document.querySelectorAll('.steps span').forEach(sp=>sp.classList.toggle('on',sp.dataset.s===n));
+  if(n==='survey')renderQ();if(n==='draw')drawWheel(rot);if(n==='prize')renderPrize();window.scrollTo(0,0);}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>el.classList.remove('on'),2200);}
+
+/* ---------- survey ---------- */
+function renderQ(){
+  const q=QS[S.step],v=S.a[q.k];
+  $('#pn').textContent=`${S.step+1} / ${QS.length}`;$('#pbar').style.width=(S.step+1)/QS.length*100+'%';
+  $('#qErr').hidden=true;$('#prev').disabled=S.step===0;$('#next').textContent=S.step===QS.length-1?'完成，去抽獎':'下一題';
+  const box=$('#qcard');box.innerHTML='';
+  const h=document.createElement('h2');h.textContent=q.q;box.append(h);
+  if(q.hint){const p=document.createElement('p');p.className='hint2';p.textContent=q.hint;box.append(p);}
+  if(q.type==='star'){const w=document.createElement('div');w.className='stars';
+    for(let i=1;i<=5;i++){const b=document.createElement('button');b.type='button';b.textContent='★';b.setAttribute('aria-label',i+' 顆星');if(v>=i)b.classList.add('on');b.onclick=()=>{S.a[q.k]=i;save();renderQ();};w.append(b);}
+    const l=document.createElement('div');l.className='starlab';l.innerHTML=`<span>${q.lab[0]}</span><span>${q.lab[1]}</span>`;box.append(w,l);}
+  if(q.type==='one'||q.type==='multi'){const w=document.createElement('div');w.className='choices';
+    q.o.forEach(t=>{const b=document.createElement('button');b.type='button';b.className='choice'+(q.type==='multi'?' multi':'');b.textContent=t;
+      const on=q.type==='multi'?(v||[]).includes(t):v===t;if(on)b.classList.add('on');b.setAttribute('aria-pressed',on);
+      b.onclick=()=>{if(q.type==='multi'){const a=new Set(S.a[q.k]||[]);a.has(t)?a.delete(t):a.add(t);S.a[q.k]=[...a];}else S.a[q.k]=t;save();renderQ();};w.append(b);});box.append(w);}
+  if(q.type==='text'){const t=document.createElement('textarea');t.maxLength=200;t.placeholder='例如：希望明年有更多親子攤位！';t.value=v||'';t.setAttribute('aria-label',q.q);t.oninput=()=>{S.a[q.k]=t.value;save();};box.append(t);}
+}
+$('#prev').onclick=()=>{if(S.step>0){S.step--;save();renderQ();}};
+$('#next').onclick=()=>{
+  const q=QS[S.step],v=S.a[q.k];
+  const empty=q.type==='text'?false:q.type==='multi'?!(v&&v.length):!v;
+  if(empty){$('#qErr').hidden=false;$('#qErr').textContent='這題還沒回答喔';return}
+  if(S.step<QS.length-1){S.step++;save();renderQ();}else{save();show(S.prize?'prize':'draw');}
+};
+
+/* ---------- wheel ---------- */
+let rot=0,spinning=false;const SEG=PRIZES.length,ARC=Math.PI*2/SEG;
+function drawWheel(r){
+  const cv=$('#wheel'),x=cv.getContext('2d'),W=cv.width,R=W/2-14;x.clearRect(0,0,W,W);
+  x.save();x.translate(W/2,W/2);
+  x.fillStyle=C.deep;x.beginPath();x.arc(0,0,R+12,0,7);x.fill();
+  for(let i=0;i<24;i++){const a=i/24*Math.PI*2;x.fillStyle=i%2?'#FFE7A8':'#F0B43C';x.beginPath();x.arc(Math.cos(a)*(R+2),Math.sin(a)*(R+2),5,0,7);x.fill();}
+  x.rotate(r);
+  PRIZES.forEach((p,i)=>{const a0=-Math.PI/2+i*ARC-ARC/2;x.fillStyle=p.c;x.beginPath();x.moveTo(0,0);x.arc(0,0,R-10,a0,a0+ARC);x.closePath();x.fill();
+    x.strokeStyle='rgba(255,255,255,.5)';x.lineWidth=3;x.stroke();
+    x.save();x.rotate(i*ARC);x.fillStyle=p.c==='#F0B43C'?'#3a2a10':'#fff';x.textAlign='center';x.font='700 40px '+HAND;x.fillText(p.n,0,-R*.62);
+    x.font='400 24px '+HAND;x.fillText(p.p.length>7?p.p.slice(0,7)+'…':p.p,0,-R*.62+38);x.restore();});
+  x.fillStyle=C.sheet;x.beginPath();x.arc(0,0,58,0,7);x.fill();x.strokeStyle=C.deep;x.lineWidth=6;x.stroke();
+  x.rotate(-r);skyLantern(x,0,4,2.4,1,'#E8574A');
+  x.restore();
+}
+function pick(){const tot=PRIZES.reduce((a,b)=>a+b.w,0);let r=Math.random()*tot;for(let i=0;i<SEG;i++){r-=PRIZES[i].w;if(r<0)return i}return SEG-1;}
+$('#spin').onclick=()=>{
+  if(spinning)return;if(S.prize){show('prize');return}
+  spinning=true;$('#spin').disabled=true;const i=pick();
+  const target=Math.PI*2*6-i*ARC+(Math.random()-.5)*ARC*.6;const start=rot%(Math.PI*2),dur=matchMedia('(prefers-reduced-motion: reduce)').matches?10:4200,t0=performance.now();
+  const step=ts=>{const p=Math.min(1,(ts-t0)/dur),e=1-Math.pow(1-p,4);rot=start+(target-start)*e;drawWheel(rot);
+    if(p<1)requestAnimationFrame(step);else{spinning=false;$('#spin').disabled=false;
+      const code='LT-'+Array.from({length:4},()=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*32)]).join('');
+      S.prize={n:PRIZES[i].n,p:PRIZES[i].p,code,at:Date.now()};save();setTimeout(()=>show('prize'),600);}};
+  requestAnimationFrame(step);
+};
+function renderPrize(){if(!S.prize)return;$('#pz').textContent=S.prize.n+'｜'+S.prize.p;$('#pcode').textContent=S.prize.code;
+  const d=new Date(S.prize.at);$('#ptime').textContent=`抽獎時間 ${todayStr()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
+$('#reset').onclick=()=>{S={a:{},step:0,prize:null};save();rot=0;show('cover');toast('已清除示範紀錄');};
+
+(function cover(){const x=$('#coverArt').getContext('2d');SCENE.lantern.draw(x,800,600,0,false,C);SCENE.lantern.cover(x,C,{firework:makeSticker('firework',C)});})();
+$('#go').onclick=()=>show(S.prize?'prize':'survey');
+document.querySelectorAll('.steps span').forEach(sp=>{sp.style.cursor='pointer';sp.onclick=()=>{if(current==='cover')return;const t=sp.dataset.s;
+  const done=QS.every(q=>q.type==='text'||(q.type==='multi'?(S.a[q.k]||[]).length:S.a[q.k]));
+  if(t==='survey')show('survey');else if(!done)toast('先填完問卷才能抽獎喔');else if(t==='prize'&&!S.prize)show('draw');else show(t);}});
+show('cover');
+})();
+</script>
+</body></html>
