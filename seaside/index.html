@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#E8EDE9">
-<title>茄萣海邊剪貼簿｜市集・走讀互動示範｜AMEI</title>
-<meta name="description" content="以高雄海線市集為情境的手機互動示範：攤位暗號拾貼紙、照片剪貼簿、瓶中信，最後生成可分享的 9:16 圖卡。適用市集、走讀小旅行與社區節慶。">
+<title>市集・走讀互動剪貼簿｜四種活動模板｜AMEI</title>
+<meta name="description" content="市集、走讀小旅行與社區節慶的手機互動：攤位暗號拾貼紙、照片剪貼簿、瓶中信，生成可分享的 9:16 圖卡。海邊、稻田、老街、燈節四種模板，製作費 NT$8,000 起。">
 <link rel="canonical" href="https://ameinew07149-sys.github.io/AMEI-takescases/seaside/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="茄萣海邊剪貼簿｜市集・走讀互動示範">
+<meta property="og:title" content="市集・走讀互動剪貼簿｜AMEI">
 <meta property="og:description" content="邊逛市集邊做一本只屬於你的剪貼簿：拾海貼紙、照片剪貼、瓶中信。">
 <meta property="og:url" content="https://ameinew07149-sys.github.io/AMEI-takescases/seaside/">
-<meta property="og:image" content="https://ameinew07149-sys.github.io/AMEI-takescases/seaside/img/s5-final.webp">
+<meta property="og:image" content="https://ameinew07149-sys.github.io/AMEI-takescases/seaside/img/poster-h.webp">
 <meta property="og:locale" content="zh_TW">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -106,6 +106,75 @@ section.sec{padding:84px 0}
 .cta p{color:var(--soft);margin:12px auto 26px;max-width:32em}
 .cta .acts{justify-content:center}
 
+/* 首屏影片 */
+.hero .q{display:block;font-family:var(--sans);font-size:.42em;color:var(--soft);letter-spacing:.06em;margin-bottom:.35em}
+.hero h1 em{font-style:normal;color:var(--sea)}
+.vid{border-radius:18px;overflow:hidden;background:var(--sheet);box-shadow:0 0 0 1px var(--line),0 30px 60px -28px rgba(28,63,75,.6)}
+.vid video{display:block;width:100%;height:auto}
+.hero-grid.v2{grid-template-columns:.85fr 1.15fr}
+.tagline{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tagline span{font-size:.88rem;padding:.25em .9em;border-radius:99px;background:var(--sheet);border:1px solid var(--line);color:var(--soft)}
+@media (max-width:860px){.hero-grid.v2{grid-template-columns:1fr}.vid{max-width:420px;margin:0 auto}}
+
+/* 三端連動 */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.trio .t{background:var(--paper);border-radius:10px;padding:26px;box-shadow:0 1px 0 var(--line)}
+.trio .ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:var(--sheet);border:1.5px solid var(--line);margin-bottom:14px}
+.trio .ic svg{width:26px;height:26px;stroke:var(--sea);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.trio h3{font-size:1.35rem}
+.trio p{color:var(--soft);margin:8px 0 0;font-size:.97rem}
+.trio .tag{font-family:var(--mono);font-size:.72rem;color:var(--roe);letter-spacing:.12em;margin-left:6px}
+@media (max-width:820px){.trio{grid-template-columns:1fr}}
+
+/* 痛點→解法 */
+.feat{display:grid;grid-template-columns:1fr 1.3fr;gap:52px;align-items:center;margin-bottom:92px}
+.feat:last-child{margin-bottom:0}
+.feat:nth-child(even) .ftxt{order:2}
+.feat .no{font-family:var(--mono);font-size:.85rem;color:var(--roe);letter-spacing:.18em}
+.pain{display:flex;align-items:center;gap:10px;margin:14px 0 12px;flex-wrap:wrap}
+.pain .x{width:28px;height:28px;border-radius:50%;border:2px solid var(--roe);position:relative;flex:none}
+.pain .x::before,.pain .x::after{content:"";position:absolute;left:50%;top:50%;width:50%;height:2px;background:var(--roe);transform:translate(-50%,-50%) rotate(45deg)}
+.pain .x::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.pain .l{font-size:.78rem;font-weight:700;color:var(--roe);border:1.5px solid var(--roe);border-radius:6px;padding:0 .55em;letter-spacing:.15em}
+.pain s{color:var(--soft);font-weight:700;font-size:1.08rem;text-decoration-color:var(--roe);text-decoration-thickness:2px}
+.sol{display:inline-block;vertical-align:.3em;font-family:var(--sans);font-size:.42em;font-weight:700;letter-spacing:.16em;background:var(--sea);color:var(--sheet);border-radius:8px;padding:.15em .6em;margin-right:.45em}
+.feat h3{font-size:clamp(1.65rem,3vw,2.25rem)}
+.feat h3 em{font-style:normal;color:var(--sea)}
+.feat p{color:var(--soft);margin:14px 0 18px}
+.pts{display:flex;flex-wrap:wrap;gap:10px;list-style:none;padding:0;margin:0}
+.pts li{padding:.4em .95em;border-radius:10px;background:var(--sheet);border:1px solid var(--line);font-size:.95rem}
+.pts li b{color:var(--roe);margin-right:.45em}
+.fimg{border-radius:14px;overflow:hidden;background:var(--paper);box-shadow:0 0 0 1px var(--line),0 24px 50px -30px rgba(28,63,75,.55)}
+@media (max-width:900px){.feat{grid-template-columns:1fr;gap:26px;margin-bottom:68px}.feat:nth-child(even) .ftxt{order:0}}
+
+/* 模板跑馬燈 */
+.marq{overflow:hidden;position:relative;padding:22px 0 34px}
+.marq::before,.marq::after{content:"";position:absolute;top:0;bottom:0;width:70px;z-index:2;pointer-events:none}
+.marq::before{left:0;background:linear-gradient(90deg,var(--sheet),transparent)}
+.marq::after{right:0;background:linear-gradient(-90deg,var(--sheet),transparent)}
+.track{display:flex;gap:40px;width:max-content;animation:mq 48s linear infinite}
+.marq:hover .track{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-50%)}}
+.tc{position:relative;width:330px;flex:none;padding-right:70px}
+.tc .nm{font-family:var(--hand);font-weight:700;font-size:1.2rem;margin-bottom:10px}
+.tc .nm small{font-family:var(--sans);font-size:.72rem;font-weight:500;color:var(--roe);border:1px solid var(--line);border-radius:99px;padding:.1em .7em;margin-left:8px;letter-spacing:.1em}
+.tc .p{width:240px;border-radius:30px;border:8px solid #14222A;box-shadow:0 22px 40px -24px rgba(28,63,75,.7)}
+.tc .c{position:absolute;right:0;bottom:-20px;width:130px;border-radius:8px;box-shadow:0 18px 30px -14px rgba(28,63,75,.7);transform:rotate(4deg)}
+@media (max-width:600px){.tc{width:260px;padding-right:56px}.tc .p{width:190px}.tc .c{width:104px}}
+@media (prefers-reduced-motion:reduce){.track{animation:none}.marq{overflow-x:auto}}
+
+/* 線上試玩 */
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:26px}
+.tabs button{font:inherit;font-size:.95rem;font-weight:700;cursor:pointer;padding:.5em 1.2em;border-radius:99px;border:1.5px solid var(--line);background:var(--sheet);color:var(--soft)}
+.tabs button.on{background:var(--ink);border-color:var(--ink);color:var(--sheet)}
+.try{display:grid;grid-template-columns:auto 1fr;gap:56px;align-items:center;max-width:960px;margin:0 auto}
+.try .phone{width:min(372px,86vw)}
+.try .info h3{font-size:1.6rem}
+.try .info p{color:var(--soft)}
+.try .info ul{padding-left:1.2em;color:var(--soft);margin:12px 0 22px}
+.try .info .acts{margin-top:8px}
+@media (max-width:860px){.try{grid-template-columns:1fr;gap:30px}}
+
 /* 方案 */
 .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
 .plan{position:relative;background:var(--sheet);border:1.5px solid var(--line);border-radius:10px;padding:32px 26px 26px;display:flex;flex-direction:column;box-shadow:0 14px 28px -22px rgba(28,63,75,.45)}
@@ -163,106 +232,168 @@ footer .r{margin-left:auto}
 <body>
 <header>
   <div class="wrap nav">
-    <a class="logo" href="#top">AMEI<small>互動示範</small></a>
+    <a class="logo" href="#top">AMEI<small>市集・走讀互動</small></a>
     <nav aria-label="頁面導覽">
-      <a class="hide-m" href="#flow">玩法</a>
-      <a class="hide-m" href="#organizer">給主辦單位</a>
+      <a class="hide-m" href="#how">三端連動</a>
+      <a class="hide-m" href="#features">玩法</a>
+      <a class="hide-m" href="#templates">模板</a>
+      <a href="#try">線上試玩</a>
       <a href="#plans">方案價格</a>
       <a class="hide-m" href="#contact">聯絡詢問</a>
-      <a class="hide-m" href="../party/">婚禮・尾牙套組</a>
-      <a href="../">AMEI 企劃服務</a>
+      <a class="hide-m" href="../">AMEI 企劃服務</a>
     </nav>
   </div>
 </header>
 
 <main id="top">
 <section class="hero">
-  <div class="wrap hero-grid">
+  <div class="wrap hero-grid v2">
     <div>
-      <div class="note"><b>示範作品</b>以茄萣海岸公園市集為假想情境製作，非實際委託案</div>
-      <div class="stamp">Market ． Walking Tour ． Demo</div>
-      <h1>茄萣海邊剪貼簿</h1>
-      <p class="lead">市集和走讀小旅行的手機互動。參加者在攤位找暗號、拾回在地故事，拍照做成剪貼簿，再寫一封瓶中信給下一位旅人，最後帶走一張可以分享的圖卡。</p>
+      <div class="note"><b>示範作品</b>情境皆為假想，非實際委託案</div>
+      <div class="stamp">Market ． Walking Tour ． Festival</div>
+      <h1><span class="q">市集、走讀小旅行，</span>想讓人潮<br><em>走進每一攤</em>？</h1>
+      <p class="lead">參加者用手機在攤位找暗號、拾貼紙，做成一本照片剪貼簿，再寫一封信給下一位旅人。主辦單位在後台看到每一攤的人潮，結案報告直接有數據。</p>
       <div class="acts">
-        <a class="btn solid" href="app.html" target="_blank" rel="noopener">用手機開啟示範</a>
-        <a class="btn ghost" href="#flow">看玩法</a>
+        <a class="btn solid" href="#try">線上試玩</a>
+        <a class="btn ghost" href="#plans">看方案價格</a>
       </div>
+      <div class="tagline"><span>海邊</span><span>稻田</span><span>老街</span><span>燈節</span><span>四種模板・NT$8,000 起</span></div>
     </div>
-    <div>
-      <div class="phone"><span class="tape"></span><iframe src="app.html" title="茄萣海邊剪貼簿 示範" loading="lazy"></iframe></div>
-      <p class="phone-cap">可以直接在這裡操作，示範暗號寫在每張卡片下方</p>
-    </div>
-  </div>
-</section>
-
-<section class="sec sheet-band">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="stamp">Why not just stamps</div>
-      <h2>不只是集章打卡</h2>
-      <p>集章容易變成跑點蓋章，剪貼簿也容易變成自拍紀念。這個設計的關鍵是：素材要認識在地才拿得到。</p>
-    </div>
-    <div class="why">
-      <div class="reveal"><span class="x">01 ／ 暗號在攤位</span><h3>逼出真正的交流</h3><p>暗號藏在攤位立牌上，參加者得走近攤位、跟攤主聊兩句，才拿得到貼紙。</p></div>
-      <div class="reveal"><span class="x">02 ／ 貼紙即故事</span><h3>每張貼紙都是在地知識</h3><p>烏魚子、黑面琵鷺、舢筏、媽祖海上遶境，拾到貼紙的同時也讀到一段地方故事。</p></div>
-      <div class="reveal"><span class="x">03 ／ 留到傍晚</span><h3>時段限定，留住人潮</h3><p>「夕陽」貼紙只在傍晚出現，讓參加者願意多留一會兒，市集也多一段消費時間。</p></div>
+    <div class="vid reveal">
+      <video id="promo" muted loop playsinline autoplay preload="metadata" poster="img/poster-h.webp" aria-label="市集互動剪貼簿介紹影片">
+        <source src="promo-h.mp4" type="video/mp4">
+      </video>
     </div>
   </div>
 </section>
 
-<section class="sec" id="flow">
+<section class="sec sheet-band" id="how">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="stamp">How it works</div>
+      <h2>攤位、手機、後台，三端連動</h2>
+      <p>不用下載 App，掃 QR code 就能玩。參加者在攤位拿到暗號，手機立刻拾到貼紙，主辦單位同步看到每一攤的人潮。</p>
+    </div>
+    <div class="trio">
+      <div class="t reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 3h14v12H5zM9 15l-2 6M15 15l2 6M8 7h8M8 10.5h5"/></svg></div><h3>攤位立牌</h3><p>每個合作攤位一張立牌，寫著本攤暗號。參加者得走近、跟攤主聊兩句才拿得到。</p></div>
+      <div class="t reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></div><h3>參加者手機</h3><p>輸入暗號拾貼紙與在地故事，拍照做剪貼簿、寫一封信，最後存下 9:16 分享圖卡。</p></div>
+      <div class="t reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><h3>主辦後台<span class="tag">正式版</span></h3><p>參與人次、各攤解鎖次數、各時段人潮即時統計；信件可審核隱藏，一鍵匯出成果報告。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="stamp">Pain ． Solution</div>
+      <h2>市集活動常見的老問題，<br>一次解決</h2>
+    </div>
+
+    <article class="feat">
+      <div class="ftxt reveal">
+        <div class="no">01 ／ 攤位暗號</div>
+        <div class="pain"><i class="x"></i><span class="l">痛點</span><s>集章只是跑點蓋章，攤商沒被認識</s></div>
+        <h3><span class="sol">解法</span>暗號藏在攤位，<br><em>聊兩句才拾得到</em></h3>
+        <p>暗號寫在攤位立牌上，參加者得走近攤位、跟攤主聊兩句才拿得到。每張貼紙背後都是一段在地故事，人潮自然被帶到每一攤。</p>
+        <ul class="pts"><li><b>交流</b>逼出真正的對話</li><li><b>故事</b>貼紙即在地知識</li><li><b>留客</b>傍晚限定貼紙</li></ul>
+      </div>
+      <div class="fimg reveal"><img src="img/f1.webp" alt="攤位立牌上的暗號、參加者手機輸入暗號、主辦後台各攤解鎖次數" loading="lazy" width="1400" height="868"></div>
+    </article>
+
+    <article class="feat">
+      <div class="ftxt reveal">
+        <div class="no">02 ／ 剪貼簿圖卡</div>
+        <div class="pain"><i class="x"></i><span class="l">痛點</span><s>宣傳只靠主辦單位自己發</s></div>
+        <h3><span class="sol">解法</span>參加者自己做圖卡，<br><em>活動名稱跟著轉發</em></h3>
+        <p>拍一張今天的照片、貼上拾到的貼紙，系統生成帶有活動名稱的 9:16 直式圖卡，剛好適合限時動態。每一次分享都是免費宣傳。</p>
+        <ul class="pts"><li><b>好玩</b>貼紙自由拖曳</li><li><b>好分享</b>9:16 限動尺寸</li><li><b>曝光</b>活動名稱跟著走</li></ul>
+      </div>
+      <div class="fimg reveal"><img src="img/f2.webp" alt="手機剪貼簿、生成的 9:16 分享圖卡、分享到限時動態" loading="lazy" width="1400" height="868"></div>
+    </article>
+
+    <article class="feat">
+      <div class="ftxt reveal">
+        <div class="no">03 ／ 瓶中信與成果報告</div>
+        <div class="pain"><i class="x"></i><span class="l">痛點</span><s>成果報告只剩簽到人數</s></div>
+        <h3><span class="sol">解法</span>參加者的話變回饋，<br><em>數據一鍵匯出報告</em></h3>
+        <p>寫一封信丟進海裡，也撿起別人的。這些留言就是最真實的活動回饋；後台可以審核隱藏，參與人次與時段人潮一鍵匯出，直接放進結案報告。</p>
+        <ul class="pts"><li><b>溫度</b>參加者互相收信</li><li><b>安心</b>後台審核隱藏</li><li><b>結案</b>數據直接匯出</li></ul>
+      </div>
+      <div class="fimg reveal"><img src="img/f3.webp" alt="手機收到瓶中信、後台信件審核、成果報告數據與匯出" loading="lazy" width="1400" height="868"></div>
+    </article>
+
+    <article class="feat">
+      <div class="ftxt reveal">
+        <div class="no">04 ／ 活動模板</div>
+        <div class="pain"><i class="x"></i><span class="l">痛點</span><s>每場都從零開發，經費撐不住</s></div>
+        <h3><span class="sol">解法</span>四種模板起步，<br><em>換地點只換內容</em></h3>
+        <p>海邊、稻田、老街、燈節四種模板已經做好，配色、插畫、貼紙與第四步的玩法都不一樣。換個地方只要換故事與暗號，預算花在內容上。</p>
+        <ul class="pts"><li><b>海邊</b>瓶中信</li><li><b>稻田</b>紙飛機</li><li><b>老街</b>時光明信片</li><li><b>燈節</b>許願燈</li></ul>
+      </div>
+      <div class="fimg reveal"><img src="img/f4.webp" alt="四種活動模板：茄萣海邊、稻田市集、老街散步、社區燈節" loading="lazy" width="1400" height="868"></div>
+    </article>
+  </div>
+</section>
+
+<section class="sec sheet-band" id="templates">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="stamp">Templates</div>
+      <h2>換個地方，換一本剪貼簿</h2>
+      <p>以下是現有的四種模板起點。客製版本會依活動地點與在地故事，重新繪製貼紙與主視覺。</p>
+    </div>
+  </div>
+  <div class="marq"><div class="track" id="trk"></div></div>
+  <div class="wrap"><div class="fit reveal" style="margin:26px 0 0"><span>農村市集</span><span>老街走讀</span><span>漁港小旅行</span><span>部落文化活動</span><span>社區節慶</span><span>校園導覽</span></div></div>
+</section>
+
+<section class="sec" id="try">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="stamp">Live demo</div>
+      <h2>直接試玩，四種模板任你切換</h2>
+      <p>示範暗號寫在每張卡片下方，限時貼紙也可以按「略過時間限制」直接拾起。</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="切換模板">
+      <button type="button" role="tab" class="on" aria-selected="true" data-t="sea">茄萣海邊</button>
+      <button type="button" role="tab" aria-selected="false" data-t="farm">稻田市集</button>
+      <button type="button" role="tab" aria-selected="false" data-t="street">老街散步</button>
+      <button type="button" role="tab" aria-selected="false" data-t="lantern">社區燈節</button>
+    </div>
+    <div class="try">
+      <div class="phone reveal"><span class="tape"></span><iframe id="demo" src="app.html?t=sea" title="市集互動剪貼簿 示範" loading="lazy"></iframe></div>
+      <div class="info reveal">
+        <h3 id="try-name">茄萣海邊剪貼簿</h3>
+        <p>四個步驟，逛一圈就完成：找暗號拾貼紙、拍照做剪貼簿、寫一封信、存下分享圖卡。</p>
+        <ul>
+          <li>正式版的信件改接雲端，參加者真正互相收到彼此的信</li>
+          <li>後台統計參與人次、各攤位解鎖次數，方便寫成果報告</li>
+          <li>故事內容與在地文史團體、產業代表確認後再上線</li>
+          <li>依現場網路狀況調整，訊號不穩也能順利操作</li>
+        </ul>
+        <div class="acts"><a class="btn solid" id="try-open" href="app.html?t=sea" target="_blank" rel="noopener">用手機開啟示範 ↗</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sheet-band" id="flow">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="stamp">How to play</div>
       <h2>四個步驟，逛一圈就完成</h2>
       <p>全程在手機上完成，不需要投影設備或下載 App。</p>
     </div>
     <div class="steps">
       <div class="step reveal"><div class="shot"><img src="img/s1-cover.webp" alt="封面：茄萣海邊剪貼簿" loading="lazy" width="560" height="1212"></div><span class="n">STEP 01</span><h3>翻開剪貼簿</h3><p>掃描入口的 QR code，封面就寫好今天要做的三件事。</p></div>
-      <div class="step reveal"><div class="shot"><img src="img/s2-collect.webp" alt="拾海：輸入暗號拾回貼紙與故事" loading="lazy" width="560" height="1212"></div><span class="n">STEP 02</span><h3>拾海</h3><p>在攤位立牌找到暗號，拾回 5 種海邊記憶與故事。</p></div>
+      <div class="step reveal"><div class="shot"><img src="img/s2-collect.webp" alt="拾海：輸入暗號拾回貼紙與故事" loading="lazy" width="560" height="1212"></div><span class="n">STEP 02</span><h3>找暗號</h3><p>在攤位立牌找到暗號，拾回 5 種在地記憶與故事。</p></div>
       <div class="step reveal"><div class="shot"><img src="img/s3-book.webp" alt="剪貼：照片貼上拾到的貼紙" loading="lazy" width="560" height="1212"></div><span class="n">STEP 03</span><h3>剪貼</h3><p>拍一張今天的照片，貼上拾到的貼紙，寫一句話。</p></div>
-      <div class="step reveal"><div class="shot"><img src="img/s4-bottle.webp" alt="瓶中信：丟出一封信，撿到另一封" loading="lazy" width="560" height="1212"></div><span class="n">STEP 04</span><h3>瓶中信</h3><p>寫一句話丟進海裡，也撿起另一位旅人留下的信。</p></div>
+      <div class="step reveal"><div class="shot"><img src="img/s4-bottle.webp" alt="瓶中信：丟出一封信，撿到另一封" loading="lazy" width="560" height="1212"></div><span class="n">STEP 04</span><h3>寫一封信</h3><p>寫一句話給下一位旅人，也收下另一位留下的信。</p></div>
     </div>
   </div>
 </section>
 
-<section class="sec sheet-band" id="organizer">
-  <div class="wrap final">
-    <img class="reveal" src="img/s5-final.webp" alt="完成的 9:16 剪貼簿圖卡" loading="lazy" width="720" height="1280">
-    <div class="reveal">
-      <div class="stamp">For organizers</div>
-      <h2>對主辦單位的好處</h2>
-      <ul>
-        <li><b>自帶活動名稱的分享圖卡</b><span>最後生成 9:16 直式圖卡，適合限時動態，活動名稱跟著被轉發出去。</span></li>
-        <li><b>帶動攤商互動</b><span>暗號放在攤位，人潮自然被帶到每一攤，對攤商和主辦單位都好交代。</span></li>
-        <li><b>留下參加者的聲音</b><span>瓶中信的內容可以整理成活動回饋，放進成果報告。</span></li>
-        <li><b>素材留在地方</b><span>貼紙圖案與故事卡可以和在地文史團體一起整理，活動結束後社區還能繼續使用。</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="stamp">Adaptable</div>
-      <h2>換個地方，換一本剪貼簿</h2>
-      <p>圖案、故事、暗號與配色都依活動重新設計，玩法可以增減。</p>
-    </div>
-    <div class="fit reveal"><span>農村市集</span><span>老街走讀</span><span>漁港小旅行</span><span>部落文化活動</span><span>社區節慶</span><span>校園導覽</span></div>
-    <div class="pro reveal">
-      <h3>這是示範版，正式活動會再加上</h3>
-      <ul>
-        <li>瓶中信改接雲端資料庫，讓參加者真正互相收到彼此的信（示範版從預設的信件中抽取）</li>
-        <li>後台統計參與人次、各攤位解鎖次數，方便寫成果報告</li>
-        <li>故事內容與在地文史團體、產業代表確認後再上線</li>
-        <li>依現場網路狀況調整，訊號不穩也能順利操作</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="sec sheet-band" id="plans">
+<section class="sec" id="plans">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="stamp">Plans</div>
@@ -321,7 +452,7 @@ footer .r{margin-left:auto}
   </div>
 </section>
 
-<section class="sec" id="contact">
+<section class="sec sheet-band" id="contact">
   <div class="wrap contact">
     <div class="info reveal">
       <div class="stamp">Contact</div>
@@ -371,6 +502,27 @@ footer .r{margin-left:auto}
 <script>
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* 首屏影片：手機用直式版 */
+(function(){
+  const v = document.getElementById('promo'); if (!v) return;
+  if (matchMedia('(max-width:860px)').matches) { v.poster = 'img/poster-v.webp'; v.querySelector('source').src = 'promo-v.mp4'; v.load(); }
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches) { v.removeAttribute('autoplay'); v.controls = true; }
+  else v.play().catch(() => { v.controls = true; });
+})();
+
+/* 模板跑馬燈 */
+const TPL = [['sea','茄萣海邊','海岸市集'],['farm','稻田市集','小農市集'],['street','老街散步','走讀小旅行'],['lantern','社區燈節','節慶夜市']];
+document.getElementById('trk').innerHTML = [...TPL,...TPL].map(([k,n,o]) => `<div class="tc"><div class="nm">${n}<small>${o}</small></div><img class="p" src="img/tpl/${k}-cover.webp" alt="${n}剪貼簿封面" loading="lazy" width="390" height="844"><img class="c" src="img/tpl/${k}-card.webp" alt="" loading="lazy" width="360" height="640"></div>`).join('');
+
+/* 試玩：切換模板 */
+document.querySelectorAll('#try .tabs button').forEach(b => b.addEventListener('click', () => {
+  const t = b.dataset.t, n = TPL.find(x => x[0] === t)[1];
+  document.querySelectorAll('#try .tabs button').forEach(x => { const on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-selected', on); });
+  document.getElementById('demo').src = 'app.html?t=' + t;
+  document.getElementById('try-open').href = 'app.html?t=' + t;
+  document.getElementById('try-name').textContent = n + '剪貼簿';
+}));
 
 /* 表單收件：與 AMEI 主站共用同一個 Google Apps Script 網址 */
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbweo6wyVg04lpsMvAnTrt-oyDYwj8tRkamnYqd7aBKvh9dJdmUUos7W6aqUl3PQzhjH/exec";
