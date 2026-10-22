@@ -841,6 +841,15 @@ main{padding-inline:16px;padding-block:20px 48px}
 .polaroid.deco{padding:6px}
 :root[data-tpl="minimal"] .ed-sheet,:root[data-tpl="logistics"] .ed-sheet{border-radius:0}
 :root[data-tpl="logistics"] .ed-sheet{border-top:4px solid #f4c21b}
+/* 同步展示：手機與投影牆並排 */
+main.duo{display:grid;grid-template-columns:minmax(300px,400px) minmax(0,1fr);gap:20px;align-items:start;max-width:1500px;margin:0 auto}
+main.duo .view-note{display:none}
+main.duo #v-wall{position:sticky;top:12px}
+@media (max-width:860px){ main.duo{grid-template-columns:1fr} main.duo #v-wall{order:-1;position:static} }
+/* 簡化版：控制台霧化 */
+#ctrl.fogged{position:relative}
+#ctrl.fogged .ctrl-grid{filter:blur(6px);opacity:.75;pointer-events:none;user-select:none}
+#ctrl.fogged::after{content:"主持控制台為完整版功能，歡迎洽詢 AMEI";position:absolute;left:50%;top:160px;transform:translateX(-50%);background:var(--ink);color:var(--bg);font-size:15px;font-weight:700;padding:10px 20px;border-radius:99px;white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 @media (prefers-reduced-motion:reduce){ *,*::before,*::after{animation:none!important;transition:none!important} }
 </style>
 </head>
@@ -853,7 +862,8 @@ main{padding-inline:16px;padding-block:20px 48px}
 <header class="topbar">
   <div class="brand"><span class="brand-name" id="brand-name">拾光互動遊戲</span><span class="demo-tag" id="brand-tag">展示版</span></div>
   <nav class="seg" id="view-seg" aria-label="切換畫面">
-    <button type="button" data-view="guest" class="on">賓客手機</button>
+    <button type="button" data-view="duo" class="on">同步展示</button>
+    <button type="button" data-view="guest">賓客手機</button>
     <button type="button" data-view="wall">投影牆</button>
     <button type="button" data-view="ctrl">控制台</button>
   </nav>
@@ -1035,6 +1045,10 @@ const SH = ['▲','◆','●','■'];
 const S = {occ:'wedding', game:'bless', view:'guest', tpl:'forest', wtpl:'forest', kit:'classic', lastGame:{}, sound:true, sim:true, timers:[], me:{name:'', table:'', side:null, dept:null}, auto:true};
 let st = {}, UID = 0;
 const G = {};
+/* 網址加 ?full=1 才顯示完整版；網頁展示預設為簡化版（3 種玩法、控制台霧化） */
+const FULL = new URLSearchParams(location.search).has('full');
+/* 「同步展示」視角：賓客手機與投影牆並排，同時更新 */
+const showsG = () => S.view==='guest' || S.view==='duo', showsW = () => S.view==='wall' || S.view==='duo';
 
 /* ========== 小工具 ========== */
 const $ = (s, r=document) => r.querySelector(s);
@@ -1090,14 +1104,14 @@ function floatReact(e){
   L.appendChild(i); setTimeout(()=>i.remove(),4400);
 }
 function confetti(n=90){
-  const host=$('#st1'); if(!host || S.view!=='wall') return;
+  const host=$('#st1'); if(!host || !showsW()) return;
   const box=document.createElement('div'); box.className='cf';
   const cols=[css('--k-flower'),css('--k-fruit'),css('--k-leaf'),css('--k-heart'),css('--flash-hi'),css('--accent2')];
   for(let i=0;i<n;i++){ const s=document.createElement('i'); s.style.cssText=`left:${Math.random()*100}%;background:${cols[i%cols.length]};animation-duration:${2.4+Math.random()*2.2}s;animation-delay:${Math.random()*1.2}s;border-radius:${i%3?2:9}px`; box.appendChild(s); }
   host.appendChild(box); setTimeout(()=>box.remove(),6000);
 }
 function floatPt(txt, x, y){
-  const host=$('#st1'); if(!host || S.view!=='wall') return;
+  const host=$('#st1'); if(!host || !showsW()) return;
   const d=document.createElement('div'); d.className='floatpt'; d.textContent=txt; d.style.left=x+'px'; d.style.top=y+'px';
   host.appendChild(d); setTimeout(()=>d.remove(),1700);
 }
@@ -1159,8 +1173,8 @@ function nameForm(title, sub, btn, cb, extra=''){
 function countdown(n, done){ st.cdn=n; sfx(n>0?'cd':'go'); RW(); RG(); after(900, ()=> n>1 ? countdown(n-1, done) : done()); }
 
 /* ========== 畫面切換 ========== */
-function RG(){ if(S.view==='guest') G[S.game].guest(); }
-function RW(){ if(S.view==='wall' && $('#wm')) G[S.game].wall($('#wm')); }
+function RG(){ if(showsG()) G[S.game].guest(); }
+function RW(){ if(showsW() && $('#wm')) G[S.game].wall($('#wm')); }
 function LC(){ if(S.view==='ctrl' && G[S.game].live) G[S.game].live(); }
 function renderWall(){
   $('#st1').innerHTML=`<header class="wh"><div><div class="w-names">${titleHTML()}</div><div class="w-date">${esc(subLine())}</div></div>
@@ -1186,18 +1200,20 @@ function renderCtrl(){
   $('#c-sim').onchange=e=>{ S.sim=e.target.checked; toast(S.sim?'已開啟模擬賓客':'已停止模擬賓客'); };
   $('#c-snd').onchange=e=>{ S.sound=e.target.checked; $('#snd').textContent=S.sound?'🔊':'🔇'; };
   G[S.game].ctrlBind && G[S.game].ctrlBind();
+  $('#ctrl').classList.toggle('fogged', !FULL);
 }
 function cueHTML(){ const c=(O().cues||{})[S.game]; if(!c) return '';
   const grp=(O().games.find(g=>g[0]===S.game)||[])[2]||'';
   return `<div class="cue span2"><header><b>主持手卡｜${esc(gname())}</b><span>${esc(grp)}</span></header><ol>${c.map(t=>`<li>${esc(t)}</li>`).join('')}</ol></div>`; }
 function render(){
   $('#note-guest').innerHTML = $('#note-wall').innerHTML = '💡 '+GAME_NOTE[S.game];
-  if(S.view==='guest') G[S.game].guest();
-  else if(S.view==='wall') renderWall();
-  else renderCtrl();
+  if(S.view==='ctrl'){ renderCtrl(); return; }
+  if(showsG()) G[S.game].guest();
+  if(showsW()) renderWall();
 }
 function setView(v){
-  S.view=v; ['guest','wall','ctrl'].forEach(k=>$('#v-'+k).hidden = k!==v);
+  S.view=v; $('#v-guest').hidden=!showsG(); $('#v-wall').hidden=!showsW(); $('#v-ctrl').hidden=v!=='ctrl';
+  document.querySelector('main').classList.toggle('duo', v==='duo');
   $$('#view-seg button').forEach(b=>b.classList.toggle('on', b.dataset.view===v));
   render();
 }
@@ -1264,7 +1280,7 @@ G.bless = {
     st.energy.forEach(m=>{ if(this.vis().length>=m.n) m.done=true; });
     every(4800, ()=>{ if(S.sim) this.bot(); });
     every(6500, ()=>this.rotate());
-    every(1600, ()=>{ if(S.sim && Math.random()<.65 && S.view==='wall') floatReact(pick(REACTS)); });
+    every(1600, ()=>{ if(S.sim && Math.random()<.65 && showsW()) floatReact(pick(REACTS)); });
   },
   vis(){ return st.posts.filter(p=>p.status==='shown'); },
   bot(silent){
@@ -1290,7 +1306,7 @@ G.bless = {
   },
   unlock(m){
     toast(`集氣解鎖：${m.t}`); sfx('win');
-    if(S.view!=='wall') return;
+    if(!showsW()) return;
     const d=document.createElement('div'); d.className='ov ov-center';
     d.innerHTML=`<div class="ov-kicker">祝福集氣達成 ${m.n} 則</div><div class="ov-title">解鎖！</div><div class="ov-text">${esc(m.t)}</div>`;
     $('#st1').appendChild(d); confetti(110); after(6500, ()=>d.remove());
@@ -1388,7 +1404,7 @@ G.bless = {
     x.font='40px "Noto Sans TC",sans-serif'; x.globalAlpha=.7; x.fillText('— '+dispName(p),540,1300); x.globalAlpha=1;
     x.fillStyle=acc2; x.font='700 46px "Noto Sans TC",sans-serif'; x.fillText(O().hashtag,540,1600);
     x.fillStyle=txt; x.globalAlpha=.6; x.font='32px "Noto Sans TC",sans-serif'; x.fillText(subLine(),540,1670); x.globalAlpha=1;
-    c.toBlob(b=>{ st.story={url:URL.createObjectURL(b), blob:b}; if(S.view==='guest' && st.g==='done') this.showStory(); },'image/png');
+    c.toBlob(b=>{ st.story={url:URL.createObjectURL(b), blob:b}; if(showsG() && st.g==='done') this.showStory(); },'image/png');
   },
   showStory(){
     const box=$('#story-box'); if(!box || !st.story) return;
@@ -1793,7 +1809,7 @@ G.cards = {
     every(1300, ()=>{ if(S.sim && this.live_() && Math.random()<.7) this.botFlash(); });
     every(6500, ()=>{ if(!st.flash) this.rotate(); });
     every(250, ()=>this.tick());
-    every(1900, ()=>{ if(S.sim && Math.random()<.55 && S.view==='wall' && !st.flash) floatReact(pick(REACTS)); });
+    every(1900, ()=>{ if(S.sim && Math.random()<.55 && showsW() && !st.flash) floatReact(pick(REACTS)); });
   },
   live_(){ return st.flash && st.flash.phase==='live'; },
   left(){ return st.flash ? Math.max(0, Math.ceil((st.flash.end-Date.now())/1000)) : 0; },
@@ -1810,7 +1826,7 @@ G.cards = {
     if(!p.fid){ st.feat=p.id; }
     if(!silent){
       if(p.fid){ this.flashR(); }
-      else { if(S.view==='wall'){ this.featR(true); this.sideR(); floatPt('+'+p.pts, 300, 230); } sfx('coin'); }
+      else { if(showsW()){ this.featR(true); this.sideR(); floatPt('+'+p.pts, 300, 230); } sfx('coin'); }
       LC();
     }
     return p;
@@ -1825,7 +1841,7 @@ G.cards = {
   endFlash(){
     if(!st.flash) return; const f=st.flash; f.phase='result'; f.end=Math.min(f.end,Date.now()); f.until=Date.now()+10000;
     this.entries().slice(0,3).forEach((p,i)=>{ const b=[100,60,30][i]; p.pts=b; st.pts[p.name]=(st.pts[p.name]||0)+b; });
-    sfx('win'); RW(); RG(); if(S.view==='ctrl') renderCtrl(); if(S.view==='wall') confetti();
+    sfx('win'); RW(); RG(); if(S.view==='ctrl') renderCtrl(); if(showsW()) confetti();
   },
   entries(){ return st.flash ? st.posts.filter(p=>p.fid===st.flash.id && p.status==='shown').sort((a,b)=>a.ts-b.ts) : []; },
   tick(){
@@ -2010,7 +2026,7 @@ G.quiz = {
       const el=Date.now()-st.t0, r=Math.max(0,1-el/st.D), sec=Math.ceil(r*st.D/1000);
       ['#qbar','#pbar'].forEach(id=>{ const b=$(id); if(b) b.style.transform=`scaleX(${r})`; });
       const s=$('#qsec'); if(s){ s.textContent=sec; s.classList.toggle('hurry',sec<=3); }
-      if(sec!==st.lastSec){ st.lastSec=sec; if(sec<=5 && sec>0 && S.view==='wall') sfx('tick'); }
+      if(sec!==st.lastSec){ st.lastSec=sec; if(sec<=5 && sec>0 && showsW()) sfx('tick'); }
       if(el>=st.D) this.endQ();
     });
   },
@@ -2020,12 +2036,12 @@ G.quiz = {
     if(st.phase!=='q') return; st.seq++; clearInterval(st.tick); st.phase='reveal'; const q=this.qs()[st.i];
     [...st.players].sort((a,b)=>b.score-a.score).forEach((p,i)=>{ p.prev=i; p.prevScore=p.score; });
     st.players.forEach(p=>{ if(p.ans===q.a){ p.streak++; p.gain=Math.round(1000*(1-(p.at/st.D)/2))+Math.min(300,(p.streak-1)*100); p.score+=p.gain; } else { p.streak=0; p.gain=0; } });
-    if(S.view==='guest' && st.me) sfx(st.me.ans===q.a?'ok':'no'); else sfx('pop');
+    if(showsG() && st.me) sfx(st.me.ans===q.a?'ok':'no'); else sfx('pop');
     RW(); RG(); this.refreshCtrl(); this.autoNext(5000);
   },
   toBoard(){
     st.seq++; st.phase='board'; RW(); RG(); this.refreshCtrl();
-    if(S.view==='wall') requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    if(showsW()) requestAnimationFrame(()=>requestAnimationFrame(()=>{
       $$('.lbr').forEach(r=>{ r.style.top=r.dataset.top+'px'; r.style.opacity=1; });
       $$('.lbr-s').forEach(sp=>{ const a=+sp.dataset.from, b=+sp.dataset.to, t0=performance.now(); const step=t=>{ const k=Math.min(1,(t-t0)/1100), e=1-Math.pow(1-k,3); sp.textContent=Math.round(a+(b-a)*e); if(k<1) requestAnimationFrame(step); }; requestAnimationFrame(step); });
     }));
@@ -2126,7 +2142,7 @@ G.vote = {
   reveal(k){
     if(st.phase!=='vote') return; st.phase='reveal'; st.ans=k;
     Object.entries(st.voters).forEach(([n,c])=>{ if(c===k) st.pts[n]=(st.pts[n]||0)+100; });
-    sfx('win'); RW(); RG(); if(S.view==='ctrl') renderCtrl(); if(S.view==='wall') confetti(70);
+    sfx('win'); RW(); RG(); if(S.view==='ctrl') renderCtrl(); if(showsW()) confetti(70);
   },
   next(){ st.qi=(st.qi+1)%O().votes.length; this.reset(); RW(); RG(); if(S.view==='ctrl') renderCtrl(); },
   host(){ const o=O().voteSides; return st.phase==='vote' ? `<button class="hb" data-act="rev0">揭曉：${o[0].l}</button><button class="hb" data-act="rev1">揭曉：${o[1].l}</button>` : `<button class="hb" data-act="next">下一題 ▶</button>`; },
@@ -2187,7 +2203,7 @@ G.tug = {
       const dl=[...Array(st.L.n)].reduce(s=>s+(Math.random()<.5+st.bias?1:0),0), dr=[...Array(st.R.n)].reduce(s=>s+(Math.random()<.5-st.bias?1:0),0);
       st.L.taps+=dl; st.R.taps+=dr; st.pos=Math.max(-100,Math.min(100, st.pos+(dr-dl)*.45));
       this.upd();
-      const sec=Math.max(0,Math.ceil(st.dur-(Date.now()-st.t0)/1000)); if(sec!==st.lastSec){ st.lastSec=sec; if(sec<=5&&sec>0&&S.view==='wall') sfx('tick'); }
+      const sec=Math.max(0,Math.ceil(st.dur-(Date.now()-st.t0)/1000)); if(sec!==st.lastSec){ st.lastSec=sec; if(sec<=5&&sec>0&&showsW()) sfx('tick'); }
       if(Math.abs(st.pos)>=100 || Date.now()-st.t0>=st.dur*1000) this.end();
     });
   },
@@ -2506,9 +2522,10 @@ new ResizeObserver(fit).observe($('#wall')); addEventListener('resize',fit); doc
   const q=new URLSearchParams(location.search);
   const occ=q.get('occ')==='weiya'||q.get('t')==='weiya'?'weiya':'wedding', tpl=q.get('tpl')||q.get('kit');
   if(WED_TPLS.some(x=>x[0]===tpl)) S.wtpl=tpl; if(KITS[tpl]) S.kit=tpl;
+  if(!FULL){ const keep=['bless','quiz','light']; OCC.wedding.games=OCC.wedding.games.filter(g=>keep.includes(g[0])); Object.values(KITS).forEach(k=>{ const g=k.games.filter(x=>keep.includes(x[0])); if(g.length) k.games=g; }); }
   setOcc(occ); setGame(q.get('game')||O().games[0][0]);
   preloadStickers();
-  const v=q.get('view'); if(['guest','wall','ctrl'].includes(v)) setView(v);
+  const v=q.get('view'); setView(['duo','guest','wall','ctrl'].includes(v) ? v : 'duo');
 })();
 </script>
 </body>
