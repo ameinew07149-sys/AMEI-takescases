@@ -184,7 +184,7 @@ function startTimer(){t0=performance.now();clearInterval(tick);
 function answer(i){
   const q=QS[cur];if(S.ans[q.id])return;clearInterval(tick);
   const left=Math.max(0,TIME-(performance.now()-t0)/1000),ok=i===q.a,pt=ok?100+Math.round(left*5):0;
-  S.ans[q.id]={pick:i,ok,pt};save();renderQ(true);feedback(S.ans[q.id]);$('#back').hidden=false;
+  S.ans[q.id]={pick:i,ok,pt};save();notify('answer',{q:cur,qname:q.name,who:S.name||'闖關者',ok,pt,total:total()});renderQ(true);feedback(S.ans[q.id]);$('#back').hidden=false;
   setTimeout(()=>$('#fb').scrollIntoView({behavior:'smooth',block:'center'}),100);
 }
 function feedback(a){const q=QS[cur];$('#fb').hidden=false;$('#fb').className='fb '+(a.ok?'ok':'ng');

@@ -233,7 +233,7 @@ $('#cut').addEventListener('input',e=>$('#compare').style.setProperty('--cut',e.
 $('#checkForm').addEventListener('submit',e=>{e.preventDefault();const s=STOPS[cur];
   if($('#code').value.trim()!==s.code){$('#codeErr').hidden=false;return}
   if(!S.done.includes(s.id)){S.done.push(s.id);S.done.sort((a,b)=>STOPS.findIndex(t=>t.id===a)-STOPS.findIndex(t=>t.id===b));save();}
-  toast('打卡成功：'+s.name);renderStop();$('#stamped').scrollIntoView({behavior:'smooth',block:'center'});});
+  toast('打卡成功：'+s.name);notify('checkin',{name:s.name,idx:cur,n:S.done.length,total:OPEN});renderStop();$('#stamped').scrollIntoView({behavior:'smooth',block:'center'});});
 
 /* ---------- voice guide (Web Speech API) ---------- */
 const canSpeak='speechSynthesis' in window;let speaking=false;

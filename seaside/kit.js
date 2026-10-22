@@ -348,3 +348,7 @@ function downloadURL(url,name){const a=document.createElement('a');a.href=url;a.
 /* ---------- 示範版／完整版：網址加 ?full=1 才顯示完整功能 ---------- */
 const FULL=new URLSearchParams(location.search).has('full');
 const LITE_NOTE='這是簡化示範版，只開放部分內容。完整玩法與主辦單位功能，歡迎洽詢 AMEI。';
+
+/* ---------- 連動展示：把參加者的動作傳給活動頁旁邊的「大螢幕／後台」示意畫面 ---------- */
+function notify(type,data){try{if(window.parent!==window)window.parent.postMessage(Object.assign({amei:1,type},data||{}),location.origin);}catch(e){}}
+function thumbOf(canvas,w,h){const t=document.createElement('canvas');t.width=w;t.height=h;t.getContext('2d').drawImage(canvas,0,0,w,h);return t.toDataURL('image/jpeg',.7);}

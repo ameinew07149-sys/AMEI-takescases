@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#E8EDE9">
 <title>活動互動模板｜市集集章・走讀導覽・教學問答・問卷抽獎｜AMEI</title>
-<meta name="description" content="一套手機互動，四種活動用途：市集集章剪貼簿、走讀語音導覽、教學問答闖關、滿意度問卷抽獎。不用下載 App，參加者最後帶走圖卡、成績或兌獎碼，製作費 NT$8,000 起。">
+<meta name="description" content="一套手機互動，四種活動用途：市集集章剪貼簿、走讀語音導覽、教學問答闖關、滿意度問卷抽獎。不用下載 App，手機與主辦後台即時連動，製作費 NT$8,000 起。">
 <link rel="canonical" href="https://ameinew07149-sys.github.io/AMEI-takescases/seaside/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="活動互動模板：市集・導覽・教學・問卷｜AMEI">
@@ -175,6 +175,44 @@ section.sec{padding:84px 0}
 .try .info .acts{margin-top:8px}
 @media (max-width:860px){.try{grid-template-columns:1fr;gap:30px}}
 
+/* 連動後台示意 */
+.duo{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:start;max-width:1040px;margin:0 auto}
+.duo .phone{width:min(372px,86vw)}
+.board{background:#fff;border-radius:16px;box-shadow:0 0 0 1px var(--line),0 24px 50px -30px rgba(28,63,75,.55);overflow:hidden}
+.board-hd{display:flex;align-items:center;gap:10px;padding:14px 18px;background:var(--ink);color:var(--sheet);font-weight:700}
+.board-hd .live{width:9px;height:9px;border-radius:50%;background:#5BD27A;box-shadow:0 0 0 0 rgba(91,210,122,.6);animation:live 1.6s infinite}
+@keyframes live{to{box-shadow:0 0 0 10px rgba(91,210,122,0)}}
+.board-hd small{margin-left:auto;font-weight:500;font-size:.75rem;opacity:.7;letter-spacing:.08em}
+.board-bd{padding:18px;display:grid;gap:16px}
+.kp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kp div{background:var(--paper);border-radius:12px;padding:10px 12px;transition:background .4s}
+.kp span{display:block;font-size:.8rem;color:var(--soft)}
+.kp b{font-family:var(--mono);font-size:1.6rem;color:var(--deep)}
+.kp div.flash{background:rgba(228,160,74,.35)}
+.feed{display:grid;gap:8px}
+.feed h4,.fog h4,.wall h4{margin:0 0 2px;font-size:.85rem;color:var(--soft);font-weight:500}
+.feed p{margin:0;display:flex;justify-content:space-between;gap:10px;background:var(--paper);border-radius:10px;padding:8px 12px;font-size:.92rem}
+.feed p small{color:var(--soft);white-space:nowrap}
+.feed p.me{background:rgba(228,160,74,.22);outline:2px solid var(--sun);animation:pop .45s cubic-bezier(.3,1.5,.5,1)}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:none;opacity:1}}
+.wall .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.wall .tiles img,.wall .tiles i{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:6px;background:var(--paper)}
+.wall .tiles .fz{filter:blur(4px);opacity:.75}
+.wall .tiles img.me{outline:3px solid var(--sun);animation:pop .5s cubic-bezier(.3,1.5,.5,1)}
+.fog{position:relative}
+.fog .in{filter:blur(5px);opacity:.7;pointer-events:none;user-select:none}
+.fog::after{content:"完整版功能";position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);background:var(--ink);color:var(--sheet);font-size:.8rem;font-weight:700;letter-spacing:.12em;padding:.35em 1em;border-radius:99px}
+.fog .bars2{display:grid;gap:8px}.fog .bars2 i{display:block;height:12px;border-radius:7px;background:var(--sea)}
+.board-tip{font-size:.85rem;color:var(--soft);text-align:center;margin:0}
+.duo .info{margin-top:22px}
+.duo .info h3{font-size:1.35rem}
+.duo .info p{color:var(--soft);margin:6px 0 0}
+.duo .info ul{padding-left:1.2em;color:var(--soft);margin:10px 0 16px}
+.sync-badge{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--sheet);padding:.55em 1.2em;border-radius:99px;font-size:.9rem;font-weight:700;opacity:0;transition:.3s;z-index:90;pointer-events:none}
+.sync-badge.on{opacity:1;transform:translateX(-50%)}
+@media (max-width:900px){.duo{grid-template-columns:1fr;gap:24px}.duo .phone{margin:0 auto}}
+@media (prefers-reduced-motion:reduce){.board-hd .live,.feed p.me,.wall .tiles img.me{animation:none}}
+
 /* 方案 */
 .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
 .plan{position:relative;background:var(--sheet);border:1.5px solid var(--line);border-radius:10px;padding:32px 26px 26px;display:flex;flex-direction:column;box-shadow:0 14px 28px -22px rgba(28,63,75,.45)}
@@ -252,7 +290,7 @@ footer .r{margin-left:auto}
       <div class="note"><b>示範作品</b>情境皆為假想，非實際委託案</div>
       <div class="stamp">Market ． Tour ． Class ． Festival</div>
       <h1><span class="q">市集、走讀、教學、節慶活動，</span>一套手機互動<br><em>四種活動用途</em></h1>
-      <p class="lead">市集集章、走讀導覽、教學問答、問卷抽獎，參加者掃 QR code 就能玩，不用下載 App。走到現場才能玩，玩完還有紀念可以帶走。</p>
+      <p class="lead">市集集章、走讀導覽、教學問答、問卷抽獎，參加者掃 QR code 就能玩，不用下載 App。參加者的每一個動作，主辦後台即時同步。</p>
       <div class="acts">
         <a class="btn solid" href="#try">線上試玩</a>
         <a class="btn ghost" href="#plans">看方案價格</a>
@@ -271,13 +309,13 @@ footer .r{margin-left:auto}
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="stamp">How it works</div>
-      <h2>現場定點、手機、帶走紀念</h2>
-      <p>不用下載 App，掃 QR code 就能玩。參加者在現場定點拿到暗號，手機立刻解鎖內容，最後存下屬於自己的紀念。</p>
+      <h2>現場、手機、後台，三端連動</h2>
+      <p>不用下載 App，掃 QR code 就能玩。參加者在現場定點拿到暗號，手機立刻解鎖內容，主辦單位在後台同步看到。</p>
     </div>
     <div class="trio">
       <div class="t reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 3h14v12H5zM9 15l-2 6M15 15l2 6M8 7h8M8 10.5h5"/></svg></div><h3>現場定點</h3><p>攤位立牌、導覽解說牌、闖關關卡牌，每個定點一組暗號，參加者得真的走到現場才拿得到。</p></div>
       <div class="t reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></div><h3>參加者手機</h3><p>依活動用途集章做剪貼簿、聽語音導覽、闖關作答或填問卷抽獎，最後存下圖卡、打卡紀錄或成績。</p></div>
-      <div class="t reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 3h14v18l-7-4-7 4z"/></svg></div><h3>帶走紀念</h3><p>分享圖卡、打卡紀錄、闖關成績或兌獎碼，參加者存在手機裡，也把活動名稱分享出去。</p></div>
+      <div class="t reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><h3>主辦後台</h3><p>打卡、作答、問卷、抽獎，參加者一有動作，後台與大螢幕就即時更新。下方試玩可以直接體驗。</p></div>
     </div>
   </div>
 </section>
@@ -295,9 +333,9 @@ footer .r{margin-left:auto}
         <div class="pain"><i class="x"></i><span class="l">痛點</span><s>集章只是跑點蓋章，攤商沒被認識</s></div>
         <h3><span class="sol">解法</span>暗號藏在攤位，<br><em>聊兩句才拾得到</em></h3>
         <p>暗號寫在攤位立牌上，參加者得走近攤位、跟攤主聊兩句才拿得到。拾到的貼紙做成照片剪貼簿，生成帶活動名稱的 9:16 圖卡，分享到限時動態就是免費宣傳。</p>
-        <ul class="pts"><li><b>交流</b>帶人潮走進每一攤</li><li><b>曝光</b>9:16 分享圖卡</li><li><b>故事</b>貼紙即在地知識</li></ul>
+        <ul class="pts"><li><b>交流</b>帶人潮走進每一攤</li><li><b>曝光</b>9:16 分享圖卡</li><li><b>同步</b>圖卡即時上牆</li><li><b>故事</b>貼紙即在地知識</li></ul>
       </div>
-      <div class="fimg reveal"><img src="img/f1.webp" alt="攤位立牌上的暗號、參加者手機輸入暗號、9:16 分享圖卡" loading="lazy" width="1400" height="868"></div>
+      <div class="fimg reveal"><img src="img/f1.webp" alt="攤位立牌上的暗號、參加者手機輸入暗號、主辦後台即時同步" loading="lazy" width="1400" height="868"></div>
     </article>
 
     <article class="feat">
@@ -306,9 +344,9 @@ footer .r{margin-left:auto}
         <div class="pain"><i class="x"></i><span class="l">痛點</span><s>導覽員一個人帶不動，後排聽不到</s></div>
         <h3><span class="sol">解法</span>每人手機一位導覽員，<br><em>語音解說加今昔對比</em></h3>
         <p>手機上有路線地圖，走到每一站就能播放語音解說，參加者戴上耳機自己聽，不用擠在導覽員身邊。在解說牌輸入暗號打卡，一站一站走完全程。</p>
-        <ul class="pts"><li><b>分流</b>不必等導覽員</li><li><b>語音</b>戴耳機自己聽</li><li><b>打卡</b>一站一站走完</li></ul>
+        <ul class="pts"><li><b>分流</b>不必等導覽員</li><li><b>語音</b>戴耳機自己聽</li><li><b>打卡</b>一站一站走完</li><li><b>同步</b>後台看到訪人數</li></ul>
       </div>
-      <div class="fimg reveal"><img src="img/f2.webp" alt="走讀導覽：路線地圖、語音導覽、解說牌打卡" loading="lazy" width="1400" height="868"></div>
+      <div class="fimg reveal"><img src="img/f2.webp" alt="走讀導覽：路線地圖、解說牌打卡、主辦後台即時同步" loading="lazy" width="1400" height="868"></div>
     </article>
 
     <article class="feat">
@@ -317,9 +355,9 @@ footer .r{margin-left:auto}
         <div class="pain"><i class="x"></i><span class="l">痛點</span><s>學習單寫完就丟，看不出學到什麼</s></div>
         <h3><span class="sol">解法</span>走到定點才能答，<br><em>答完馬上有解說</em></h3>
         <p>在關卡牌輸入暗號打開題目，限時作答、越快答對分數越高，答完馬上看到解說。邊走邊學，比寫學習單更記得住。</p>
-        <ul class="pts"><li><b>闖關</b>走到定點才能答</li><li><b>即時</b>答完就有解說</li><li><b>計分</b>越快答對越高分</li></ul>
+        <ul class="pts"><li><b>闖關</b>走到定點才能答</li><li><b>即時</b>答完就有解說</li><li><b>計分</b>越快答對越高分</li><li><b>同步</b>老師即時看作答</li></ul>
       </div>
-      <div class="fimg reveal"><img src="img/f3.webp" alt="教學問答：限時作答、即時解說、闖關成績" loading="lazy" width="1400" height="868"></div>
+      <div class="fimg reveal"><img src="img/f3.webp" alt="教學問答：限時作答、即時解說、老師後台即時同步" loading="lazy" width="1400" height="868"></div>
     </article>
 
     <article class="feat">
@@ -328,9 +366,9 @@ footer .r{margin-left:auto}
         <div class="pain"><i class="x"></i><span class="l">痛點</span><s>滿意度問卷回收率低，紙本統計累</s></div>
         <h3><span class="sol">解法</span>填完問卷才能抽獎，<br><em>回收率自然提高</em></h3>
         <p>問卷一題一頁、點選就能填，填完才能轉燈籠輪盤抽獎，拿到兌獎碼到服務台兌換。不用再一張張發紙本問卷、事後輸入。</p>
-        <ul class="pts"><li><b>回收</b>抽獎帶動填答</li><li><b>好填</b>一題一頁點選</li><li><b>免紙本</b>手機直接填</li></ul>
+        <ul class="pts"><li><b>回收</b>抽獎帶動填答</li><li><b>好填</b>一題一頁點選</li><li><b>免紙本</b>手機直接填</li><li><b>同步</b>回收份數即時更新</li></ul>
       </div>
-      <div class="fimg reveal"><img src="img/f4.webp" alt="問卷抽獎：一題一頁的問卷、燈籠抽獎輪盤、兌獎碼" loading="lazy" width="1400" height="868"></div>
+      <div class="fimg reveal"><img src="img/f4.webp" alt="問卷抽獎：一題一頁的問卷、抽獎兌獎碼、主辦後台即時同步" loading="lazy" width="1400" height="868"></div>
     </article>
   </div>
 </section>
@@ -351,8 +389,8 @@ footer .r{margin-left:auto}
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="stamp">Live demo</div>
-      <h2>直接試玩，四種用途任你切換</h2>
-      <p>示範暗號都寫在畫面上，直接輸入就能玩。這裡是簡化示範版，只開放部分內容。</p>
+      <h2>手機一動，後台同步更新</h2>
+      <p>在左邊的手機輸入示範暗號操作看看，右邊的主辦後台會即時跳出你的動作。這裡是簡化示範版，後台細節以霧化呈現。</p>
     </div>
     <div class="tabs" role="tablist" aria-label="切換模板">
       <button type="button" role="tab" class="on" aria-selected="true" data-t="market">市集集章</button>
@@ -360,16 +398,19 @@ footer .r{margin-left:auto}
       <button type="button" role="tab" aria-selected="false" data-t="quiz">教學問答</button>
       <button type="button" role="tab" aria-selected="false" data-t="survey">問卷抽獎</button>
     </div>
-    <div class="try">
-      <div class="phone reveal"><span class="tape"></span><iframe id="demo" src="app.html?t=sea" title="活動互動示範" loading="lazy"></iframe></div>
-      <div class="info reveal">
-        <h3 id="try-name">市集集章｜茄萣海邊剪貼簿</h3>
-        <p id="try-desc">在攤位找暗號拾貼紙與在地故事，拍照做成剪貼簿，存下 9:16 分享圖卡。</p>
-        <ul id="try-list">
-          <li>示範版開放 3 個攤位</li>
-          <li>貼紙圖案、故事與暗號都會依活動重新設計</li>
-        </ul>
-        <div class="acts"><a class="btn solid" id="try-open" href="app.html?t=sea" target="_blank" rel="noopener">用手機開啟示範 ↗</a></div>
+    <div class="duo">
+      <div class="phone reveal"><span class="tape"></span><iframe id="demo" src="app.html?t=sea" title="活動互動示範：參加者手機" loading="lazy"></iframe></div>
+      <div class="reveal">
+        <div class="board" aria-live="polite">
+          <div class="board-hd"><i class="live"></i><span id="bd-title">主辦後台</span><small>即時同步・示意</small></div>
+          <div class="board-bd" id="board"></div>
+        </div>
+        <div class="info">
+          <h3 id="try-name">市集集章｜茄萣海邊剪貼簿</h3>
+          <p id="try-desc"></p>
+          <ul id="try-list"></ul>
+          <div class="acts"><a class="btn solid" id="try-open" href="app.html?t=sea" target="_blank" rel="noopener">用手機開啟示範 ↗</a></div>
+        </div>
       </div>
     </div>
   </div>
@@ -481,6 +522,7 @@ footer .r{margin-left:auto}
 @media (prefers-reduced-motion:reduce){.line-fab{transition:none}}
 @media print{.line-fab{display:none}}
 </style>
+<div class="sync-badge" id="sync-badge">後台已同步 ↓</div>
 <script>
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
@@ -495,35 +537,78 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
 /* 模板跑馬燈 */
 const MODES = {
-  market:{n:'市集集章',o:'茄萣海邊剪貼簿',src:'app.html?t=sea',card:'img/mode/market-card.webp',
+  market:{n:'市集集章',o:'茄萣海邊剪貼簿',src:'app.html?t=sea',card:'img/mode/market-card.webp',board:'主辦後台・市集集章',
     d:'在攤位找暗號拾貼紙與在地故事，拍照做成剪貼簿，存下 9:16 分享圖卡。',
-    l:['示範版開放 3 個攤位','貼紙圖案、故事與暗號都會依活動重新設計']},
-  tour:{n:'走讀導覽',o:'老街散步導覽',src:'tour.html',card:'img/mode/tour-card.webp',
+    l:['示範版開放 3 個攤位','拾到貼紙、完成剪貼簿，後台與大螢幕照片牆同步更新'],
+    kp:[['參與人次',126],['拾到貼紙',341],['分享圖卡',58]],wall:1,fog:'各攤解鎖排行',
+    seed:[['阿哲','拾到「舢筏」','2 分鐘前'],['Ruby','拾到「烏魚」','3 分鐘前'],['小葵','完成剪貼簿','5 分鐘前']]},
+  tour:{n:'走讀導覽',o:'老街散步導覽',src:'tour.html',card:'img/mode/tour-card.webp',board:'導覽後台・走讀導覽',
     d:'看路線地圖走到下一站，播放語音解說，在解說牌輸入暗號打卡。',
-    l:['示範版開放前 2 站','解說內容依在地文史資料撰寫，語音可用真人錄音']},
-  quiz:{n:'教學問答',o:'稻田小學堂',src:'quiz.html',card:'img/mode/quiz-card.webp',
+    l:['示範版開放前 2 站','每一次打卡，後台的到訪人數同步更新'],
+    kp:[['今日走讀',84],['打卡次數',263],['正在路上',12]],fog:'各站停留時間與熱點',
+    seed:[['陳先生','第 3 站「老招牌」打卡','1 分鐘前'],['小芸','第 1 站「亭仔腳」打卡','4 分鐘前'],['阿哲','第 2 站「古井」打卡','6 分鐘前']]},
+  quiz:{n:'教學問答',o:'稻田小學堂',src:'quiz.html',card:'img/mode/quiz-card.webp',board:'老師後台・教學問答',
     d:'在關卡牌輸入暗號打開題目，20 秒內作答、越快答對分數越高，每題都有解說。',
-    l:['示範版開放 2 題','題目依課程目標與老師一起設計']},
-  survey:{n:'問卷抽獎',o:'社區燈節 填問卷抽好禮',src:'survey.html',card:'img/mode/survey-card.webp',
+    l:['示範版開放 2 題','每一題作答結果，老師後台即時看到'],
+    kp:[['闖關組數',11],['作答題數',96],['答對題數',71]],fog:'各題全班答對率',
+    seed:[['第 3 組','第 2 題 答對 +172','1 分鐘前'],['第 1 組','第 1 題 答錯','2 分鐘前'],['第 5 組','第 1 題 答對 +190','3 分鐘前']]},
+  survey:{n:'問卷抽獎',o:'社區燈節 填問卷抽好禮',src:'survey.html',card:'img/mode/survey-card.webp',board:'主辦後台・問卷抽獎',
     d:'點選式的滿意度問卷，填完才能轉燈籠輪盤抽獎，拿到兌獎碼。',
-    l:['示範版只有 3 題','問卷題目可依標案規定的滿意度項目調整']}
+    l:['示範版只有 3 題','送出問卷、抽中獎品，後台的回收份數與滿意度同步更新'],
+    kp:[['回收份數',85],['平均滿意度',4.52],['已抽出獎品',38]],fog:'滿意度分布、年齡層、獎品庫存',
+    seed:[['匿名','送出問卷 ★★★★★','1 分鐘前'],['匿名','抽中 三獎','1 分鐘前'],['匿名','送出問卷 ★★★★','3 分鐘前']]}
 };
 
 /* 四種用途跑馬燈 */
 const ML = Object.entries(MODES);
 document.getElementById('trk').innerHTML = [...ML,...ML].map(([k,m]) => `<div class="tc"><div class="nm">${m.n}<small>${m.o}</small></div><img class="p" src="img/mode/${k}-cover.webp" alt="${m.n}示範封面" loading="lazy" width="390" height="844"><img class="c" src="${m.card}" alt="" loading="lazy" width="360" height="640"></div>`).join('');
 
-/* 試玩：切換用途 */
-document.querySelectorAll('#try .tabs button').forEach(b => b.addEventListener('click', () => {
-  const m = MODES[b.dataset.t];
-  document.querySelectorAll('#try .tabs button').forEach(x => { const on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-selected', on); });
-  document.getElementById('demo').src = m.src;
+/* 試玩：手機 + 後台示意，同步連動 */
+let MODE = 'market', KP = [], seen = {};
+const board = document.getElementById('board'), demo = document.getElementById('demo');
+const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function renderBoard(){
+  const m = MODES[MODE]; KP = m.kp.map(x => x[1]); seen = {};
+  document.getElementById('bd-title').textContent = m.board;
+  const fogBars = [92,78,64,51,37].map(w => `<i style="width:${w}%"></i>`).join('');
+  board.innerHTML = `
+    <div class="kp">${m.kp.map((x,i) => `<div id="kp${i}"><span>${x[0]}</span><b>${fmtKP(i)}</b></div>`).join('')}</div>
+    ${m.wall ? `<div class="wall"><h4>大螢幕照片牆</h4><div class="tiles" id="tiles">${[1,2,3,4,5].map(() => `<img class="fz" src="${m.card}" alt="">`).join('')}</div></div>` : ''}
+    <div class="feed" id="feed"><h4>即時動態</h4>${m.seed.map(([w,t,ago]) => `<p><span>${esc(w)}　${esc(t)}</span><small>${ago}</small></p>`).join('')}</div>
+    <div class="fog"><h4>${m.fog}</h4><div class="in bars2">${fogBars}</div></div>
+    <p class="board-tip" id="bd-tip">在左邊手機操作，這裡會即時更新</p>`;
+}
+function fmtKP(i){const v = KP[i]; return typeof v === 'number' && !Number.isInteger(v) ? v.toFixed(2) : v.toLocaleString();}
+function bump(i, v){KP[i] = v === undefined ? KP[i] + 1 : v; const d = document.getElementById('kp'+i); if(!d) return; d.querySelector('b').textContent = fmtKP(i); d.classList.add('flash'); setTimeout(() => d.classList.remove('flash'), 900);}
+function feed(text){
+  const f = document.getElementById('feed'); const p = document.createElement('p'); p.className = 'me';
+  p.innerHTML = `<span>你　${esc(text)}</span><small>剛剛</small>`; f.insertBefore(p, f.children[1]);
+  while (f.querySelectorAll('p').length > 4) f.lastElementChild.remove();
+  document.getElementById('bd-tip').textContent = '這就是主辦單位在後台看到的畫面';
+  const r = board.getBoundingClientRect(); if (r.top > innerHeight || r.bottom < 0) { const b = document.getElementById('sync-badge'); b.classList.add('on'); clearTimeout(b.h); b.h = setTimeout(() => b.classList.remove('on'), 1800); }
+}
+addEventListener('message', e => {
+  const d = e.data; if (e.origin !== location.origin || !d || !d.amei || e.source !== demo.contentWindow) return;
+  if (d.type === 'unlock'){ if(!seen.p){seen.p=1;bump(0);} bump(1); feed(`拾到「${d.name}」`); }
+  if (d.type === 'card'){ bump(2); feed('完成剪貼簿，圖卡上牆'); const t = document.getElementById('tiles'); if (t && d.thumb){ const i = new Image(); i.className = 'me'; i.alt = '你的剪貼簿圖卡'; i.src = d.thumb; t.prepend(i); t.lastElementChild.remove(); } }
+  if (d.type === 'checkin'){ if(!seen.p){seen.p=1;bump(0);bump(2);} bump(1); feed(`第 ${d.idx+1} 站「${d.name}」打卡`); }
+  if (d.type === 'answer'){ if(!seen.p){seen.p=1;bump(0);} bump(1); if(d.ok) bump(2); feed(`第 ${d.q+1} 題 ${d.ok ? '答對 +' + d.pt : '答錯'}`); }
+  if (d.type === 'survey'){ const n = KP[0]; bump(1, (KP[1]*n + d.sat) / (n+1)); bump(0); feed('送出問卷 ' + '★'.repeat(d.sat)); }
+  if (d.type === 'prize'){ bump(2); feed('抽中 ' + d.n); }
+});
+function setMode(k){
+  MODE = k; const m = MODES[k];
+  document.querySelectorAll('#try .tabs button').forEach(x => { const on = x.dataset.t === k; x.classList.toggle('on', on); x.setAttribute('aria-selected', on); });
+  if (!demo.src.endsWith(m.src)) demo.src = m.src;
   document.getElementById('try-open').href = m.src;
   document.getElementById('try-name').textContent = m.n + '｜' + m.o;
   document.getElementById('try-desc').textContent = m.d;
   const ul = document.getElementById('try-list'); ul.textContent = '';
   m.l.forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.append(li); });
-}));
+  renderBoard();
+}
+document.querySelectorAll('#try .tabs button').forEach(b => b.addEventListener('click', () => setMode(b.dataset.t)));
+setMode('market');
 
 /* 表單收件：與 AMEI 主站共用同一個 Google Apps Script 網址 */
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbweo6wyVg04lpsMvAnTrt-oyDYwj8tRkamnYqd7aBKvh9dJdmUUos7W6aqUl3PQzhjH/exec";

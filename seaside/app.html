@@ -360,7 +360,7 @@ function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');c
 
 /* ---------- collect ---------- */
 const isTimedOpen=()=>{const d=new Date(),m=d.getHours()*60+d.getMinutes();return m>=TH.timed.from&&m<=TH.timed.to};
-function unlock(id){if(!S.unlocked.includes(id)){S.unlocked.push(id);save();toast('拾到了：'+ST.find(s=>s.id===id).name);}renderCards();}
+function unlock(id){if(!S.unlocked.includes(id)){S.unlocked.push(id);save();toast('拾到了：'+ST.find(s=>s.id===id).name);notify('unlock',{name:ST.find(s=>s.id===id).name,n:S.unlocked.length,total:ST.length});}renderCards();}
 function renderCards(){
   $('#count').textContent=`已拾到 ${S.unlocked.length} / ${ST.length}`;
   const box=$('#cards');box.textContent='';
@@ -531,7 +531,7 @@ async function renderFinal(){
     x.fillStyle=C.soft;x.font='400 30px '+HAND;x.textAlign='right';x.fillText('—— '+S.received.f,330,bh/2-20);x.restore();
   }
   x.fillStyle='rgba(248,248,242,.8)';x.font='400 28px '+HAND;x.textAlign='center';x.fillText(TH.foot,W/2,H-36);
-  const url=c.toDataURL('image/jpeg',.9);$('#out').src=url;finalUrl=url;
+  const url=c.toDataURL('image/jpeg',.9);$('#out').src=url;finalUrl=url;notify('card',{thumb:thumbOf(c,216,384)});
 }
 let finalUrl='';
 $('#save').hidden=false;

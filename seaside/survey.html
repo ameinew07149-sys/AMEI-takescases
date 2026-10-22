@@ -136,7 +136,7 @@ $('#next').onclick=()=>{
   const q=QS[S.step],v=S.a[q.k];
   const empty=q.type==='text'?false:q.type==='multi'?!(v&&v.length):!v;
   if(empty){$('#qErr').hidden=false;$('#qErr').textContent='這題還沒回答喔';return}
-  if(S.step<QS.length-1){S.step++;save();renderQ();}else{save();show(S.prize?'prize':'draw');}
+  if(S.step<QS.length-1){S.step++;save();renderQ();}else{save();if(!S.prize)notify('survey',{sat:S.a.sat,fav:S.a.fav||[]});show(S.prize?'prize':'draw');}
 };
 
 /* ---------- wheel ---------- */
@@ -163,7 +163,7 @@ $('#spin').onclick=()=>{
   const step=ts=>{const p=Math.min(1,(ts-t0)/dur),e=1-Math.pow(1-p,4);rot=start+(target-start)*e;drawWheel(rot);
     if(p<1)requestAnimationFrame(step);else{spinning=false;$('#spin').disabled=false;
       const code='LT-'+Array.from({length:4},()=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*32)]).join('');
-      S.prize={n:PRIZES[i].n,p:PRIZES[i].p,code,at:Date.now()};save();setTimeout(()=>show('prize'),600);}};
+      S.prize={n:PRIZES[i].n,p:PRIZES[i].p,code,at:Date.now()};save();notify('prize',{n:PRIZES[i].n,p:PRIZES[i].p});setTimeout(()=>show('prize'),600);}};
   requestAnimationFrame(step);
 };
 function renderPrize(){if(!S.prize)return;$('#pz').textContent=S.prize.n+'｜'+S.prize.p;$('#pcode').textContent=S.prize.code;
