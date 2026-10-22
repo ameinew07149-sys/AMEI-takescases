@@ -344,3 +344,7 @@ function wrapText(x,text,maxW){const out=[];text.split('\n').forEach(par=>{let l
 function todayStr(){const d=new Date();return`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`}
 function paperGround(x,W,H,C){x.fillStyle=C.paper;x.fillRect(0,0,W,H);x.fillStyle=rgba(C.ink,.035);for(let i=0;i<2600;i++)x.fillRect(Math.random()*W,Math.random()*H,2,2);}
 function downloadURL(url,name){const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();}
+
+/* ---------- 示範版／完整版：網址加 ?full=1 才顯示完整功能 ---------- */
+const FULL=new URLSearchParams(location.search).has('full');
+const LITE_NOTE='這是簡化示範版，只開放部分內容。完整玩法與主辦單位功能，歡迎洽詢 AMEI。';

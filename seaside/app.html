@@ -316,7 +316,7 @@ const TEMPLATES={
 };
 const TK=(new URLSearchParams(location.search).get('t')||'sea');
 const TH=TEMPLATES[TK]||TEMPLATES.sea, SC=SCENE[TEMPLATES[TK]?TK:'sea'];
-const C=TH.pal, ST=TH.stations;
+const C=TH.pal, ST=FULL?TH.stations:TH.stations.filter(s=>s.code).slice(0,3); // 示範版只開放 3 個攤位
 
 /* ---------- apply template text and colors ---------- */
 (function applyTemplate(){
@@ -326,7 +326,7 @@ const C=TH.pal, ST=TH.stations;
   document.title=TH.title+'｜互動示範';
   const set=(id,v,html)=>{const el=$('#'+id);if(el)el[html?'innerHTML':'textContent']=v;};
   set('brand',TH.title);set('coverStamp',TH.stamp);set('coverTitle',TH.h1,1);set('coverText',TH.intro);
-  $('#coverList').innerHTML='';TH.list.forEach(t=>{const li=document.createElement('li');li.textContent=t;$('#coverList').append(li);});
+  $('#coverList').innerHTML='';(FULL?TH.list:[TH.list[0].replace('5 種','3 種'),TH.list[1]]).forEach(t=>{const li=document.createElement('li');li.textContent=t;$('#coverList').append(li);});
   set('go',TH.go);set('collectH',TH.collectH);set('collectP',TH.collectP);
   set('bottleH',TH.letterH);set('bottleP',TH.letterP);set('throw',TH.send);set('recvStamp',TH.recv);set('finalH',TH.finalH);
   $('#letterText').placeholder=TH.letterPh;$('#bottle').alt=TH.itemAlt;
@@ -547,7 +547,12 @@ $('#coverArt').setAttribute('aria-label',TH.title+'封面插畫');
 cover();
 $('#go').onclick=()=>show('collect');
 $('#toBook').onclick=()=>show('book');
-$('#toBottle').onclick=()=>show('bottle');
+if(FULL)$('#toBottle').onclick=()=>show('bottle');
+else{ // 示範版：略過第四步，直接完成
+  $('#toBottle').textContent='完成我的剪貼簿';$('#toBottle').onclick=()=>show('final');
+  document.querySelector('.steps span[data-s=bottle]').remove();
+  const p=document.createElement('p');p.className='hint';p.textContent=LITE_NOTE;$('#s-final').insertBefore(p,$('#again'));
+}
 $('#toFinal').onclick=()=>show('final');
 $('#again').onclick=()=>show('book');
 document.querySelectorAll('.steps span').forEach(sp=>{sp.style.cursor='pointer';sp.onclick=()=>{if(current!=='cover')show(sp.dataset.s)}});

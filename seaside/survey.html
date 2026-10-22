@@ -103,7 +103,8 @@ const QS=[
  {k:'say',type:'text',q:'有什麼想對主辦單位說的？',hint:'選填，也可以直接按完成'}
 ];
 const PRIZES=[{n:'頭獎',p:'在地伴手禮禮盒',w:3,c:'#C2463A'},{n:'參加獎',p:'燈節紀念徽章',w:24,c:'#3E4A8C'},{n:'三獎',p:'市集 100 元抵用券',w:20,c:'#F0B43C'},{n:'參加獎',p:'燈節紀念徽章',w:23,c:'#5A63A8'},{n:'二獎',p:'手作蓮花燈',w:7,c:'#E8574A'},{n:'參加獎',p:'燈節紀念徽章',w:23,c:'#2E3778'}];
-const KEY='survey-lantern-v1';
+if(!FULL)QS.splice(0,QS.length,...QS.filter(q=>['sat','fav','again'].includes(q.k))); // 示範版只有 3 題
+const KEY=FULL?'survey-lantern-v1':'survey-lantern-lite-v1';
 let S={a:{},step:0,prize:null};
 try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v)S=Object.assign(S,v)}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
@@ -169,6 +170,7 @@ function renderPrize(){if(!S.prize)return;$('#pz').textContent=S.prize.n+'｜'+S
   const d=new Date(S.prize.at);$('#ptime').textContent=`抽獎時間 ${todayStr()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
 $('#reset').onclick=()=>{S={a:{},step:0,prize:null};save();rot=0;show('cover');toast('已清除示範紀錄');};
 
+if(!FULL){document.querySelector('.thanks').textContent=LITE_NOTE;document.querySelector('.ticket small:last-child').remove();}
 (function cover(){const x=$('#coverArt').getContext('2d');SCENE.lantern.draw(x,800,600,0,false,C);SCENE.lantern.cover(x,C,{firework:makeSticker('firework',C)});})();
 $('#go').onclick=()=>show(S.prize?'prize':'survey');
 document.querySelectorAll('.steps span').forEach(sp=>{sp.style.cursor='pointer';sp.onclick=()=>{if(current==='cover')return;const t=sp.dataset.s;

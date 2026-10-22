@@ -18,6 +18,7 @@
 .mapwrap{position:relative;background:var(--sheet);border-radius:8px;box-shadow:0 1px 0 var(--line),0 14px 30px -20px rgba(60,40,30,.5);overflow:hidden}
 .mapwrap canvas{display:block;width:100%;aspect-ratio:6/5}
 .pin{position:absolute;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;border:3px solid var(--ink);background:var(--sheet);font-family:var(--mono);font-weight:700;font-size:15px;display:grid;place-items:center;cursor:pointer;padding:0;color:var(--ink)}
+.pin.off{background:var(--paper);border-color:var(--line);color:var(--line);cursor:default}
 .pin.done{background:var(--sea);color:var(--sheet);border-color:var(--sea-deep)}
 .pin.now{box-shadow:0 0 0 0 rgba(217,161,62,.7);animation:pulse 1.6s infinite;background:var(--sun)}
 @keyframes pulse{to{box-shadow:0 0 0 16px rgba(217,161,62,0)}}
@@ -73,7 +74,7 @@
       <canvas class="cover-art" id="coverArt" width="800" height="600" aria-label="紅磚老街與燈籠"></canvas>
       <p>跟著手機上的路線散步老街，每一站都有語音解說和今昔對比。</p>
       <div class="meta"><span>5 站</span><span>約 1.2 公里</span><span>約 60 分鐘</span><span>語音導覽</span></div>
-      <ol class="small">
+      <ol class="small" id="coverList">
         <li>看地圖走到下一站，聽語音解說</li>
         <li>拉動滑桿，比較這裡以前和現在的樣子</li>
         <li>輸入解說牌上的暗號打卡，集滿 5 站領完走證書</li>
@@ -152,12 +153,13 @@ const STOPS=[
   story:['天色暗下來以後，老街一盞盞燈籠亮起來，整條街換上另一種表情。','燈籠上的字，有些是店名，有些是祝福的話。走完全程了，回頭再看一次這條街吧。'],
   then:'昔：節慶時掛滿燈籠的老街（示意）',next:''}
 ];
-const KEY='tour-street-v1';
+const KEY=FULL?'tour-street-v1':'tour-street-lite-v1';
 let S={done:[],name:''};
 try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v)S=Object.assign(S,v)}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const STK={};STOPS.forEach(s=>{const c=makeSticker(s.id,C);STK[s.id]={cv:c,url:c.toDataURL()}});
-const nextIdx=()=>STOPS.findIndex(s=>!S.done.includes(s.id));
+const OPEN=FULL?STOPS.length:2; // 示範版只開放前 2 站
+const nextIdx=()=>STOPS.slice(0,OPEN).findIndex(s=>!S.done.includes(s.id));
 let cur=0,current='cover';
 
 function show(n){current=n;['cover','map','stop','cert'].forEach(s=>$('#s-'+s).hidden=s!==n);
@@ -191,17 +193,18 @@ function renderMap(){
   drawMap();
   const wrap=$('#mapwrap');wrap.querySelectorAll('.pin').forEach(p=>p.remove());
   const ni=nextIdx();
-  STOPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pin'+(S.done.includes(s.id)?' done':'')+(i===ni?' now':'');
+  STOPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pin'+(i>=OPEN?' off':'')+(S.done.includes(s.id)?' done':'')+(i===ni?' now':'');
     b.textContent=i+1;b.style.left=s.xy[0]*100+'%';b.style.top=`calc(${s.xy[1]} * (100% - 37px))`;b.setAttribute('aria-label',`第 ${i+1} 站 ${s.name}`);
     b.onclick=()=>openStop(i);wrap.append(b);});
-  $('#mapHint').textContent=ni<0?'5 站都走完了，領取你的完走證書吧！':`下一站：第 ${ni+1} 站「${STOPS[ni].name}」，點地圖上的站點看解說。`;
+  $('#mapHint').textContent=ni<0?(FULL?'5 站都走完了，領取你的完走證書吧！':'示範版到這裡。完整路線與更多功能，歡迎洽詢 AMEI。'):`下一站：第 ${ni+1} 站「${STOPS[ni].name}」，點地圖上的站點看解說。`;
   const box=$('#stops');box.textContent='';
-  STOPS.forEach((s,i)=>{const ok=S.done.includes(s.id);const r=document.createElement('button');r.type='button';r.className='stoprow'+(ok||i===ni?'':' locked');
+  STOPS.forEach((s,i)=>{const ok=S.done.includes(s.id);if(i>=OPEN){const r=document.createElement('div');r.className='stoprow locked';r.innerHTML=`<img src="${STK[s.id].url}" alt=""><span><b>${i+1}. ${s.name}</b><small>示範版未開放</small></span><em>完整版</em>`;box.append(r);return;}
+    const r=document.createElement('button');r.type='button';r.className='stoprow'+(ok||i===ni?'':' locked');
     r.innerHTML=`<img src="${STK[s.id].url}" alt=""><span><b>${i+1}. ${s.name}</b><small>${ok?'已打卡':(i===ni?'下一站':'還沒到')}</small></span><em class="${ok?'ok':''}">${ok?'✓ 打卡':'STOP '+(i+1)}</em>`;
     r.onclick=()=>openStop(i);box.append(r);});
-  $('#toCert').hidden=ni>=0;
+  $('#toCert').hidden=!FULL||ni>=0;
 }
-function openStop(i){cur=i;show('stop');}
+function openStop(i){if(i>=OPEN){toast('示範版只開放前 '+OPEN+' 站');return}cur=i;show('stop');}
 
 /* ---------- stop ---------- */
 function drawCompare(s){
@@ -217,13 +220,13 @@ function renderStop(){
   const s=STOPS[cur],ok=S.done.includes(s.id),ni=nextIdx();
   $('#dots').innerHTML=STOPS.map((t,i)=>`<i class="${S.done.includes(t.id)?'done':(i===cur?'now':'')}"></i>`).join('');
   $('#stopNo').textContent=`STOP ${cur+1} / ${STOPS.length}`;$('#stopName').textContent=s.name;
-  drawCompare(s);$('#cut').value=50;$('#compare').style.setProperty('--cut','50%');
-  $('#thenCap').textContent=s.then+'。正式版放入地方提供的老照片。';
+  if(FULL){drawCompare(s);$('#cut').value=50;$('#compare').style.setProperty('--cut','50%');
+  $('#thenCap').textContent=s.then+'。正式版放入地方提供的老照片。';}
   $('#storyText').innerHTML=s.story.map(p=>`<p></p>`).join('');[...$('#storyText').children].forEach((p,i)=>p.textContent=s.story[i]);
   $('#codeWhere').textContent='暗號在「'+s.where+'」';$('#codeDemo').textContent='示範暗號：'+s.code;
   $('#code').value='';$('#codeErr').hidden=true;
-  $('#checkBox').hidden=ok;$('#stamped').hidden=!ok;$('#stampImg').src=STK[s.id].url;$('#stampTxt').textContent=`已收集 ${S.done.length} / ${STOPS.length} 站`;
-  $('#nextBox').hidden=!ok;$('#nextTxt').textContent=s.next||'5 站都走完了！回到路線地圖領取完走證書。';
+  $('#checkBox').hidden=ok;$('#stamped').hidden=!ok;$('#stampImg').src=STK[s.id].url;$('#stampTxt').textContent=`已收集 ${S.done.length} / ${OPEN} 站`;
+  $('#nextBox').hidden=!ok;$('#nextTxt').textContent=(!FULL&&cur===OPEN-1)?'示範版到這裡，回到地圖看看完整路線吧！':(s.next||'5 站都走完了！回到路線地圖領取完走證書。');
   $('#speak').textContent='▶ 播放語音導覽';
 }
 $('#cut').addEventListener('input',e=>$('#compare').style.setProperty('--cut',e.target.value+'%'));
@@ -269,6 +272,16 @@ async function makeCert(){
 }
 $('#makeCert').onclick=makeCert;
 $('#save').onclick=()=>{if(certUrl){downloadURL(certUrl,'老街散步完走證書.jpg');toast('已下載，iPhone 請改用長按圖片儲存');}};
+
+/* ---------- 示範版：精簡功能 ---------- */
+if(!FULL){
+  $('#compare').remove();$('#thenCap').remove();
+  document.querySelector('.steps span[data-s=cert]').remove();
+  document.querySelector('.meta').innerHTML='<span>示範 2 站</span><span>語音導覽</span><span>解說牌打卡</span>';
+  $('#coverList').innerHTML='<li>看地圖走到下一站，聽語音解說</li><li>輸入解說牌上的暗號打卡</li>';
+  document.querySelector('#s-cover .cover > p:not(.stamp)').textContent='跟著手機上的路線散步老街，每一站都有語音解說。';
+  const p=document.createElement('p');p.className='hint';p.textContent=LITE_NOTE;$('#s-map').append(p);
+}
 
 /* ---------- boot ---------- */
 (function cover(){const x=$('#coverArt').getContext('2d');SCENE.street.draw(x,800,600,0,false,C);SCENE.street.cover(x,C,{lantern:STK.lantern.cv});})();

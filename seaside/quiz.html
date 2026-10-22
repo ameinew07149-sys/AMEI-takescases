@@ -14,7 +14,7 @@
 <style>
 /* Layout: station quiz — stations → code → timed question → explanation → result card. */
 .who{display:grid;gap:6px;margin-top:12px}
-.who input{border:0;border-bottom:1.5px dashed var(--line);background:transparent;font-size:20px;padding:4px 2px;font-family:var(--hand)}
+.who input{min-width:0;width:100%;border:0;border-bottom:1.5px dashed var(--line);background:transparent;font-size:20px;padding:4px 2px;font-family:var(--hand)}
 .score{display:flex;justify-content:space-between;align-items:center;background:var(--sheet);border-radius:10px;padding:10px 14px;box-shadow:0 1px 0 var(--line)}
 .score b{font-family:var(--mono);font-size:26px;color:var(--sea-deep)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -123,6 +123,7 @@
 (()=>{
 const $=s=>document.querySelector(s);
 const C=PAL.farm;applyPal(C);
+/* 示範版：精簡畫面 */
 /* 題目為示範內容，正式活動依課程目標與在地農友、老師確認 */
 const QS=[
  {id:'rice',name:'稻穗',code:'金黃',where:'第 1 關關卡牌（田埂入口）',q:'稻子從插秧到收割，大約需要多久？',o:['約 1 個月','約 4 個月','約 1 年','約 3 年'],a:1,
@@ -136,7 +137,8 @@ const QS=[
  {id:'firefly',name:'螢火蟲',code:'夜光',where:'第 5 關關卡牌（生態池）',q:'螢火蟲發光，最主要是為了什麼？',o:['照亮回家的路','求偶和溝通','取暖','嚇跑青蛙'],a:1,
   e:'螢火蟲用閃光的節奏和同伴溝通、尋找伴侶。牠們只在水質乾淨、少用農藥的環境出現，是環境好壞的指標。'}
 ];
-const TIME=20,KEY='quiz-farm-v1';
+if(!FULL)QS.splice(2); // 示範版只開放 2 題
+const TIME=20,KEY=FULL?'quiz-farm-v1':'quiz-farm-lite-v1';
 let S={name:'',ans:{}}; // ans[id]={pick,ok,pt}
 try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v)S=Object.assign(S,v)}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
@@ -191,6 +193,7 @@ function feedback(a){const q=QS[cur];$('#fb').hidden=false;$('#fb').className='f
 let outUrl='';
 async function renderResult(){
   const n=correct(),sc=total(),name=S.name||'闖關者';
+  if(!FULL){$('#rWho').textContent=name;$('#rScore').textContent=sc;$('#rCount').textContent=`答對 ${n} / ${QS.length} 題`;$('#rBadge').textContent='';return;}
   $('#rWho').textContent=name;$('#rScore').textContent=sc;$('#rCount').textContent=`答對 ${n} / ${QS.length} 題`;$('#rBadge').textContent='稱號：'+badge(n);
   const others=[['第 3 組',880],['小芸',790],['阿哲',705],['第 1 組',620],['Ruby',540],['第 5 組',430]];
   const list=[...others.map(([a,b])=>({a,b})),{a:name,b:sc,me:1}].sort((x,y)=>y.b-x.b).slice(0,6);
@@ -220,6 +223,13 @@ $('#nm').value=S.name||'';$('#nm').addEventListener('input',e=>{S.name=e.target.
 $('#go').onclick=()=>show('map');$('#back').onclick=()=>show('map');$('#again').onclick=()=>show('map');$('#toResult').onclick=()=>show('result');
 document.querySelectorAll('.steps span').forEach(sp=>{sp.style.cursor='pointer';sp.onclick=()=>{if(current==='cover')return;const t=sp.dataset.s;
   if(t==='q'){const i=QS.findIndex(q=>!S.ans[q.id]);cur=i<0?0:i;openQ();}else if(t==='result'&&Object.keys(S.ans).length<QS.length)toast('闖完 5 關才有成績單喔');else show(t);}});
+if(!FULL){
+  $('#rank').parentElement.remove();document.querySelector('.teacher').remove();$('#out').remove();document.querySelector('#s-result .hint').remove();$('#save').remove();
+  const p=document.createElement('p');p.className='hint';p.textContent=LITE_NOTE;$('#s-result').insertBefore(p,$('#again'));
+  document.querySelector('#s-cover .cover > p:not(.stamp)').textContent='沿著田邊走，找到關卡牌，回答問題、聽解說。示範版開放 2 關。';
+  document.querySelector('#s-cover ol li:last-child').textContent='每題答完都有解說';
+  document.querySelector('#s-result h2+p').textContent='看看你答對了幾題。';
+}
 show('cover');
 })();
 </script>
