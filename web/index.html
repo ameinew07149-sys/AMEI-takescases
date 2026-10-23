@@ -162,6 +162,10 @@ header .btn{padding:8px 16px;font-size:13.5px}
 .tagx.l{left:12px;background:rgba(181,64,47,.92);color:#fff}
 .tagx.r{right:12px;background:rgba(31,58,51,.92);color:#fff}
 .hint{font-size:13px;color:var(--ink2);margin-top:10px}
+.focus{background:var(--green);color:#F3EEE2;border-radius:16px;padding:18px 20px;margin-bottom:6px}
+.focus small{font-size:12px;letter-spacing:.15em;color:var(--gold2);font-weight:700}
+.focus b{display:block;font-family:var(--serif);font-size:23px;line-height:1.35;margin:4px 0 6px}
+.focus p{font-size:13.5px;color:rgba(243,238,226,.75);line-height:1.6}
 .chg{list-style:none}
 .chg li{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:14px 0;border-bottom:1px solid var(--line);opacity:0;transform:translateX(10px);transition:.5s}
 .chg li.in{opacity:1;transform:none}
@@ -335,8 +339,8 @@ footer a{color:rgba(243,238,226,.85)}
 <!-- CASES -->
 <section id="cases"><div class="wrap">
   <div class="eb rv">BEFORE ／ AFTER</div>
-  <h2 class="rv">同樣的內容，換個框架就不一樣</h2>
-  <p class="sub rv">拖動把手，左邊改版前、右邊改版後。情境皆為虛構示範。</p>
+  <h2 class="rv">不同的網站，要的東西不一樣</h2>
+  <p class="sub rv">沒有一套公式。先判斷這類網站最重要的是什麼，再決定框架和美感。<br>拖動把手比較，情境皆為虛構示範。</p>
   <div class="ctabs rv" id="ctabs"></div>
   <div class="cgrid">
     <div class="rv">
@@ -347,7 +351,7 @@ footer a{color:rgba(243,238,226,.85)}
       </div>
       <div class="hint">← 拖動比較 →</div>
     </div>
-    <ul class="chg" id="chg"></ul>
+    <div><div class="focus rv" id="focus"><small>這類網站最重要的是</small><b id="fb"></b><p id="fw"></p></div><ul class="chg" id="chg"></ul></div>
   </div>
 </div></section>
 
@@ -450,7 +454,7 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
 /* cases */
 const CASES=[
- {name:'陶藝教室',url:'kojima-pottery.tw',
+ {name:'陶藝教室',url:'kojima-pottery.tw',focus:'零基礎的人敢不敢報名',why:'客人在意的是「我做得到嗎、要花多少」。先給答案，再談理念。',
   before:`<div class="mk" style="background:#fff;color:#444">
    <div style="background:#7a5c8f;color:#fff;text-align:center;padding:14px;font-size:24px;font-weight:900;letter-spacing:6px">小島陶藝</div>
    <div style="height:150px;background:linear-gradient(135deg,#c9b8d8,#9fb7c9);display:flex;align-items:center;justify-content:center;color:#fff;font-size:34px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,.25)">歡迎光臨</div>
@@ -467,34 +471,44 @@ const CASES=[
     ${[['手捏體驗','2 小時・零基礎','1,200'],['拉坯體驗','2.5 小時・含上釉','1,800'],['親子同樂','1 大 1 小','2,000']].map(c=>`<div style="background:#fff;border:1px solid #EADFCF;border-radius:14px;padding:14px 16px"><b>${c[0]}</b><div style="font-size:11.5px;color:#8a7f73">${c[1]}</div><div class="ser" style="font-weight:900;color:#9A6B3E;font-size:20px;margin-top:4px">NT$${c[2]}</div></div>`).join('')}</div>
    <div style="margin:14px 32px;font-size:12px;color:#6b6157;border-left:3px solid #C9A45C;padding-left:10px">★ 4.9・800+ 位學員｜老師日本學藝 3 年</div></div>`,
   chg:[['歡迎光臨','你會得到什麼'],['價格藏在電話裡','三種課程直接比價'],['自我介紹放最前','評價與實績一行帶過'],['找不到報名','預約按鈕在第一眼']]},
- {name:'活動報名',url:'harbor-market.tw',
+ {name:'活動報名',url:'harbor-market.tw',focus:'一打開就看到報名資訊',why:'參加者最想知道：哪天、在哪、多少錢、還能不能報。主視覺夠用就好，不必搶戲。',
   before:`<div class="mk" style="background:#f4f4f4;color:#444">
    <div style="padding:14px 28px;font-size:20px;font-weight:900;color:#2a5d8f">2026 港邊秋日市集 活動資訊</div>
    <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;padding:0 28px">
     <div style="height:380px;background:linear-gradient(160deg,#F0A35E,#E46A4A 50%,#2a5d8f);border-radius:4px;padding:18px;color:#fff;font-size:10px;line-height:1.6"><div style="font-size:26px;font-weight:900;line-height:1.2">港邊<br>秋日市集</div><div style="margin-top:200px">日期：11/22（六）10:00-17:00 地點：舊港倉庫前廣場 報名費：200 元 名額：40 攤 主辦：OO協會 協辦：OO里辦公處 指導：OO局…</div></div>
-    <div style="font-size:12.5px;line-height:2;color:#666">各位鄉親大家好！<br>本會為推廣在地產業、促進社區交流，將於秋天舉辦市集活動，歡迎有興趣的朋友踴躍參加。活動詳情請見左方海報，如有任何問題歡迎來電詢問。<br><br>注意事項：<br>1. 請自備桌椅<br>2. 不可使用明火<br>3. 請維持環境整潔<br>4. 主辦單位保留修改權利<br><br><u style="color:#2a5d8f;font-size:11px">點此報名（Google 表單）</u></div></div></div>`,
-  after:`<div class="mk" style="background:#FFF8EF;color:#2b2723">
-   <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:24px;padding:26px 32px;background:linear-gradient(120deg,#FBE3C8,#FFF8EF)">
-    <div><div style="font-size:11px;letter-spacing:.2em;color:#C0573A;font-weight:700">攤商招募中</div><div class="ser" style="font-size:36px;font-weight:900;line-height:1.2;margin:6px 0 12px">港邊秋日市集</div>
-     <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:700">${['📅 11/22（六）','📍 舊港倉庫前','💰 攤位 NT$200'].map(t=>`<span style="background:#fff;border:1px solid #F0D7BD;padding:6px 12px;border-radius:20px">${t}</span>`).join('')}</div></div>
-    <div style="background:#2b2723;color:#fff;border-radius:18px;padding:18px 20px;text-align:center"><div style="font-size:12px;opacity:.7">剩餘攤位</div><div class="ser" style="font-size:46px;font-weight:900;color:#F0A35E;line-height:1.1">12<small style="font-size:16px"> / 40</small></div><div style="background:#F0A35E;color:#2b2723;border-radius:22px;padding:10px;font-weight:900;margin-top:10px">立即報名攤位 →</div></div></div>
-   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:22px 32px">
-    ${[['01','線上填表','3 分鐘完成'],['02','繳費確認','匯款後 2 日內通知'],['03','當天報到','9:00 開放進場佈置']].map(s=>`<div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #F0E2D0"><div class="ser" style="color:#C0573A;font-weight:900">${s[0]}</div><b style="font-size:16px">${s[1]}</b><div style="font-size:12px;color:#8a7f73">${s[2]}</div></div>`).join('')}</div>
-   <div style="padding:0 32px;font-size:12px;color:#8a7f73">須知：自備桌椅・禁用明火・保持整潔　<u>完整辦法 ↓</u></div></div>`,
-  chg:[['資訊全塞在海報裡','日期地點費用一眼看到'],['看不出還能不能報','剩餘名額推一把'],['注意事項一長串','報名流程拆成 3 步'],['報名是一行小連結','報名按鈕放在第一眼']]},
- {name:'影像工作室',url:'lightdot-studio.tw',
-  before:`<div class="mk" style="background:#0d0d0d;color:#ddd">
-   <div style="height:250px;background:radial-gradient(circle at 30% 40%,#3a3a3a,#0d0d0d);display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:34px;font-weight:900;letter-spacing:10px;color:#fff">CREATIVITY</div><div style="font-size:13px;letter-spacing:8px;color:#999;margin-top:8px">PASSION ・ DREAM ・ FUTURE</div></div>
-   <div style="padding:16px 28px;font-size:12.5px;color:#999;text-align:center">服務項目：影片製作、2D 動畫、攝影、剪輯、後製、動態圖像、企業形象、婚禮紀錄、活動紀錄、產品拍攝…</div>
-   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 28px">${['#333','#2a2a2a','#3a3a3a','#262626','#303030','#2c2c2c','#383838','#242424'].map(c=>`<div style="height:72px;background:${c}"></div>`).join('')}</div></div>`,
-  after:`<div class="mk" style="background:#F6F4F0;color:#1d1d1b">
-   <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:26px;padding:26px 32px;align-items:center">
-    <div><div style="font-size:11px;letter-spacing:.2em;color:#C14B2E;font-weight:700">高雄・影像與 2D 動畫</div><div class="ser" style="font-size:32px;font-weight:900;line-height:1.25;margin:8px 0">30 秒，<br>讓客人看懂你的品牌</div><div style="display:flex;gap:10px;margin-top:14px;align-items:center"><span style="background:#1d1d1b;color:#fff;padding:10px 20px;border-radius:24px;font-weight:700;font-size:14px">免費估價 →</span><span style="font-size:12px;color:#777">3 個工作天內回覆</span></div></div>
-    <div style="height:170px;border-radius:16px;background:linear-gradient(135deg,#2b2b2b,#C14B2E);position:relative"><span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center">▶</span></div></div>
-   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 32px">
-    ${[['品牌形象片','想讓官網更有質感的店家','NT$30,000 起'],['2D 動畫說明','產品難用文字解釋時','NT$25,000 起'],['活動紀錄','需要成果報告的主辦單位','NT$8,000 起']].map(c=>`<div style="background:#fff;border-radius:14px;padding:14px 16px;border:1px solid #E6E1D8"><b style="font-size:15px">${c[0]}</b><div style="font-size:11.5px;color:#888;margin:2px 0 6px">適合：${c[1]}</div><b class="ser" style="color:#C14B2E">${c[2]}</b></div>`).join('')}</div>
-   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:12px 32px">${[['咖啡品牌','形象片・觀看 2 萬次'],['社區協會','活動紀錄・結案使用'],['科技新創','2D 動畫・募資頁']].map(w=>`<div style="display:flex;gap:10px;align-items:center;font-size:12px"><div style="width:52px;height:38px;border-radius:8px;background:#ccc"></div><div><b>${w[0]}</b><div style="color:#888">${w[1]}</div></div></div>`).join('')}</div></div>`,
-  chg:[['口號很大，看不出做什麼','第一屏講具體成果'],['服務項目一長串','依「適合誰」分三類'],['作品只有圖，沒有說明','作品附客戶類型與成果'],['沒有價格參考','起價讓客人自己篩選']]}
+    <div style="font-size:12.5px;line-height:2;color:#666">各位鄉親大家好！<br>本會為推廣在地產業、促進社區交流，將於秋天舉辦市集活動，內容包含在地美食、手作體驗、街頭表演與親子活動等精彩內容，歡迎有興趣的朋友踴躍參加。活動詳情請見左方海報，如有任何問題歡迎來電詢問。<br><br>注意事項：1. 請自備桌椅 2. 不可使用明火 3. 請維持環境整潔 4. 主辦單位保留修改權利<br><br><u style="color:#2a5d8f;font-size:11px">點此報名（Google 表單）</u></div></div></div>`,
+  after:`<div class="mk" style="background:#FFF9F1;color:#2b2723">
+   <div style="height:96px;background:linear-gradient(100deg,#E9744F,#F2A65A 55%,#F6D49A);display:flex;align-items:center;justify-content:space-between;padding:0 32px;color:#fff;position:relative;overflow:hidden">
+    <div><div style="font-size:10.5px;letter-spacing:.3em;font-weight:700;opacity:.9">HARBOR AUTUMN MARKET</div><div class="ser" style="font-size:30px;font-weight:900;line-height:1.2">港邊秋日市集</div></div>
+    <div style="position:absolute;right:-30px;top:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.18)"></div><div style="position:absolute;right:90px;bottom:-60px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.12)"></div></div>
+   <div style="margin:-18px 32px 0;position:relative;background:#fff;border-radius:16px;box-shadow:0 10px 26px rgba(120,70,30,.14);display:grid;grid-template-columns:repeat(4,1fr) 180px;align-items:center">
+    ${[['日期','11/22（六）','10:00–17:00'],['地點','舊港倉庫前','捷運站步行 5 分'],['攤位費','NT$200','現場可刷卡'],['剩餘攤位','12 / 40','額滿即止']].map((x,i)=>`<div style="padding:14px 18px;${i?'border-left:1px solid #F1E4D4':''}"><div style="font-size:10.5px;color:#a08c78;font-weight:700">${x[0]}</div><div class="ser" style="font-size:17px;font-weight:900;color:${i==3?'#D3542F':'#2b2723'}">${x[1]}</div><div style="font-size:10.5px;color:#8a7f73">${x[2]}</div></div>`).join('')}
+    <div style="padding:0 14px"><div style="background:#D3542F;color:#fff;border-radius:12px;padding:14px 0;text-align:center;font-weight:900;font-size:15px">立即報名 →</div></div></div>
+   <div style="padding:22px 32px 0;display:flex;justify-content:space-between;align-items:baseline"><b class="ser" style="font-size:18px">活動快速導覽</b><span style="font-size:11px;color:#a08c78">左右滑動看更多 →</span></div>
+   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:10px 32px">
+    ${[['🍢','在地小吃','30 攤','#F6C27A','#E9744F'],['🧶','手作體驗','10:30 / 14:00','#B9D3C2','#4F8A72'],['🎷','港邊表演','15:00 開唱','#C7B8E0','#6E5AA8'],['🎈','親子市集','全天開放','#F4B8B0','#D3542F']].map(c=>`<div style="border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.06)"><div style="height:92px;background:linear-gradient(135deg,${c[3]},${c[4]});display:flex;align-items:flex-end;padding:8px 10px;font-size:26px">${c[0]}</div><div style="padding:9px 11px"><b style="font-size:13.5px">${c[1]}</b><div style="font-size:10.5px;color:#8a7f73">${c[2]}</div></div></div>`).join('')}</div>
+   <div style="padding:6px 32px;font-size:11px;color:#a08c78">須知：自備桌椅・禁用明火　<u>完整辦法</u></div></div>`,
+  chg:[['大海報佔滿第一屏','主視覺縮成簡單橫幅'],['日期、費用藏在海報小字','報名資訊直接列在第一屏'],['看不出還有沒有名額','剩餘名額和報名按鈕並排'],['活動內容寫成一大段','圖卡式快速導覽']]},
+ {name:'影像工作室',url:'lightdot-studio.tw',focus:'第一眼的震撼',why:'客人買的是質感。網站本身就是作品，第一屏要讓人記住，而不是像公司簡介。',
+  before:`<div class="mk" style="background:#fff;color:#444">
+   <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 28px;border-bottom:1px solid #e5e5e5;font-size:12px;color:#666"><b style="font-size:17px;color:#1f5fa8">光點影像工作室</b><span>首頁｜關於我們｜服務項目｜作品集｜聯絡我們</span></div>
+   <div style="padding:18px 28px"><div style="font-size:18px;font-weight:900;color:#1f5fa8;border-left:4px solid #1f5fa8;padding-left:10px">關於我們</div>
+    <div style="font-size:12px;line-height:1.9;color:#666;margin-top:8px">光點影像工作室成立於 2018 年，專業團隊擁有多年拍攝經驗，致力於提供客戶最優質的影像服務。我們秉持專業、熱忱、創新的精神，為每一位客戶量身打造最合適的影像作品。</div></div>
+   <div style="padding:0 28px"><div style="font-size:18px;font-weight:900;color:#1f5fa8;border-left:4px solid #1f5fa8;padding-left:10px">服務項目</div>
+    <div style="font-size:12px;line-height:1.9;color:#666;margin-top:6px">・形象影片拍攝 ・2D 動畫製作 ・活動紀錄 ・婚禮紀錄 ・產品攝影 ・後製剪輯</div></div>
+   <div style="padding:14px 28px"><div style="font-size:18px;font-weight:900;color:#1f5fa8;border-left:4px solid #1f5fa8;padding-left:10px">作品集</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px">${[1,2,3,4,5].map(n=>`<div><div style="height:56px;background:#d9d9d9"></div><div style="font-size:10px;color:#999;margin-top:3px">作品 ${n}</div></div>`).join('')}</div></div>
+   <div style="padding:6px 28px;font-size:10.5px;color:#999">電話：07-000-0000　Email：service@example.com</div></div>`,
+  after:`<div class="mk" style="background:#0B0B0C;color:#F2EEE6">
+   <div style="position:absolute;inset:0;background:radial-gradient(120% 90% at 78% 35%,rgba(214,92,52,.55),transparent 55%),radial-gradient(80% 70% at 20% 80%,rgba(60,90,120,.45),transparent 60%),linear-gradient(180deg,#121214,#0B0B0C)"></div>
+   <div style="position:absolute;left:0;right:0;top:0;height:26px;background:#000"></div><div style="position:absolute;left:0;right:0;bottom:0;height:26px;background:#000"></div>
+   <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.2px);background-size:4px 4px"></div>
+   <div style="position:relative;display:flex;justify-content:space-between;align-items:center;padding:38px 40px 0;font-size:11.5px;letter-spacing:.2em"><b style="letter-spacing:.35em">LIGHTDOT</b><span style="opacity:.7">WORKS　SERVICES　<b style="border:1px solid rgba(242,238,230,.6);padding:6px 14px;border-radius:20px;opacity:1">預約估價</b></span></div>
+   <div style="position:relative;padding:58px 40px 0"><div style="font-size:11px;letter-spacing:.45em;color:#E8875E">SHOWREEL 2026</div>
+    <div class="ser" style="font-size:56px;font-weight:900;line-height:1.08;margin-top:10px;letter-spacing:.02em">把品牌<br>拍成一部電影。</div>
+    <div style="display:flex;align-items:center;gap:14px;margin-top:22px"><span style="width:46px;height:46px;border-radius:50%;border:1.5px solid #F2EEE6;display:flex;align-items:center;justify-content:center;font-size:14px">▶</span><span style="font-size:12px;letter-spacing:.2em;opacity:.8">PLAY 60s REEL</span></div></div>
+   <div style="position:absolute;left:40px;right:40px;bottom:40px;display:grid;grid-template-columns:repeat(5,1fr);gap:6px">${['#3b2a24,#B5532F','#1f2c38,#5E86A8','#2b2b22,#A8915A','#2a1d2b,#8B5A8F','#1c2a24,#4F8A72'].map(g=>`<div style="height:46px;border-radius:4px;background:linear-gradient(135deg,${g});opacity:.9"></div>`).join('')}</div></div>`,
+  chg:[['白底套版，像公司簡介','全幅暗色主視覺，第一眼就記住'],['第一屏是「關於我們」','一句大標講出風格'],['作品是一排灰色縮圖','作品做成底片條，點開看影片'],['聯絡方式在最下面','預約估價固定在右上角']]}
 ];
 (()=>{
  const tabs=$('#ctabs'),lb=$('#lb'),la=$('#la'),chg=$('#chg'),cmp=$('#cmp'),sc=$('#scale'),hd=$('#hd'),curl=$('#curl');
@@ -505,6 +519,7 @@ const CASES=[
   const step=t=>{const e=t-t0;let p=kf[kf.length-1][1];for(let k=1;k<kf.length;k++){if(e<=kf[k][0]){const [a,pa]=kf[k-1],[b,pb]=kf[k];const r=(e-a)/(b-a),ez=r<.5?2*r*r:1-Math.pow(-2*r+2,2)/2;p=pa+(pb-pa)*ez;break}}setPos(p);if(e<kf[kf.length-1][0])anim=requestAnimationFrame(step)};anim=requestAnimationFrame(step)}
  function show(i){const c=CASES[i];lb.innerHTML=c.before;la.innerHTML=c.after;curl.textContent=c.url;
   [...tabs.children].forEach((b,k)=>b.classList.toggle('on',k===i));
+  $('#fb').textContent=c.focus;$('#fw').textContent=c.why;
   chg.innerHTML=c.chg.map((x,k)=>`<li><i>${k+1}</i><div><s>${x[0]}</s><b>${x[1]}</b></div></li>`).join('');
   [...chg.children].forEach((li,k)=>setTimeout(()=>li.classList.add('in'),200+k*220));fit();sweep()}
  tabs.innerHTML=CASES.map((c,i)=>`<button type="button">${c.name}</button>`).join('');
@@ -514,7 +529,7 @@ const CASES=[
  cmp.addEventListener('pointermove',e=>{if(drag)at(e)});
  cmp.addEventListener('pointerup',()=>drag=false);cmp.addEventListener('pointercancel',()=>drag=false);
  addEventListener('resize',fit);
- lb.innerHTML=CASES[0].before;la.innerHTML=CASES[0].after;curl.textContent=CASES[0].url;fit();setPos(94);
+ lb.innerHTML=CASES[0].before;la.innerHTML=CASES[0].after;curl.textContent=CASES[0].url;$('#fb').textContent=CASES[0].focus;$('#fw').textContent=CASES[0].why;fit();setPos(94);
  tabs.children[0].classList.add('on');
  const o=new IntersectionObserver(es=>{if(es[0].isIntersecting){show(0);o.disconnect()}},{threshold:.35});o.observe(cmp);
 })();
