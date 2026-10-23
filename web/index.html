@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>一頁式網站｜先搭框架，再談美感｜AMEI 阿梅</title>
+<meta name="description" content="企劃出身的一頁式網站製作。先理解框架：誰在看、在意什麼、看完要做什麼，再設計成好讀、有質感、會動的網頁。架構健檢 NT$2,000，一頁式網站 NT$8,000 起，含風格與佈局 3 次修改。">
+<link rel="canonical" href="https://ameinew07149-sys.github.io/AMEI-takescases/web/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="一頁式網站｜看得懂，才會按下去｜AMEI 阿梅">
+<meta property="og:description" content="先搭框架，再談美感。企劃出身的一頁式網站，讓客人看完就選中你。">
+<meta property="og:url" content="https://ameinew07149-sys.github.io/AMEI-takescases/web/">
+<meta property="og:image" content="https://ameinew07149-sys.github.io/AMEI-takescases/og.png">
+<meta property="og:locale" content="zh_TW">
+<meta name="theme-color" content="#FAF8F3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAF8F3;--paper2:#F2EEE5;--sheet:#fff;--ink:#1F1D1A;--ink2:#5C5850;--line:#E3DDD0;
+  --gold:#9A7B3E;--gold2:#C9A45C;--green:#1F3A33;--green2:#2F6B5A;--red:#B5402F;
+  --serif:'Noto Serif TC','Noto Serif CJK TC',serif;--sans:'Noto Sans TC','Noto Sans CJK TC',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+.eb{font-size:12.5px;letter-spacing:.28em;color:var(--gold);font-weight:700}
+h2{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.4vw,46px);line-height:1.28;margin:8px 0 10px}
+.sub{color:var(--ink2);font-size:clamp(15px,1.8vw,17px)}
+section{padding:96px 0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:700;font-size:15.5px;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-2px)}
+.b-dark{background:var(--green);color:#F3EEE2;box-shadow:0 10px 24px rgba(31,58,51,.22)}
+.b-ghost{border:1.5px solid var(--ink)}
+.b-line{background:#06C755;color:#fff;box-shadow:0 10px 24px rgba(6,199,85,.25)}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ===== header with service tabs ===== */
+header{position:sticky;top:0;z-index:50;background:rgba(250,248,243,.93);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:18px;height:62px}
+.logo{font-family:var(--serif);font-weight:900;font-size:18px;white-space:nowrap}
+.tabs{display:flex;gap:4px;margin:0 auto;background:var(--paper2);padding:4px;border-radius:999px}
+.tabs a{font-size:14px;font-weight:700;color:var(--ink2);padding:7px 15px;border-radius:999px;white-space:nowrap;transition:.25s}
+.tabs a:hover{color:var(--ink)}
+.tabs a.on{background:var(--ink);color:var(--paper)}
+header .btn{padding:8px 16px;font-size:13.5px}
+@media(max-width:860px){
+  header .wrap{flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:10px;gap:8px}
+  .tabs{order:3;width:100%;overflow-x:auto;margin:0;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  header .btn{display:none}
+  .tabs a{padding:7px 11px;font-size:13px}
+}
+
+/* ===== hero ===== */
+.hero{padding:70px 0 90px;position:relative;overflow:hidden}
+.hero:before{content:'';position:absolute;right:-200px;top:-160px;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(201,164,92,.17),transparent 65%);pointer-events:none}
+.hgrid{display:grid;grid-template-columns:1fr 1.08fr;gap:54px;align-items:center}
+@media(max-width:900px){.hgrid{grid-template-columns:1fr;gap:40px}}
+.hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(42px,6.6vw,78px);line-height:1.14;margin:14px 0 18px}
+.hero h1 em{font-style:normal;color:var(--gold);background:linear-gradient(transparent 72%,rgba(201,164,92,.3) 72%)}
+.hero .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px}
+.chips span{font-size:13px;font-weight:700;border:1px solid var(--line);background:var(--sheet);padding:5px 12px;border-radius:999px;color:var(--ink2)}
+.chips b{color:var(--gold)}
+
+/* browser frame */
+.br{background:var(--sheet);border-radius:14px;box-shadow:0 30px 70px rgba(40,35,25,.16),0 0 0 1px rgba(0,0,0,.04);overflow:hidden}
+.br .bar{height:32px;background:#EEEAE1;display:flex;align-items:center;gap:6px;padding:0 12px}
+.br .bar i{width:10px;height:10px;border-radius:50%;background:#D3CCBE}
+.br .bar span{flex:1;margin-left:8px;height:18px;border-radius:6px;background:#fff;font-size:10.5px;color:#9a948a;line-height:18px;padding:0 10px;overflow:hidden;white-space:nowrap}
+
+/* build demo */
+.build .vp{height:400px;position:relative;overflow:hidden}
+.build .pg{position:absolute;left:0;right:0;top:0;padding:18px;transition:transform 1.4s cubic-bezier(.5,0,.2,1)}
+.blk{position:relative;border:1.5px dashed #CFC7B6;border-radius:10px;margin-bottom:12px;transition:all .7s;background:transparent;overflow:hidden}
+.blk .lb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#A39A88;letter-spacing:.06em;transition:opacity .5s}
+.blk .ct{opacity:0;transition:opacity .6s .2s}
+.b-nav{height:30px}
+.b-hero{height:150px}
+.b-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.b-row .blk{height:88px;margin:0}
+.b-price{height:74px;margin-top:12px}
+.b-cta{height:46px;width:56%;margin:12px auto 0;border-radius:999px}
+.b-more{height:110px}
+/* stage 1: content */
+.build.s1 .lb,.build.s2 .lb,.build.s3 .lb{opacity:0}
+.build.s1 .ct,.build.s2 .ct,.build.s3 .ct{opacity:1}
+/* stage 2: visual */
+.build.s2 .blk,.build.s3 .blk{border:1.5px solid transparent}
+.build.s2 .b-hero,.build.s3 .b-hero{background:linear-gradient(120deg,#EBDDC8,#F7F1E6 55%,#DCE6DD)}
+.build.s2 .b-row .blk,.build.s3 .b-row .blk{background:#fff;box-shadow:0 6px 16px rgba(40,35,25,.08)}
+.build.s2 .b-price,.build.s3 .b-price{background:var(--green);color:#F3EEE2}
+.build.s2 .b-cta,.build.s3 .b-cta{background:var(--gold2);color:var(--ink)}
+.build.s2 .b-nav,.build.s3 .b-nav{border-bottom:1px solid var(--line);border-radius:0}
+.build.s2 .b-more,.build.s3 .b-more{background:var(--paper2)}
+.build.s3 .pg{transform:translateY(-150px)}
+.build .ct{height:100%;padding:10px 14px;font-size:12px}
+.b-nav .ct{display:flex;justify-content:space-between;align-items:center;padding:0 10px;font-weight:900;font-family:var(--serif)}
+.b-nav .ct small{font-family:var(--sans);font-weight:500;color:#999;font-size:10.5px}
+.b-hero .ct{padding:18px 20px}
+.b-hero .ct b{display:block;font-family:var(--serif);font-size:24px;line-height:1.3}
+.b-hero .ct p{color:#6b6157;margin-top:6px}
+.b-row .ct b{display:block;font-size:13px}
+.b-row .ct span{color:#8a7f73;font-size:11px}
+.b-row .ct em{display:block;font-style:normal;font-family:var(--serif);font-weight:900;color:var(--gold);font-size:16px;margin-top:6px}
+.b-price .ct{display:flex;align-items:center;justify-content:space-between;padding:0 18px}
+.b-price .ct b{font-family:var(--serif);font-size:24px}
+.b-cta .ct{display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+.b-more .ct{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px}
+.b-more .ct div{border-radius:8px}
+.steps4{display:flex;gap:6px;margin-top:16px}
+.steps4 div{flex:1;text-align:center;font-size:13px;font-weight:700;color:#A39A88;padding:9px 4px;border-radius:10px;border:1px solid var(--line);background:var(--sheet);transition:.4s}
+.steps4 div b{display:block;font-family:var(--serif);font-size:16px}
+.steps4 div.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.steps4 div.on b{color:var(--gold2)}
+.build.s3 .b-cta{animation:pulse 1.2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(201,164,92,.25)}}
+
+/* ===== framework ===== */
+.fw{background:var(--green);color:#F3EEE2;text-align:center}
+.fw .eb{color:var(--gold2)}
+.fw .sub{color:rgba(243,238,226,.72)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:44px;text-align:left}
+@media(max-width:800px){.vs{grid-template-columns:1fr}}
+.vs>div{border-radius:20px;padding:24px;border:1px solid rgba(243,238,226,.16)}
+.vs h3{font-family:var(--serif);font-size:22px;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.vs h3 i{font-style:normal;font-size:12px;font-family:var(--sans);padding:3px 10px;border-radius:999px}
+.vs .bad h3 i{background:rgba(181,64,47,.25);color:#F1A79A}
+.vs .good{background:rgba(255,255,255,.05);border-color:rgba(201,164,92,.45)}
+.vs .good h3 i{background:rgba(201,164,92,.25);color:var(--gold2)}
+.vs p{font-size:14px;color:rgba(243,238,226,.65)}
+.mini{margin-top:18px;height:220px;border-radius:12px;background:#F7F4EC;position:relative;overflow:hidden}
+.mini .m{position:absolute;left:14px;right:14px;border-radius:7px;transition:all 1s cubic-bezier(.5,0,.2,1);display:flex;align-items:center;padding:0 10px;font-size:11.5px;font-weight:700;color:#5c5850}
+/* bad: template boxes, content overflows */
+.bad .m{background:#E4DFD3}
+.bad .m.x{background:#F3D3CC;color:var(--red)}
+.bad .m.x:after{content:'✕';margin-left:auto;font-weight:900}
+.good .m{background:#E9E2D2}
+.good .m.k{background:var(--green2);color:#fff}
+.good .m.g{background:var(--gold2);color:var(--ink);justify-content:center}
+.qs{display:flex;justify-content:center;gap:10px;margin-top:30px;flex-wrap:wrap}
+.qs span{font-family:var(--serif);font-weight:700;font-size:17px;padding:8px 18px;border-radius:999px;border:1px solid rgba(201,164,92,.5);color:var(--gold2)}
+
+/* ===== cases ===== */
+.ctabs{display:flex;gap:8px;flex-wrap:wrap;margin:34px 0 18px}
+.ctabs button{font:inherit;font-weight:700;font-size:14.5px;border:1px solid var(--line);background:var(--sheet);padding:9px 18px;border-radius:999px;cursor:pointer;color:var(--ink2);transition:.25s}
+.ctabs button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.cgrid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:30px;align-items:start}
+@media(max-width:900px){.cgrid{grid-template-columns:1fr}}
+.cmpbox{position:relative;border-radius:0 0 14px 14px;overflow:hidden;user-select:none;touch-action:pan-y;cursor:ew-resize;background:#fff}
+.cmpbox .scale{position:absolute;left:0;top:0;width:800px;height:480px;transform-origin:0 0}
+.cmpbox .lay{position:absolute;inset:0;overflow:hidden}
+.cmpbox .after{clip-path:inset(0 0 0 50%)}
+.handle{position:absolute;top:0;bottom:0;width:3px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.08);left:50%;transform:translateX(-50%);z-index:4;pointer-events:none}
+.handle:after{content:'⇆';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--ink)}
+.tagx{position:absolute;bottom:12px;z-index:5;font-size:12px;font-weight:900;padding:4px 12px;border-radius:999px;pointer-events:none}
+.tagx.l{left:12px;background:rgba(181,64,47,.92);color:#fff}
+.tagx.r{right:12px;background:rgba(31,58,51,.92);color:#fff}
+.hint{font-size:13px;color:var(--ink2);margin-top:10px}
+.chg{list-style:none}
+.chg li{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:14px 0;border-bottom:1px solid var(--line);opacity:0;transform:translateX(10px);transition:.5s}
+.chg li.in{opacity:1;transform:none}
+.chg i{width:30px;height:30px;border-radius:50%;background:var(--green2);color:#fff;font-style:normal;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center}
+.chg s{display:block;color:#a69f93;font-size:13.5px;text-decoration-color:rgba(181,64,47,.6)}
+.chg b{font-size:16px}
+/* mock page shared */
+.mk{width:800px;height:480px;font-family:var(--sans);overflow:hidden;position:relative}
+.mk .ser{font-family:var(--serif)}
+
+/* ===== motion demos ===== */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+@media(max-width:960px){.mgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.mgrid{grid-template-columns:1fr}}
+.mc{background:var(--sheet);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.mc .stage{height:190px;background:var(--paper2);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.mc .tx{padding:14px 16px 16px}
+.mc b{font-family:var(--serif);font-size:18px;display:block}
+.mc .tx span{font-size:13.5px;color:var(--ink2)}
+.cnt{font-family:var(--serif);font-weight:900;font-size:58px;color:var(--green);line-height:1}
+.cnt small{font-size:20px;color:var(--gold)}
+.cntl{font-size:12px;color:var(--ink2);text-align:center;margin-top:6px}
+.rows{width:78%}
+.rows div{height:30px;border-radius:8px;background:#fff;margin-bottom:9px;box-shadow:0 4px 10px rgba(0,0,0,.05);opacity:0;animation:rin 4s infinite;display:flex;align-items:center;padding:0 10px;gap:8px;font-size:11.5px;font-weight:700;color:#6b6157}
+.rows div i{width:14px;height:14px;border-radius:4px;background:var(--gold2)}
+.rows div:nth-child(2){animation-delay:.35s}.rows div:nth-child(3){animation-delay:.7s}
+@keyframes rin{0%{opacity:0;transform:translateY(16px)}15%,80%{opacity:1;transform:none}100%{opacity:0}}
+.sw{background:#fff;border-radius:14px;padding:12px;width:80%;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+.sw .t{display:flex;background:var(--paper2);border-radius:999px;padding:3px;position:relative;font-size:12px;font-weight:700}
+.sw .t span{flex:1;text-align:center;padding:5px;position:relative;z-index:1;transition:color .3s}
+.sw .t:before{content:'';position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);background:var(--ink);border-radius:999px;transition:transform .4s}
+.sw.b .t:before{transform:translateX(100%)}
+.sw .t span.on{color:#fff}
+.sw .pr{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;font-size:12px;color:#6b6157}
+.sw .pr b{font-family:var(--serif);font-size:24px;color:var(--gold);transition:opacity .3s}
+.ph{width:110px;height:170px;border-radius:18px;background:#1b1b18;padding:5px;position:relative}
+.ph .s{width:100%;height:100%;border-radius:14px;background:#fff;overflow:hidden;position:relative}
+.ph .sc{animation:scr 5s ease-in-out infinite;padding:8px}
+.ph .sc div{height:30px;border-radius:5px;background:var(--paper2);margin-bottom:6px}
+.ph .sc div:first-child{height:50px;background:linear-gradient(120deg,#EBDDC8,#DCE6DD)}
+@keyframes scr{0%,15%{transform:none}50%,65%{transform:translateY(-120px)}100%{transform:none}}
+.ph .stk{position:absolute;left:8px;right:8px;bottom:8px;height:20px;border-radius:10px;background:var(--green);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+/* ===== pain ===== */
+.pain{margin-top:40px;display:grid;gap:12px}
+.pr2{display:grid;grid-template-columns:1fr 46px 1fr;align-items:center;gap:10px;background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:18px 22px}
+.pr2 .a{color:var(--ink2);font-size:15.5px;position:relative;width:max-content;max-width:100%}
+.pr2 .a:after{content:'';position:absolute;left:0;top:52%;height:2px;background:rgba(181,64,47,.7);width:0;transition:width .7s .3s}
+.pr2.in .a:after{width:100%}
+.pr2 .ar{text-align:center;color:var(--gold);font-weight:900;font-size:20px}
+.pr2 .b{font-family:var(--serif);font-weight:900;font-size:17.5px;color:var(--green)}
+@media(max-width:640px){.pr2{grid-template-columns:1fr;gap:4px}.pr2 .ar{text-align:left;transform:rotate(90deg);width:20px}}
+
+/* ===== price ===== */
+.price{background:var(--paper2)}
+.plans{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;margin-top:40px}
+@media(max-width:800px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--sheet);border:1px solid var(--line);border-radius:22px;padding:30px 28px;position:relative}
+.plan.main{background:var(--green);color:#F3EEE2;border:0}
+.plan .tg{font-size:12.5px;font-weight:700;letter-spacing:.15em;color:var(--gold)}
+.plan.main .tg{color:var(--gold2)}
+.plan h3{font-family:var(--serif);font-size:25px;margin-top:4px}
+.plan .p{font-family:var(--serif);font-weight:900;font-size:46px;line-height:1.1;margin:10px 0 4px}
+.plan .p small{font-size:18px;margin:0 3px}
+.plan .nt{font-size:13.5px;opacity:.72}
+.plan ul{list-style:none;margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.plan li{font-size:13.5px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--paper2)}
+.plan.main li{background:rgba(255,255,255,.1)}
+.plan li.hl{background:var(--gold2);color:var(--ink)}
+.badge{position:absolute;top:-13px;right:24px;background:var(--gold2);color:var(--ink);font-weight:900;font-size:12.5px;padding:4px 13px;border-radius:999px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+@media(max-width:700px){.flow{grid-template-columns:repeat(2,1fr)}}
+.flow div{background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:13px;color:var(--ink2)}
+.flow b{display:block;font-family:var(--serif);font-size:16px;color:var(--ink)}
+.flow b i{font-style:normal;color:var(--gold);margin-right:6px}
+.foot-note{font-size:13px;color:var(--ink2);margin-top:14px}
+.foot-note b{color:var(--gold)}
+
+/* ===== family ===== */
+.fam{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
+@media(max-width:800px){.fam{grid-template-columns:1fr}}
+.fam a{border-radius:20px;overflow:hidden;position:relative;min-height:190px;padding:22px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;transition:transform .35s,box-shadow .35s}
+.fam a:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.15)}
+.fam small{font-size:12px;letter-spacing:.2em;opacity:.75;font-weight:700}
+.fam b{font-family:var(--serif);font-size:22px;margin:4px 0 2px}
+.fam span{font-size:13.5px;opacity:.85}
+.fam i{position:absolute;right:20px;top:18px;font-style:normal;font-size:20px}
+
+/* ===== contact ===== */
+.ct2{background:var(--green);color:#F3EEE2;text-align:center}
+.ct2 .eb{color:var(--gold2)}
+.ct2 .acts{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:28px}
+.ct2 .b-ghost{border-color:rgba(243,238,226,.5)}
+.perk{display:inline-block;margin-top:18px;font-size:13.5px;color:var(--gold2);border:1px solid rgba(201,164,92,.45);border-radius:999px;padding:5px 15px}
+footer{background:#172c26;color:rgba(243,238,226,.55);font-size:13px;padding:22px 0;text-align:center}
+footer a{color:rgba(243,238,226,.85)}
+.line-fab{position:fixed;right:16px;bottom:16px;z-index:40;display:none}
+@media(max-width:700px){.line-fab{display:inline-flex}section{padding:76px 0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.chg li{opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <a class="logo" href="../">AMEI 阿梅</a>
+  <nav class="tabs" aria-label="AMEI 服務">
+    <a href="../">企劃服務</a>
+    <a href="../party/">婚禮・尾牙</a>
+    <a href="../seaside/">活動互動</a>
+    <a class="on" href="./" aria-current="page">一頁式網站</a>
+  </nav>
+  <a class="btn b-line" href="https://lin.ee/y8NnuAy" target="_blank" rel="noopener">LINE 洽詢</a>
+</div></header>
+
+<!-- HERO -->
+<section class="hero"><div class="wrap hgrid">
+  <div>
+    <div class="eb rv">ONE-PAGE WEBSITE</div>
+    <h1 class="rv">看得懂，<br>才會<em>按下去</em>。</h1>
+    <p class="sub rv">企劃出身的一頁式網站：<b>先搭框架，再談美感。</b></p>
+    <div class="acts rv">
+      <a class="btn b-dark" href="#price">架構健檢 NT$2,000 →</a>
+      <a class="btn b-ghost" href="#cases">看改版前後</a>
+    </div>
+    <div class="chips rv"><span><b>50+</b> 份企劃</span><span><b>100+</b> 場活動</span><span>修改 <b>3</b> 次</span></div>
+  </div>
+  <div class="rv">
+    <div class="br build s0" id="build">
+      <div class="bar"><i></i><i></i><i></i><span>your-brand.github.io</span></div>
+      <div class="vp"><div class="pg">
+        <div class="blk b-nav"><div class="lb">導覽</div><div class="ct">小島陶藝<small>課程　作品　預約</small></div></div>
+        <div class="blk b-hero"><div class="lb">誰在看？他想要什麼？</div><div class="ct"><b>週末 2 小時，<br>捏出你的第一個杯子</b><p>零基礎可・作品燒好寄到家</p></div></div>
+        <div class="b-row">
+          <div class="blk"><div class="lb">你的不同</div><div class="ct"><b>手捏體驗</b><span>2 小時</span><em>1,200</em></div></div>
+          <div class="blk"><div class="lb">你的不同</div><div class="ct"><b>拉坯體驗</b><span>含上釉</span><em>1,800</em></div></div>
+          <div class="blk"><div class="lb">你的不同</div><div class="ct"><b>親子同樂</b><span>1 大 1 小</span><em>2,000</em></div></div>
+        </div>
+        <div class="blk b-price"><div class="lb">多少錢？</div><div class="ct"><span>體驗課</span><b>NT$1,200 起</b></div></div>
+        <div class="blk b-cta"><div class="lb">下一步</div><div class="ct">立即預約週末體驗 →</div></div>
+        <div class="blk b-more" style="margin-top:12px"><div class="lb">信任：作品・評價</div><div class="ct"><div style="background:linear-gradient(135deg,#C8A98A,#8E6E52)"></div><div style="background:linear-gradient(135deg,#A9B8B0,#6E837A)"></div><div style="background:linear-gradient(135deg,#E2D3BC,#B59B78)"></div></div></div>
+      </div></div>
+    </div>
+    <div class="steps4" id="bsteps"><div class="on"><b>01</b>框架</div><div><b>02</b>內容</div><div><b>03</b>視覺</div><div><b>04</b>動態</div></div>
+  </div>
+</div></section>
+
+<!-- FRAMEWORK -->
+<section class="fw"><div class="wrap">
+  <div class="eb rv">THE DIFFERENCE</div>
+  <h2 class="rv">門檻不在會不會做，<br>在懂不懂框架</h2>
+  <p class="sub rv">版型誰都能套。決定客人留不留下來的，是順序。</p>
+  <div class="vs">
+    <div class="bad rv"><h3>先套版型，再塞內容<i>常見做法</i></h3><p>格子先決定好，內容硬擠進去</p>
+      <div class="mini" id="mbad">
+        <div class="m" style="top:14px;height:44px">大圖輪播：歡迎光臨</div>
+        <div class="m" style="top:66px;height:52px">關於我們（三段文字）</div>
+        <div class="m" style="top:126px;height:36px">相簿</div>
+        <div class="m" style="top:170px;height:36px">聯絡方式</div>
+      </div></div>
+    <div class="good rv"><h3>先定框架，再設計<i>阿梅的做法</i></h3><p>依客人的問題排順序，再上視覺</p>
+      <div class="mini" id="mgood">
+        <div class="m" style="top:14px;height:44px">大圖輪播：歡迎光臨</div>
+        <div class="m" style="top:66px;height:52px">關於我們（三段文字）</div>
+        <div class="m" style="top:126px;height:36px">相簿</div>
+        <div class="m" style="top:170px;height:36px">聯絡方式</div>
+      </div></div>
+  </div>
+  <div class="qs rv"><span>誰在看？</span><span>他在意什麼？</span><span>看完要做什麼？</span></div>
+</div></section>
+
+<!-- CASES -->
+<section id="cases"><div class="wrap">
+  <div class="eb rv">BEFORE ／ AFTER</div>
+  <h2 class="rv">同樣的內容，換個框架就不一樣</h2>
+  <p class="sub rv">拖動把手，左邊改版前、右邊改版後。情境皆為虛構示範。</p>
+  <div class="ctabs rv" id="ctabs"></div>
+  <div class="cgrid">
+    <div class="rv">
+      <div class="br"><div class="bar"><i></i><i></i><i></i><span id="curl"></span></div>
+        <div class="cmpbox" id="cmp"><div class="scale" id="scale">
+          <div class="lay before" id="lb"></div><div class="lay after" id="la"></div>
+        </div><div class="handle" id="hd"></div><span class="tagx l">改版前</span><span class="tagx r">改版後</span></div>
+      </div>
+      <div class="hint">← 拖動比較 →</div>
+    </div>
+    <ul class="chg" id="chg"></ul>
+  </div>
+</div></section>
+
+<!-- MOTION -->
+<section style="padding-top:20px"><div class="wrap">
+  <div class="eb rv">MOTION</div>
+  <h2 class="rv">動態，只用在幫助理解的地方</h2>
+  <div class="mgrid">
+    <div class="mc rv"><div class="stage" style="flex-direction:column"><div class="cnt"><span id="cnt">0</span><small>+</small></div><div class="cntl">位學員上過課</div></div><div class="tx"><b>數字跳動</b><span>讓實績被看見</span></div></div>
+    <div class="mc rv"><div class="stage"><div class="rows"><div><i></i>報名</div><div><i></i>上課</div><div><i></i>取件</div></div></div><div class="tx"><b>依序出現</b><span>流程一步一步懂</span></div></div>
+    <div class="mc rv"><div class="stage"><div class="sw" id="sw"><div class="t"><span class="on">單堂</span><span>4 堂套票</span></div><div class="pr"><span id="swl">手捏體驗</span><b id="swp">1,200</b></div></div></div><div class="tx"><b>切換比較</b><span>不用私訊問價</span></div></div>
+    <div class="mc rv"><div class="stage"><div class="ph"><div class="s"><div class="sc"><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="stk">預約 →</div></div></div></div><div class="tx"><b>固定按鈕</b><span>想報名時不卡住</span></div></div>
+  </div>
+</div></section>
+
+<!-- PAIN -->
+<section style="padding-top:20px"><div class="wrap">
+  <div class="eb rv">PAIN ／ FIX</div>
+  <h2 class="rv">常見卡關，先幫你避開</h2>
+  <div class="pain">
+    <div class="pr2 rv"><div class="a">需求說不清，來回改十幾次</div><div class="ar">→</div><div class="b">第一次會談就用企劃方式對齊</div></div>
+    <div class="pr2 rv"><div class="a">很漂亮，但看不懂在賣什麼</div><div class="ar">→</div><div class="b">第一屏 3 秒講清楚</div></div>
+    <div class="pr2 rv"><div class="a">套版跟同業長一樣，只能比價</div><div class="ar">→</div><div class="b">挑出你的不同，放第一眼</div></div>
+    <div class="pr2 rv"><div class="a">修改次數沒講好，越改越貴</div><div class="ar">→</div><div class="b">風格與佈局 3 次，寫進報價</div></div>
+    <div class="pr2 rv"><div class="a">上線後改一個字都要找人</div><div class="ar">→</div><div class="b">接 Google 試算表，自己更新</div></div>
+  </div>
+</div></section>
+
+<!-- PRICE -->
+<section class="price" id="price"><div class="wrap">
+  <div class="eb rv">PRICING</div>
+  <h2 class="rv">先健檢，合拍再製作</h2>
+  <div class="plans">
+    <div class="plan rv"><div class="tg">先試試看</div><h3>架構健檢</h3><div class="p"><small>NT$</small>2,000</div><div class="nt">下單製作全額折抵</div>
+      <ul><li>標出卻步點</li><li>區塊順序建議</li><li>挑出你的特點</li><li>30 分鐘線上說明</li></ul></div>
+    <div class="plan main rv"><span class="badge">最常選</span><div class="tg">一次做好</div><h3>一頁式網站</h3><div class="p"><small>NT$</small>8,000<small>起</small></div><div class="nt">依區塊數量與功能報價</div>
+      <ul><li>含架構健檢</li><li>框架與文案順序</li><li>基本視覺設計</li><li>捲動動態</li><li>手機優先</li><li class="hl">風格與佈局修改 3 次</li><li>可接 Google 試算表</li></ul></div>
+  </div>
+  <div class="flow">
+    <div class="rv"><b><i>01</i>健檢</b>找出卻步點</div>
+    <div class="rv"><b><i>02</i>框架稿</b>確認順序才動工</div>
+    <div class="rv"><b><i>03</i>製作</b>可修改 3 次</div>
+    <div class="rv"><b><i>04</i>上線</b>附更新說明</div>
+  </div>
+  <p class="foot-note rv">＊每輪修改彙整後算 1 次，錯字等小修正不計。＊插畫或特殊美術風格，與合作設計師製作，<b>另行報價</b>。</p>
+</div></section>
+
+<!-- FAMILY -->
+<section><div class="wrap">
+  <div class="eb rv">MORE FROM AMEI</div>
+  <h2 class="rv">實際做過的頁面，也是我的其他服務</h2>
+  <div class="fam">
+    <a class="rv" href="../" style="background:linear-gradient(150deg,#2a2a26,#12343B)"><i>↗</i><small>企劃服務</small><b>標案・社區企劃</b><span>50+ 份企劃、活動攝影</span></a>
+    <a class="rv" href="../party/" style="background:linear-gradient(150deg,#3a2418,#15100e)"><i>↗</i><small>婚禮・尾牙</small><b>三端連動互動套組</b><span>祝福牆・問答・燈海｜NT$3,800 起</span></a>
+    <a class="rv" href="../seaside/" style="background:linear-gradient(150deg,#3D7585,#1C3F4B)"><i>↗</i><small>市集・走讀</small><b>活動互動模板</b><span>集章・導覽・問答・抽獎｜NT$8,000 起</span></a>
+  </div>
+</div></section>
+
+<!-- CONTACT -->
+<section class="ct2" id="contact"><div class="wrap">
+  <div class="eb rv">CONTACT</div>
+  <h2 class="rv">先聊聊，你想讓誰看見？</h2>
+  <div class="acts rv">
+    <a class="btn b-line" href="https://lin.ee/y8NnuAy" target="_blank" rel="noopener">加入 LINE 好友洽詢</a>
+    <a class="btn b-ghost" href="mailto:ameinew07149@gmail.com">Email 詢問</a>
+  </div>
+  <div class="perk rv">加入 LINE 好友洽詢，另有優惠</div>
+</div></section>
+
+<footer><div class="wrap">AMEI 阿梅｜活動企劃・把想法變成能玩的活動　·　<a href="../">回到企劃服務主頁</a></div></footer>
+<a class="btn b-line line-fab" href="https://lin.ee/y8NnuAy" target="_blank" rel="noopener">LINE 洽詢</a>
+
+<script>
+const $=s=>document.querySelector(s), RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,sib=[...el.parentElement.children].filter(x=>x.classList.contains('rv'));el.style.transitionDelay=Math.min(sib.indexOf(el),5)*90+'ms';el.classList.add('in');io.unobserve(el)}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* hero build loop */
+(()=>{const b=$('#build'),st=[...document.querySelectorAll('#bsteps div')];let i=0;
+ const go=()=>{b.className='br build s'+i;st.forEach((d,k)=>d.classList.toggle('on',k===i));i=(i+1)%4};
+ go();if(!RM)setInterval(go,2600);})();
+
+/* framework mini demos */
+(()=>{
+ const bad=[...document.querySelectorAll('#mbad .m')],good=[...document.querySelectorAll('#mgood .m')];
+ const badSeq=[
+  [{t:'大圖輪播：歡迎光臨'},{t:'關於我們（三段文字）'},{t:'相簿'},{t:'聯絡方式'}],
+  [{t:'大圖輪播：歡迎光臨',x:1},{t:'關於我們（文字太長，被截斷…',x:1},{t:'課程和價格塞進相簿說明',x:1},{t:'聯絡方式（一行小字）',x:1}]];
+ const goodPos=[[14,44],[66,52],[126,36],[170,36]];
+ const goodFinal=[{t:'週末 2 小時，捏出第一個杯子',c:'k',top:14,h:44},{t:'三種課程＋價格',top:66,h:40},{t:'作品・學員評價',top:114,h:40},{t:'立即預約 →',c:'g',top:164,h:40}];
+ let s=0;
+ function tick(){
+  const B=badSeq[s%2];bad.forEach((m,k)=>{m.textContent=B[k].t;m.classList.toggle('x',!!B[k].x)});
+  good.forEach((m,k)=>{m.className='m';if(s%2){const g=goodFinal[k];m.textContent=g.t;if(g.c)m.classList.add(g.c);m.style.top=g.top+'px';m.style.height=g.h+'px'}else{m.textContent=badSeq[0][k].t;m.style.top=goodPos[k][0]+'px';m.style.height=goodPos[k][1]+'px'}});
+  s++;
+ }
+ tick();setTimeout(()=>{tick();if(!RM)setInterval(tick,3200)},1400);
+})();
+
+/* cases */
+const CASES=[
+ {name:'陶藝教室',url:'kojima-pottery.tw',
+  before:`<div class="mk" style="background:#fff;color:#444">
+   <div style="background:#7a5c8f;color:#fff;text-align:center;padding:14px;font-size:24px;font-weight:900;letter-spacing:6px">小島陶藝</div>
+   <div style="height:150px;background:linear-gradient(135deg,#c9b8d8,#9fb7c9);display:flex;align-items:center;justify-content:center;color:#fff;font-size:34px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,.25)">歡迎光臨</div>
+   <div style="padding:16px 28px;font-size:12px;line-height:1.9;color:#777"><b style="color:#7a5c8f;font-size:15px">關於我們</b><br>小島陶藝成立於 2019 年，創辦人從小熱愛手作，大學畢業後前往日本學習陶藝三年，回台後決定在家鄉開設工作室，希望讓更多人感受到泥土的溫度。我們相信每一件作品都有自己的生命，也相信每個人都能找到屬於自己的創作方式，歡迎大家來玩。</div>
+   <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:0 28px"><div style="height:70px;background:#ddd"></div><div style="height:70px;background:#ddd"></div><div style="height:70px;background:#ddd"></div><div style="height:70px;background:#ddd"></div><div style="height:70px;background:#ddd"></div><div style="height:70px;background:#ddd"></div></div>
+   <div style="padding:12px 28px;font-size:11px;color:#999">課程資訊請來電洽詢 07-123-4567</div></div>`,
+  after:`<div class="mk" style="background:#FBF7F0;color:#2b2723">
+   <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 32px;font-size:13px;color:#7a6f63"><b class="ser" style="font-size:18px;color:#2b2723">小島陶藝</b><span>課程　作品　評價　<b style="background:#2b2723;color:#fff;padding:6px 14px;border-radius:20px">預約</b></span></div>
+   <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:26px;padding:16px 32px;align-items:center">
+    <div><div style="font-size:11px;letter-spacing:.2em;color:#9A6B3E;font-weight:700">高雄・週末手作</div><div class="ser" style="font-size:34px;font-weight:900;line-height:1.25;margin:8px 0">週末 2 小時，<br>捏出你的第一個杯子</div><div style="font-size:13px;color:#6b6157">零基礎可・作品燒好寄到家</div>
+     <div style="display:flex;gap:12px;align-items:center;margin-top:16px"><span style="background:#2b2723;color:#fff;padding:10px 20px;border-radius:24px;font-weight:700;font-size:14px">預約體驗 →</span><b style="color:#9A6B3E">NT$1,200 起</b></div></div>
+    <div style="height:190px;border-radius:18px;background:linear-gradient(135deg,#D9C2A2,#8E6E52)"></div></div>
+   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:6px 32px">
+    ${[['手捏體驗','2 小時・零基礎','1,200'],['拉坯體驗','2.5 小時・含上釉','1,800'],['親子同樂','1 大 1 小','2,000']].map(c=>`<div style="background:#fff;border:1px solid #EADFCF;border-radius:14px;padding:14px 16px"><b>${c[0]}</b><div style="font-size:11.5px;color:#8a7f73">${c[1]}</div><div class="ser" style="font-weight:900;color:#9A6B3E;font-size:20px;margin-top:4px">NT$${c[2]}</div></div>`).join('')}</div>
+   <div style="margin:14px 32px;font-size:12px;color:#6b6157;border-left:3px solid #C9A45C;padding-left:10px">★ 4.9・800+ 位學員｜老師日本學藝 3 年</div></div>`,
+  chg:[['歡迎光臨','你會得到什麼'],['價格藏在電話裡','三種課程直接比價'],['自我介紹放最前','評價與實績一行帶過'],['找不到報名','預約按鈕在第一眼']]},
+ {name:'活動報名',url:'harbor-market.tw',
+  before:`<div class="mk" style="background:#f4f4f4;color:#444">
+   <div style="padding:14px 28px;font-size:20px;font-weight:900;color:#2a5d8f">2026 港邊秋日市集 活動資訊</div>
+   <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;padding:0 28px">
+    <div style="height:380px;background:linear-gradient(160deg,#F0A35E,#E46A4A 50%,#2a5d8f);border-radius:4px;padding:18px;color:#fff;font-size:10px;line-height:1.6"><div style="font-size:26px;font-weight:900;line-height:1.2">港邊<br>秋日市集</div><div style="margin-top:200px">日期：11/22（六）10:00-17:00 地點：舊港倉庫前廣場 報名費：200 元 名額：40 攤 主辦：OO協會 協辦：OO里辦公處 指導：OO局…</div></div>
+    <div style="font-size:12.5px;line-height:2;color:#666">各位鄉親大家好！<br>本會為推廣在地產業、促進社區交流，將於秋天舉辦市集活動，歡迎有興趣的朋友踴躍參加。活動詳情請見左方海報，如有任何問題歡迎來電詢問。<br><br>注意事項：<br>1. 請自備桌椅<br>2. 不可使用明火<br>3. 請維持環境整潔<br>4. 主辦單位保留修改權利<br><br><u style="color:#2a5d8f;font-size:11px">點此報名（Google 表單）</u></div></div></div>`,
+  after:`<div class="mk" style="background:#FFF8EF;color:#2b2723">
+   <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:24px;padding:26px 32px;background:linear-gradient(120deg,#FBE3C8,#FFF8EF)">
+    <div><div style="font-size:11px;letter-spacing:.2em;color:#C0573A;font-weight:700">攤商招募中</div><div class="ser" style="font-size:36px;font-weight:900;line-height:1.2;margin:6px 0 12px">港邊秋日市集</div>
+     <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:700">${['📅 11/22（六）','📍 舊港倉庫前','💰 攤位 NT$200'].map(t=>`<span style="background:#fff;border:1px solid #F0D7BD;padding:6px 12px;border-radius:20px">${t}</span>`).join('')}</div></div>
+    <div style="background:#2b2723;color:#fff;border-radius:18px;padding:18px 20px;text-align:center"><div style="font-size:12px;opacity:.7">剩餘攤位</div><div class="ser" style="font-size:46px;font-weight:900;color:#F0A35E;line-height:1.1">12<small style="font-size:16px"> / 40</small></div><div style="background:#F0A35E;color:#2b2723;border-radius:22px;padding:10px;font-weight:900;margin-top:10px">立即報名攤位 →</div></div></div>
+   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:22px 32px">
+    ${[['01','線上填表','3 分鐘完成'],['02','繳費確認','匯款後 2 日內通知'],['03','當天報到','9:00 開放進場佈置']].map(s=>`<div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #F0E2D0"><div class="ser" style="color:#C0573A;font-weight:900">${s[0]}</div><b style="font-size:16px">${s[1]}</b><div style="font-size:12px;color:#8a7f73">${s[2]}</div></div>`).join('')}</div>
+   <div style="padding:0 32px;font-size:12px;color:#8a7f73">須知：自備桌椅・禁用明火・保持整潔　<u>完整辦法 ↓</u></div></div>`,
+  chg:[['資訊全塞在海報裡','日期地點費用一眼看到'],['看不出還能不能報','剩餘名額推一把'],['注意事項一長串','報名流程拆成 3 步'],['報名是一行小連結','報名按鈕放在第一眼']]},
+ {name:'影像工作室',url:'lightdot-studio.tw',
+  before:`<div class="mk" style="background:#0d0d0d;color:#ddd">
+   <div style="height:250px;background:radial-gradient(circle at 30% 40%,#3a3a3a,#0d0d0d);display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:34px;font-weight:900;letter-spacing:10px;color:#fff">CREATIVITY</div><div style="font-size:13px;letter-spacing:8px;color:#999;margin-top:8px">PASSION ・ DREAM ・ FUTURE</div></div>
+   <div style="padding:16px 28px;font-size:12.5px;color:#999;text-align:center">服務項目：影片製作、2D 動畫、攝影、剪輯、後製、動態圖像、企業形象、婚禮紀錄、活動紀錄、產品拍攝…</div>
+   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 28px">${['#333','#2a2a2a','#3a3a3a','#262626','#303030','#2c2c2c','#383838','#242424'].map(c=>`<div style="height:72px;background:${c}"></div>`).join('')}</div></div>`,
+  after:`<div class="mk" style="background:#F6F4F0;color:#1d1d1b">
+   <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:26px;padding:26px 32px;align-items:center">
+    <div><div style="font-size:11px;letter-spacing:.2em;color:#C14B2E;font-weight:700">高雄・影像與 2D 動畫</div><div class="ser" style="font-size:32px;font-weight:900;line-height:1.25;margin:8px 0">30 秒，<br>讓客人看懂你的品牌</div><div style="display:flex;gap:10px;margin-top:14px;align-items:center"><span style="background:#1d1d1b;color:#fff;padding:10px 20px;border-radius:24px;font-weight:700;font-size:14px">免費估價 →</span><span style="font-size:12px;color:#777">3 個工作天內回覆</span></div></div>
+    <div style="height:170px;border-radius:16px;background:linear-gradient(135deg,#2b2b2b,#C14B2E);position:relative"><span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center">▶</span></div></div>
+   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 32px">
+    ${[['品牌形象片','想讓官網更有質感的店家','NT$30,000 起'],['2D 動畫說明','產品難用文字解釋時','NT$25,000 起'],['活動紀錄','需要成果報告的主辦單位','NT$8,000 起']].map(c=>`<div style="background:#fff;border-radius:14px;padding:14px 16px;border:1px solid #E6E1D8"><b style="font-size:15px">${c[0]}</b><div style="font-size:11.5px;color:#888;margin:2px 0 6px">適合：${c[1]}</div><b class="ser" style="color:#C14B2E">${c[2]}</b></div>`).join('')}</div>
+   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:12px 32px">${[['咖啡品牌','形象片・觀看 2 萬次'],['社區協會','活動紀錄・結案使用'],['科技新創','2D 動畫・募資頁']].map(w=>`<div style="display:flex;gap:10px;align-items:center;font-size:12px"><div style="width:52px;height:38px;border-radius:8px;background:#ccc"></div><div><b>${w[0]}</b><div style="color:#888">${w[1]}</div></div></div>`).join('')}</div></div>`,
+  chg:[['口號很大，看不出做什麼','第一屏講具體成果'],['服務項目一長串','依「適合誰」分三類'],['作品只有圖，沒有說明','作品附客戶類型與成果'],['沒有價格參考','起價讓客人自己篩選']]}
+];
+(()=>{
+ const tabs=$('#ctabs'),lb=$('#lb'),la=$('#la'),chg=$('#chg'),cmp=$('#cmp'),sc=$('#scale'),hd=$('#hd'),curl=$('#curl');
+ let pos=50,anim=null;
+ function setPos(p){pos=Math.max(0,Math.min(100,p));la.style.clipPath=`inset(0 0 0 ${pos}%)`;hd.style.left=pos+'%'}
+ let first=true;function fit(){const w=cmp.clientWidth,s=w/800;sc.style.transform=`scale(${s})`;cmp.style.height=480*s+'px'}
+ function sweep(){if(RM){setPos(50);return}cancelAnimationFrame(anim);const t0=performance.now();const kf=[[0,94],[1100,94],[2500,6],[3300,6],[3900,4]];
+  const step=t=>{const e=t-t0;let p=kf[kf.length-1][1];for(let k=1;k<kf.length;k++){if(e<=kf[k][0]){const [a,pa]=kf[k-1],[b,pb]=kf[k];const r=(e-a)/(b-a),ez=r<.5?2*r*r:1-Math.pow(-2*r+2,2)/2;p=pa+(pb-pa)*ez;break}}setPos(p);if(e<kf[kf.length-1][0])anim=requestAnimationFrame(step)};anim=requestAnimationFrame(step)}
+ function show(i){const c=CASES[i];lb.innerHTML=c.before;la.innerHTML=c.after;curl.textContent=c.url;
+  [...tabs.children].forEach((b,k)=>b.classList.toggle('on',k===i));
+  chg.innerHTML=c.chg.map((x,k)=>`<li><i>${k+1}</i><div><s>${x[0]}</s><b>${x[1]}</b></div></li>`).join('');
+  [...chg.children].forEach((li,k)=>setTimeout(()=>li.classList.add('in'),200+k*220));fit();sweep()}
+ tabs.innerHTML=CASES.map((c,i)=>`<button type="button">${c.name}</button>`).join('');
+ [...tabs.children].forEach((b,i)=>b.onclick=()=>show(i));
+ let drag=false;const at=e=>{const r=cmp.getBoundingClientRect();setPos((e.clientX-r.left)/r.width*100)};
+ cmp.addEventListener('pointerdown',e=>{drag=true;cancelAnimationFrame(anim);cmp.setPointerCapture(e.pointerId);at(e)});
+ cmp.addEventListener('pointermove',e=>{if(drag)at(e)});
+ cmp.addEventListener('pointerup',()=>drag=false);cmp.addEventListener('pointercancel',()=>drag=false);
+ addEventListener('resize',fit);
+ lb.innerHTML=CASES[0].before;la.innerHTML=CASES[0].after;curl.textContent=CASES[0].url;fit();setPos(94);
+ tabs.children[0].classList.add('on');
+ const o=new IntersectionObserver(es=>{if(es[0].isIntersecting){show(0);o.disconnect()}},{threshold:.35});o.observe(cmp);
+})();
+
+/* motion demos */
+(()=>{const el=$('#cnt');let run=false;
+ const count=()=>{const t0=performance.now();const f=t=>{const r=Math.min((t-t0)/1600,1);el.textContent=Math.round(800*(1-Math.pow(1-r,3)));if(r<1)requestAnimationFrame(f)};requestAnimationFrame(f)};
+ const o=new IntersectionObserver(es=>{if(es[0].isIntersecting&&!run){run=true;count();if(!RM)setInterval(count,4200)}});o.observe(el);
+ const sw=$('#sw'),sp=sw.querySelectorAll('.t span'),p=$('#swp');let b=0;
+ if(!RM)setInterval(()=>{b^=1;sw.classList.toggle('b',!!b);sp[0].classList.toggle('on',!b);sp[1].classList.toggle('on',!!b);p.style.opacity=0;setTimeout(()=>{p.textContent=b?'4,200':'1,200';p.style.opacity=1},200)},2200);
+})();
+</script>
+</body>
+</html>
