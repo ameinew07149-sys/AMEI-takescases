@@ -209,6 +209,44 @@ header .btn{padding:8px 16px;font-size:13.5px}
 @keyframes scr{0%,15%{transform:none}50%,65%{transform:translateY(-120px)}100%{transform:none}}
 .ph .stk{position:absolute;left:8px;right:8px;bottom:8px;height:20px;border-radius:10px;background:var(--green);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
 
+.adm{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:center;margin-top:40px}
+@media(max-width:860px){.adm{grid-template-columns:1fr}}
+.panel{display:grid;grid-template-columns:120px 1fr;min-height:330px}
+.panel .side{background:#1F2B28;color:rgba(243,238,226,.7);padding:16px 12px;font-size:12px}
+.panel .side b{display:block;color:#F3EEE2;font-family:var(--serif);font-size:15px;margin-bottom:14px}
+.panel .side div{padding:7px 10px;border-radius:8px;margin-bottom:4px}
+.panel .side div.on{background:rgba(201,164,92,.22);color:var(--gold2);font-weight:700}
+.panel .main{padding:18px 20px;background:#FBFAF7}
+.panel h4{font-size:15px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.panel h4 span{font-size:11px;font-weight:500;color:#999}
+.fld{margin-bottom:12px}
+.fld label{display:block;font-size:11.5px;color:#888;font-weight:700;margin-bottom:4px}
+.fld .in{background:#fff;border:1.5px solid #E2DCCF;border-radius:9px;padding:8px 11px;font-size:14px;min-height:38px;transition:border-color .3s,box-shadow .3s}
+.fld .in.typing{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(201,164,92,.2)}
+.fld .in .cur{display:inline-block;width:1.5px;height:15px;background:var(--ink);vertical-align:-2px;margin-left:1px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.tg2{display:flex;align-items:center;gap:10px;font-size:13.5px}
+.tg2 i{width:38px;height:22px;border-radius:99px;background:#D8D2C5;position:relative;transition:.3s}
+.tg2 i:after{content:'';position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.3s}
+.tg2.on i{background:var(--green2)}.tg2.on i:after{transform:translateX(16px)}
+.save{margin-top:6px;display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:9px;transition:transform .15s}
+.save.press{transform:scale(.94)}
+.saved{font-size:12px;color:var(--green2);font-weight:700;margin-left:10px;opacity:0;transition:.3s}
+.saved.on{opacity:1}
+.pv{width:250px;margin:0 auto;border-radius:34px;background:#151513;padding:9px;box-shadow:0 30px 60px rgba(40,35,25,.2)}
+.pv .s{height:430px;border-radius:26px;overflow:hidden;background:#FBF7F0;position:relative}
+.pv .hd2{padding:18px 16px 14px;background:linear-gradient(180deg,#EBDDC8,#FBF7F0)}
+.pv .hd2 small{font-size:9.5px;letter-spacing:.2em;color:#9A6B3E;font-weight:700}
+.pv .hd2 b{display:block;font-family:var(--serif);font-size:19px;line-height:1.3;margin:4px 0}
+.pv .note{margin:0 14px;border-radius:10px;padding:8px 10px;font-size:11.5px;font-weight:700;background:#fff;border:1px solid #EADFCF;transition:background .4s}
+.pv .cd{margin:8px 14px 0;background:#fff;border:1px solid #EADFCF;border-radius:12px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.pv .cd em{font-style:normal;font-family:var(--serif);font-weight:900;color:#9A6B3E;font-size:16px;transition:background .4s;border-radius:6px;padding:0 4px}
+.pv .full{display:none;font-size:10px;font-weight:900;background:#B5402F;color:#fff;border-radius:99px;padding:2px 8px;margin-left:6px}
+.pv .full.on{display:inline-block}
+.flash{background:rgba(201,164,92,.35)!important}
+.pv .bt{position:absolute;left:12px;right:12px;bottom:12px;background:#2b2723;color:#fff;text-align:center;border-radius:14px;padding:10px;font-size:12.5px;font-weight:700}
+.adm-pts{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.adm-pts span{font-size:13.5px;font-weight:700;padding:7px 14px;border-radius:999px;background:var(--sheet);border:1px solid var(--line)}
 /* ===== pain ===== */
 .pain{margin-top:40px;display:grid;gap:12px}
 .pr2{display:grid;grid-template-columns:1fr 46px 1fr;align-items:center;gap:10px;background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:18px 22px}
@@ -235,6 +273,9 @@ header .btn{padding:8px 16px;font-size:13.5px}
 .plan li{font-size:13.5px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--paper2)}
 .plan.main li{background:rgba(255,255,255,.1)}
 .plan li.hl{background:var(--gold2);color:var(--ink)}
+.addon{margin-top:18px;border-top:1px dashed rgba(243,238,226,.25);padding-top:14px}
+.addon b{display:block;font-family:var(--serif);font-size:17px;color:var(--gold2)}
+.addon span{font-size:13px;opacity:.8}
 .badge{position:absolute;top:-13px;right:24px;background:var(--gold2);color:var(--ink);font-weight:900;font-size:12.5px;padding:4px 13px;border-radius:999px}
 .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
 @media(max-width:700px){.flow{grid-template-columns:repeat(2,1fr)}}
@@ -367,6 +408,35 @@ footer a{color:rgba(243,238,226,.85)}
   </div>
 </div></section>
 
+<!-- ADMIN -->
+<section style="padding-top:20px" id="admin"><div class="wrap">
+  <div class="eb rv">EDIT IT YOURSELF</div>
+  <h2 class="rv">上線之後，你自己就能改</h2>
+  <p class="sub rv">專屬編輯後台：登入、改字、按儲存，網站馬上更新。不用碰程式，也不用開試算表。</p>
+  <div class="adm">
+    <div class="br rv"><div class="bar"><i></i><i></i><i></i><span>your-brand.github.io/admin</span></div>
+      <div class="panel">
+        <div class="side"><b>小島陶藝</b><div class="on">課程與價格</div><div>最新公告</div><div>作品照片</div><div>聯絡資訊</div></div>
+        <div class="main">
+          <h4>課程與價格<span>上次更新：剛剛</span></h4>
+          <div class="fld"><label>最新公告</label><div class="in" id="aNote">週末班開放報名中</div></div>
+          <div class="fld"><label>手捏體驗 價格</label><div class="in" id="aPrice">1,200</div></div>
+          <div class="fld"><div class="tg2" id="aFull"><i></i>拉坯體驗 已額滿</div></div>
+          <span class="save" id="aSave">儲存並發布</span><span class="saved" id="aSaved">✓ 已更新網站</span>
+        </div>
+      </div></div>
+    <div class="rv"><div class="pv"><div class="s">
+      <div class="hd2"><small>KOJIMA POTTERY</small><b>週末 2 小時，<br>捏出你的第一個杯子</b></div>
+      <div class="note" id="pNote">📢 週末班開放報名中</div>
+      <div class="cd"><div><b>手捏體驗</b><div style="font-size:10px;color:#8a7f73">2 小時</div></div><em id="pPrice">1,200</em></div>
+      <div class="cd"><div><b>拉坯體驗</b><span class="full" id="pFull">已額滿</span><div style="font-size:10px;color:#8a7f73">含上釉</div></div><em>1,800</em></div>
+      <div class="cd"><div><b>親子同樂</b><div style="font-size:10px;color:#8a7f73">1 大 1 小</div></div><em>2,000</em></div>
+      <div class="bt">立即預約週末體驗</div>
+    </div></div></div>
+  </div>
+  <div class="adm-pts rv"><span>🔐 帳號密碼登入</span><span>✏️ 只開放需要改的欄位</span><span>📱 手機也能改</span><span>⚡ 存檔即更新</span></div>
+</div></section>
+
 <!-- PAIN -->
 <section style="padding-top:20px"><div class="wrap">
   <div class="eb rv">PAIN ／ FIX</div>
@@ -376,7 +446,7 @@ footer a{color:rgba(243,238,226,.85)}
     <div class="pr2 rv"><div class="a">很漂亮，但看不懂在賣什麼</div><div class="ar">→</div><div class="b">第一屏 3 秒講清楚</div></div>
     <div class="pr2 rv"><div class="a">套版跟同業長一樣，只能比價</div><div class="ar">→</div><div class="b">挑出你的不同，放第一眼</div></div>
     <div class="pr2 rv"><div class="a">修改次數沒講好，越改越貴</div><div class="ar">→</div><div class="b">風格與佈局 3 次，寫進報價</div></div>
-    <div class="pr2 rv"><div class="a">上線後改一個字都要找人</div><div class="ar">→</div><div class="b">接 Google 試算表，自己更新</div></div>
+    <div class="pr2 rv"><div class="a">上線後改一個字都要找人</div><div class="ar">→</div><div class="b">專屬後台，像填表單一樣自己改</div></div>
   </div>
 </div></section>
 
@@ -388,7 +458,8 @@ footer a{color:rgba(243,238,226,.85)}
     <div class="plan rv"><div class="tg">先試試看</div><h3>架構健檢</h3><div class="p"><small>NT$</small>2,000</div><div class="nt">下單製作全額折抵</div>
       <ul><li>標出卻步點</li><li>區塊順序建議</li><li>挑出你的特點</li><li>30 分鐘線上說明</li></ul></div>
     <div class="plan main rv"><span class="badge">最常選</span><div class="tg">一次做好</div><h3>一頁式網站</h3><div class="p"><small>NT$</small>8,000<small>起</small></div><div class="nt">依區塊數量與功能報價</div>
-      <ul><li>含架構健檢</li><li>框架與文案順序</li><li>基本視覺設計</li><li>捲動動態</li><li>手機優先</li><li class="hl">風格與佈局修改 3 次</li><li>可接 Google 試算表</li></ul></div>
+      <ul><li>含架構健檢</li><li>框架與文案順序</li><li>基本視覺設計</li><li>捲動動態</li><li>手機優先</li><li class="hl">風格與佈局修改 3 次</li></ul>
+      <div class="addon"><b>＋ 專屬編輯後台</b><span>登入就能改文字、價格、公告與照片｜依可編輯欄位另行報價</span></div></div>
   </div>
   <div class="flow">
     <div class="rv"><b><i>01</i>健檢</b>找出卻步點</div>
@@ -540,6 +611,23 @@ const CASES=[
  const o=new IntersectionObserver(es=>{if(es[0].isIntersecting&&!run){run=true;count();if(!RM)setInterval(count,4200)}});o.observe(el);
  const sw=$('#sw'),sp=sw.querySelectorAll('.t span'),p=$('#swp');let b=0;
  if(!RM)setInterval(()=>{b^=1;sw.classList.toggle('b',!!b);sp[0].classList.toggle('on',!b);sp[1].classList.toggle('on',!!b);p.style.opacity=0;setTimeout(()=>{p.textContent=b?'4,200':'1,200';p.style.opacity=1},200)},2200);
+})();
+/* admin demo */
+(()=>{const aN=$('#aNote'),aP=$('#aPrice'),aF=$('#aFull'),sv=$('#aSave'),ok=$('#aSaved'),pN=$('#pNote'),pP=$('#pPrice'),pF=$('#pFull');
+ const W=ms=>new Promise(r=>setTimeout(r,ms));
+ async function type(el,txt){el.classList.add('typing');el.innerHTML='<span class="cur"></span>';for(const ch of txt){el.innerHTML=el.textContent+ch+'<span class="cur"></span>';await W(90)}await W(250);el.classList.remove('typing');el.textContent=txt}
+ async function del(el){el.classList.add('typing');let t=el.textContent;while(t.length){t=t.slice(0,-1);el.innerHTML=t+'<span class="cur"></span>';await W(35)}}
+ async function cycle(v){
+  await del(aN);await type(aN,v.note);await W(300);
+  await del(aP);await type(aP,v.price);await W(300);
+  aF.classList.toggle('on',v.full);await W(600);
+  sv.classList.add('press');await W(160);sv.classList.remove('press');ok.classList.add('on');
+  pN.textContent='📢 '+v.note;pP.textContent=v.price;pF.classList.toggle('on',v.full);
+  [pN,pP].forEach(e=>e.classList.add('flash'));await W(900);[pN,pP].forEach(e=>e.classList.remove('flash'));
+  await W(1600);ok.classList.remove('on');
+ }
+ const V=[{note:'12 月聖誕杯限定班開跑！',price:'1,500',full:true},{note:'週末班開放報名中',price:'1,200',full:false}];
+ let run=false;const o=new IntersectionObserver(async es=>{if(!es[0].isIntersecting||run||RM)return;run=true;let i=0;while(true){await cycle(V[i%2]);i++;await W(800)}});o.observe($('#admin'));
 })();
 </script>
 </body>
