@@ -134,6 +134,32 @@ section.sec{padding:84px 0}
 
 
 /* ===== animated scenes ===== */
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-.15em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;--ac:var(--sun);--bgc:#1C3F4B;overflow:visible}
+.chips3 .ico,.flow4 .ico{display:block;width:44px;height:44px;margin:0 auto 8px;color:var(--sheet)}
+.flow4 div.on .ico{transform:scale(1.15);transition:transform .4s}
+.flow4 div .ico{transition:transform .4s}
+.chips3 .ico .dp{transition:transform 1.2s}
+.chips3 div:hover .ico .d1,.reveal.in .chips3 .ico .d1{animation:dispL 2.6s ease-in-out infinite}
+.reveal.in .chips3 .ico .d3{animation:dispR 2.6s ease-in-out infinite}
+.reveal.in .chips3 .ico .d2{animation:dispD 2.6s ease-in-out infinite}
+@keyframes dispL{0%,100%{transform:none}50%{transform:translate(-4px,3px)}}
+@keyframes dispR{0%,100%{transform:none}50%{transform:translate(4px,3px)}}
+@keyframes dispD{0%,100%{transform:none}50%{transform:translate(0,4px)}}
+.flow4 .ico .scl{animation:scanl 1.8s ease-in-out infinite}
+@keyframes scanl{0%,100%{transform:translateY(-4px)}50%{transform:translateY(5px)}}
+.judge .ico{width:22px;height:22px;color:var(--sun);--ac:var(--sun);vertical-align:-6px;margin-right:6px}
+.stall .goods .ico{width:40px;height:40px;color:#3b2a1c;stroke-width:2}
+.stall .goods .ico{--ac:#E9A35E}
+.how3 .hand .ico{width:50px;height:50px;color:#0e1a1f;--ac:#8FB7C2;--bgc:#F8F8F2}
+.ph2 .unl .stk .ico{width:80px;height:80px;color:#1C3F4B;--ac:#E4A04A}
+.dash .toast .ico{width:16px;height:16px;--ac:#1C3F4B;margin-right:4px}
+.f1 .card916 .st .ico{width:22px;height:22px;color:#fff;--ac:rgba(255,255,255,.35)}
+.f1 .reach .ico{width:16px;height:16px;color:var(--soft);--ac:var(--roe);margin-right:3px}
+.f1 .hrt .ico{width:22px;height:22px;--ac:inherit}
+.f2 .ear .ico{width:30px;height:30px;color:var(--sea);--ac:var(--sea)}
+.f3 .tip .ico{width:16px;height:16px;color:#F8F8F2;--ac:var(--sun);margin-right:3px}
+.f4 .cmp .ico{width:18px;height:18px;color:var(--ink);--ac:var(--roe);margin-right:4px}
+
 .fit-box{position:relative;width:100%;overflow:hidden}
 .fit-box>.cv{position:absolute;left:0;top:0;transform-origin:0 0}
 .cap3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px;text-align:center}
@@ -295,11 +321,11 @@ section.sec{padding:84px 0}
 .chips3 div i{display:block;font-style:normal;font-size:1.6rem;margin-bottom:4px}
 .flow4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;position:relative}
 .flow4 div{text-align:center;padding:14px 6px;border-radius:14px;background:rgba(248,248,242,.05);border:1.5px solid transparent;transition:all .4s;font-size:.85rem}
-.flow4 div i{display:block;font-style:normal;font-size:1.8rem;margin-bottom:6px;transition:transform .4s}
+.flow4 div i{display:block;font-style:normal}
 .flow4 div b{display:block;font-family:var(--hand);font-size:1.05rem;color:var(--sheet)}
 .flow4 div span{color:rgba(248,248,242,.6);font-size:.75rem}
 .flow4 div.on{border-color:var(--sun);background:rgba(228,160,74,.14)}
-.flow4 div.on i{transform:scale(1.2)}
+
 @media (max-width:560px){.flow4{grid-template-columns:repeat(2,1fr)}}
 .wa .judge{margin-top:14px}
 
@@ -481,6 +507,27 @@ footer .r{margin-left:auto}
   </div>
 </header>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-crowd" viewBox="0 0 48 48"><path d="M24 4c-5.5 0-9.5 4-9.5 9.3 0 7 9.5 15.2 9.5 15.2s9.5-8.2 9.5-15.2C33.5 8 29.5 4 24 4z" fill="var(--ac)" stroke="none"/><circle cx="24" cy="13.3" r="3.4" fill="var(--bgc)" stroke="none"/><path d="M24 32l-11 6M24 32l11 6M24 32v8" stroke-dasharray="1.5 3.5"/><circle class="dp d1" cx="10" cy="40" r="3"/><circle class="dp d2" cx="24" cy="43" r="3"/><circle class="dp d3" cx="38" cy="40" r="3"/></symbol>
+<symbol id="i-story" viewBox="0 0 48 48"><path d="M5 11c6.5-2 13-1.2 19 3 6-4.2 12.5-5 19-3v27c-6.5-2-13-1.2-19 3-6-4.2-12.5-5-19-3z"/><path d="M24 14v27"/><path d="M9 31l4.5-6 3.5 3.5 4-5.5" stroke="var(--ac)"/><circle cx="15" cy="19" r="2.4" fill="var(--ac)" stroke="none"/><path d="M28 21h10M28 26h10M28 31h6"/></symbol>
+<symbol id="i-report" viewBox="0 0 48 48"><rect x="8" y="5" width="25" height="33" rx="3"/><path d="M14 31v-5M20.5 31v-10M27 31v-15" stroke="var(--ac)" stroke-width="3.2"/><path d="M43 30a12 12 0 0 1-19 12" /><path d="M23 36.5l1 5.8 5.8-1"/></symbol>
+<symbol id="i-demo" viewBox="0 0 48 48"><rect x="11" y="5" width="21" height="38" rx="4"/><rect x="15" y="11" width="13" height="9" rx="2" fill="var(--ac)" stroke="none"/><path d="M15 25h13M15 30h9M19.5 38.5h4"/><path d="M39 6l1.8 4.2L45 12l-4.2 1.8L39 18l-1.8-4.2L33 12l4.2-1.8z" fill="var(--ac)" stroke="none"/></symbol>
+<symbol id="i-proposal" viewBox="0 0 48 48"><path d="M10 4h18l10 10v30H10z"/><path d="M28 4v10h10"/><path d="M15 19h13M15 24h18"/><rect x="24" y="29" width="10" height="10" rx="1.5" fill="var(--ac)" stroke="none"/><path d="M27 32h1.5v1.5H27zM30.5 35h1.5v1.5h-1.5z" fill="var(--bgc)" stroke="none"/><path d="M15 30h5M15 35h5"/></symbol>
+<symbol id="i-scan" viewBox="0 0 48 48"><rect x="11" y="4" width="26" height="40" rx="4.5"/><path d="M17 15v-4h4M31 15v-4h-4M17 27v4h4M31 27v4h-4" stroke="var(--ac)"/><path class="scl" d="M18 19h12" stroke="var(--ac)" stroke-width="2.6"/><path d="M21.5 39h5"/></symbol>
+<symbol id="i-win" viewBox="0 0 48 48"><circle cx="19" cy="17" r="11"/><path d="M14 17.5l3.6 3.6 6.6-7.2" stroke="var(--ac)" stroke-width="2.8"/><path d="M12.5 26l-3 14 6.5-3.2 3.5 5.7 2.4-12.5"/><path d="M30 36h13M38 31l5 5-5 5" stroke="var(--ac)"/></symbol>
+<symbol id="i-doc" viewBox="0 0 48 48"><path d="M10 4h18l10 10v30H10z"/><path d="M28 4v10h10M16 22h16M16 28h16M16 34h10"/></symbol>
+<symbol id="i-fish" viewBox="0 0 48 48"><path d="M5 24c7-9 20-11 30-4l8-6v20l-8-6c-10 7-23 5-30-4z" fill="var(--ac)"/><circle cx="14" cy="22" r="2" fill="#1C3F4B" stroke="none"/><path d="M21 18c2 3 2 9 0 12"/></symbol>
+<symbol id="i-shell" viewBox="0 0 48 48"><path d="M24 42L7 21a19 19 0 0 1 34 0z" fill="var(--ac)"/><path d="M24 42L16 13M24 42V9M24 42l8-29M24 42L11 18M24 42l13-24"/></symbol>
+<symbol id="i-jar" viewBox="0 0 48 48"><rect x="13" y="8" width="22" height="6" rx="2" fill="var(--ac)"/><path d="M15 14h18v24a5 5 0 0 1-5 5h-8a5 5 0 0 1-5-5z"/><path d="M15 24h18" stroke="var(--ac)" stroke-width="5"/></symbol>
+<symbol id="i-phone" viewBox="0 0 48 48"><rect x="13" y="3" width="22" height="42" rx="4.5" fill="var(--bgc)"/><path d="M21 39h6"/><rect x="17" y="9" width="14" height="22" rx="2" fill="var(--ac)" stroke="none"/></symbol>
+<symbol id="i-heart" viewBox="0 0 48 48"><path d="M24 41S6 30 6 18a9 9 0 0 1 18-3 9 9 0 0 1 18 3c0 12-18 23-18 23z" fill="var(--ac)" stroke="none"/></symbol>
+<symbol id="i-eye" viewBox="0 0 48 48"><path d="M4 24s8-12 20-12 20 12 20 12-8 12-20 12S4 24 4 24z"/><circle cx="24" cy="24" r="5.5" fill="var(--ac)" stroke="none"/></symbol>
+<symbol id="i-ear" viewBox="0 0 48 48"><path d="M8 30v-5a16 16 0 0 1 32 0v5"/><rect x="5" y="28" width="9" height="13" rx="3.5" fill="var(--ac)"/><rect x="34" y="28" width="9" height="13" rx="3.5" fill="var(--ac)"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 48 48"><path d="M17 31c-4-3-6-7-6-11a13 13 0 0 1 26 0c0 4-2 8-6 11v5H17z" fill="var(--ac)"/><path d="M18 41h12M21 46h6"/></symbol>
+<symbol id="i-paper" viewBox="0 0 48 48"><path d="M11 4h26v40l-4.3-3-4.4 3-4.3-3-4.3 3-4.4-3L11 44z"/><path d="M17 14h14M17 20h14M17 26h9"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 48 48"><path d="M28 3L9 28h13l-3 17 20-26H26z" fill="var(--ac)" stroke="none"/></symbol>
+<symbol id="i-sun" viewBox="0 0 48 48"><path d="M4 32h40"/><path d="M11 32a13 13 0 0 1 26 0" fill="var(--ac)"/><path d="M24 9v5M9 17l3.5 3.5M39 17l-3.5 3.5"/></symbol>
+</defs></svg>
 <main id="top">
 <section class="hero">
   <div class="wrap hero-grid v2">
@@ -515,10 +562,10 @@ footer .r{margin-left:auto}
       <div class="pn pA stall">
         <div class="awn"></div>
         <div class="sign"><b>阿嬤的烏魚子</b><div class="cw">暗號：<em>海風</em></div></div>
-        <div class="table"></div><div class="goods"><span>🐟</span><span>🦐</span><span>🍶</span></div>
+        <div class="table"></div><div class="goods"><svg class="ico " aria-hidden="true"><use href="#i-fish"/></svg><svg class="ico " aria-hidden="true"><use href="#i-shell"/></svg><svg class="ico " aria-hidden="true"><use href="#i-jar"/></svg></div>
         <div class="leg" style="left:30px"></div><div class="leg" style="right:30px"></div>
       </div>
-      <div class="hand">📱</div>
+      <div class="hand"><svg class="ico " aria-hidden="true"><use href="#i-phone"/></svg></div>
       <div class="wire w1"><i></i></div>
       <div class="pn pB"><div class="ph2"><div class="sc">
         <div class="tt">茄萣海邊剪貼簿</div>
@@ -526,7 +573,7 @@ footer .r{margin-left:auto}
         <div class="ip" id="howIp"></div>
         <div class="go">拾起貼紙</div>
         <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px"><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div></div>
-        <div class="unl"><div class="stk">🐟</div><b>拾到「烏魚子」貼紙</b><span>附上攤主的在地小故事</span></div>
+        <div class="unl"><div class="stk"><svg class="ico " aria-hidden="true"><use href="#i-fish"/></svg></div><b>拾到「烏魚子」貼紙</b><span>附上攤主的在地小故事</span></div>
       </div></div></div>
       <div class="wire w2"><i></i></div>
       <div class="pn pC dash">
@@ -536,7 +583,7 @@ footer .r{margin-left:auto}
         <div class="row"><span>手作陶杯</span><div class="bar"><i style="width:44%"></i></div><span>44</span></div>
         <div class="row"><span>海邊咖啡</span><div class="bar"><i style="width:71%"></i></div><span>71</span></div>
         <div class="row"><span>漁村故事</span><div class="bar"><i style="width:36%"></i></div><span>36</span></div>
-        <div class="toast">⚡ 剛剛：烏魚子攤 +1</div>
+        <div class="toast"><svg class="ico " aria-hidden="true"><use href="#i-bolt"/></svg>剛剛：烏魚子攤 +1</div>
       </div>
     </div></div>
     <div class="cap3 reveal"><div><b>01</b>現場找暗號<small>攤位立牌・解說牌・關卡牌</small></div><div><b>02</b>手機解鎖<small>不用下載 App</small></div><div><b>03</b>後台即時跳動<small>結案報告直接有數字</small></div></div>
@@ -552,16 +599,16 @@ footer .r{margin-left:auto}
     <div class="wa">
       <div class="c reveal"><div class="k">FIELD EXPERIENCE</div><h3>懂活動現場，也會寫地方故事</h3>
         <div class="exp-nums"><div><b class="cnt" data-n="100">0</b><span>場活動執行</span></div><div><b class="cnt" data-n="50">0</b><span>份標案企劃</span></div><div><b class="cnt" data-n="10">0</b><span>農遊體驗方案</span></div></div>
-        <div class="chips3"><div><i>📍</i>知道人潮<br>在哪散掉</div><div><i>✍️</i>寫得出<br>在地故事</div><div><i>📊</i>從結案<br>往回設計</div></div>
+        <div class="chips3"><div><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4c-5.5 0-9.5 4-9.5 9.3 0 7 9.5 15.2 9.5 15.2s9.5-8.2 9.5-15.2C33.5 8 29.5 4 24 4z" fill="var(--ac)" stroke="none"/><circle cx="24" cy="13.3" r="3.4" fill="var(--bgc)" stroke="none"/><path d="M24 32l-11 6M24 32l11 6M24 32v8" stroke-dasharray="1.5 3.5"/><circle class="dp d1" cx="10" cy="40" r="3"/><circle class="dp d2" cx="24" cy="43" r="3"/><circle class="dp d3" cx="38" cy="40" r="3"/></svg>知道人潮<br>在哪散掉</div><div><svg class="ico " aria-hidden="true"><use href="#i-story"/></svg>寫得出<br>在地故事</div><div><svg class="ico " aria-hidden="true"><use href="#i-report"/></svg>從結案<br>往回設計</div></div>
       </div>
       <div class="c reveal"><div class="k">DEMO FOR REVIEW</div><h3>評選現場，直接讓評審玩</h3>
         <div class="flow4" id="flow4">
-          <div class="on"><i>🛠️</i><b>先做 Demo</b><span>套入你的活動</span></div>
-          <div><i>📑</i><b>寫進建議書</b><span>附 QR code</span></div>
-          <div><i>📱</i><b>評審掃碼玩</b><span>比文字有說服力</span></div>
-          <div><i>🚀</i><b>得標延續</b><span>不用重做</span></div>
+          <div class="on"><i><svg class="ico " aria-hidden="true"><use href="#i-demo"/></svg></i><b>先做 Demo</b><span>套入你的活動</span></div>
+          <div><i><svg class="ico " aria-hidden="true"><use href="#i-proposal"/></svg></i><b>寫進建議書</b><span>附 QR code</span></div>
+          <div><i><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="11" y="4" width="26" height="40" rx="4.5"/><path d="M17 15v-4h4M31 15v-4h-4M17 27v4h4M31 27v4h-4" stroke="var(--ac)"/><path class="scl" d="M18 19h12" stroke="var(--ac)" stroke-width="2.6"/><path d="M21.5 39h5"/></svg></i><b>評審掃碼玩</b><span>比文字有說服力</span></div>
+          <div><i><svg class="ico " aria-hidden="true"><use href="#i-win"/></svg></i><b>得標延續</b><span>不用重做</span></div>
         </div>
-        <div class="judge"><p>📑 也寫標案企劃，<a href="../">企劃與互動一起規劃</a>，內容前後對得上。</p></div>
+        <div class="judge"><p><svg class="ico " aria-hidden="true"><use href="#i-doc"/></svg>也寫標案企劃，<a href="../">企劃與互動一起規劃</a>，內容前後對得上。</p></div>
       </div>
     </div>
   </div>
@@ -582,9 +629,9 @@ footer .r{margin-left:auto}
         <ul class="pts"><li><b>交流</b>帶人潮走進每一攤</li><li><b>曝光</b>9:16 分享圖卡</li><li><b>同步</b>圖卡即時上牆</li><li><b>故事</b>貼紙即在地知識</li></ul>
       </div>
       <div class="fimg anim reveal"><div class="fit-box" data-w="560" data-h="360"><div class="cv scn f1 s0">
-  <div class="mph p1"><div class="sc"><div class="card916"><b>茄萣海邊剪貼簿</b><div class="st"><span>🐚</span><span>🐟</span><span>🌅</span></div></div><div class="done">✓ 已分享<br><small style="font-size:.7rem;color:var(--soft)">圖卡帶活動名稱</small></div><div class="shr">一鍵分享限動 ↗</div></div></div>
-  <div class="reach"><b class="rn">0</b><span>👀 觸及人次</span></div>
-  <span class="hrt" style="left:410px;top:240px">❤️</span><span class="hrt" style="left:440px;top:250px">💛</span><span class="hrt" style="left:385px;top:255px">❤️</span>
+  <div class="mph p1"><div class="sc"><div class="card916"><b>茄萣海邊剪貼簿</b><div class="st"><svg class="ico " aria-hidden="true"><use href="#i-shell"/></svg><svg class="ico " aria-hidden="true"><use href="#i-fish"/></svg><svg class="ico " aria-hidden="true"><use href="#i-sun"/></svg></div></div><div class="done">✓ 已分享<br><small style="font-size:.7rem;color:var(--soft)">圖卡帶活動名稱</small></div><div class="shr">一鍵分享限動 ↗</div></div></div>
+  <div class="reach"><b class="rn">0</b><span><svg class="ico " aria-hidden="true"><use href="#i-eye"/></svg>觸及人次</span></div>
+  <span class="hrt" style="left:410px;top:240px;--ac:#E0565B"><svg class="ico " aria-hidden="true"><use href="#i-heart"/></svg></span><span class="hrt" style="left:440px;top:250px;--ac:#E4A04A"><svg class="ico " aria-hidden="true"><use href="#i-heart"/></svg></span><span class="hrt" style="left:385px;top:255px;--ac:#B4613A"><svg class="ico " aria-hidden="true"><use href="#i-heart"/></svg></span>
   <div class="mph p2"><div class="sc"><div class="story"><div class="bars"></div><b>茄萣海邊剪貼簿</b><span class="tagx">#港邊秋日市集</span></div></div></div>
   <span class="tagdemo">示意數據</span></div></div></div>
     </article>
@@ -602,7 +649,7 @@ footer .r{margin-left:auto}
    <circle cx="30" cy="280" r="10" fill="#1C3F4B"/><circle cx="130" cy="150" r="10" fill="#1C3F4B"/><circle cx="240" cy="40" r="10" fill="#fff" stroke="#1C3F4B" stroke-width="3"/>
    <circle r="9" fill="#E4A04A" stroke="#fff" stroke-width="3"><animateMotion dur="6s" repeatCount="indefinite" rotate="auto"><mpath href="#rt"/></animateMotion></circle></svg></div>
   <div class="lst"><div class="now"><small>NOW PLAYING</small><b>第 2 站・老街米店</b><div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-   <div class="ear">🎧 <div><b class="ln">0</b> 人同時收聽</div></div>
+   <div class="ear"><svg class="ico " aria-hidden="true"><use href="#i-ear"/></svg><div><b class="ln">0</b> 人同時收聽</div></div>
    <div class="old"><div style="background:linear-gradient(135deg,#9C8A6A,#6E5E44);filter:sepia(.5)"></div><div style="background:linear-gradient(135deg,#8FB7C9,#4F7F67)"></div><span class="sl"></span></div></div>
   <span class="tagdemo">示意畫面</span></div></div></div>
     </article>
@@ -622,7 +669,7 @@ footer .r{margin-left:auto}
    <div class="r"><span>Q1</span><div class="b"><i style="--w:92%;background:#8FB7C2"></i></div><span>92%</span></div>
    <div class="r"><span>Q2</span><div class="b"><i style="--w:41%;background:#E4A04A"></i></div><span>41%</span></div>
    <div class="r"><span>Q3</span><div class="b"><i style="--w:78%;background:#8FB7C2"></i></div><span>78%</span></div>
-   <div class="tip">💡 Q2 答對率偏低，回教室再講一次</div></div>
+   <div class="tip"><svg class="ico " aria-hidden="true"><use href="#i-bulb"/></svg>Q2 答對率偏低，回教室再講一次</div></div>
   <span class="tagdemo">示意數據</span></div></div></div>
     </article>
 
@@ -635,8 +682,8 @@ footer .r{margin-left:auto}
       </div>
       <div class="fimg anim reveal"><div class="fit-box" data-w="560" data-h="360"><div class="cv scn f4 s0">
   <div class="mph p1"><div class="sc"><div class="dots"><i></i><i></i><i></i><i></i><i></i></div><div class="qq">從哪裡得知活動？</div><div class="opt">臉書・IG</div><div class="opt">親友介紹</div><div class="opt">里辦公處</div><div class="wh"></div><div class="code">兌獎碼 K7Q2</div></div></div>
-  <div class="cmp"><div class="r"><span>📄 紙本問卷 回收率</span><div class="b"><i style="--w:32%;background:#C9D3CF"></i><em>32%</em></div></div>
-   <div class="r"><span>📱 填完才能抽獎</span><div class="b"><i style="--w:86%;background:#B4613A"></i><em>86%</em></div></div>
+  <div class="cmp"><div class="r"><span><svg class="ico " aria-hidden="true"><use href="#i-paper"/></svg>紙本問卷 回收率</span><div class="b"><i style="--w:32%;background:#C9D3CF"></i><em>32%</em></div></div>
+   <div class="r"><span><svg class="ico " aria-hidden="true"><use href="#i-phone"/></svg>填完才能抽獎</span><div class="b"><i style="--w:86%;background:#B4613A"></i><em>86%</em></div></div>
    <div class="auto">滿意度・年齡層・資訊來源<br><b>自動統計，直接放進成果報告</b></div></div>
   <span class="tagdemo">示意數據</span></div></div></div>
     </article>
