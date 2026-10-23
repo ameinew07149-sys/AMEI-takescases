@@ -237,25 +237,14 @@ footer b{font-family:var(--serif);color:var(--ink);letter-spacing:.14em}
 footer a{color:var(--gold2);text-decoration:none}
 footer .r{margin-left:auto}
 </style>
+<link rel="stylesheet" href="../shared/amei-nav.css">
 </head>
 <body>
-<header>
-  <nav class="wrap nav" aria-label="頁面導覽">
-    <a class="logo" href="#top">AMEI<small>活動互動套組</small></a>
-    <button class="menu" aria-label="開啟選單" aria-expanded="false" aria-controls="nav-links">☰</button>
-    <ul id="nav-links">
-      <li><a href="#how">三端連動</a></li>
-      <li><a href="#features">玩法</a></li>
-      <li><a href="#styles">風格</a></li>
-      <li><a href="#try">線上試玩</a></li>
-      <li><a href="#plans">方案價格</a></li>
-      <li><a href="#contact">聯絡諮詢</a></li>
-      <li><a href="../web/">一頁式網站</a></li>
-      <li><a href="../">AMEI 企劃服務 ↗</a></li>
-    </ul>
-    <a class="btn solid cta" href="#contact">免費諮詢</a>
-  </nav>
-</header>
+<header class="amei-top"><div class="in">
+  <a class="lg" href="../">AMEI 阿梅<small>活動企劃</small></a>
+  <nav class="tb" aria-label="AMEI 服務"><a href="../">企劃服務</a><a href="../party/" class="on" aria-current="page">婚禮・尾牙</a><a href="../seaside/">活動互動<span class="d">APP</span></a><a href="../web/">一頁式網站</a></nav>
+  <a class="ln" href="https://lin.ee/y8NnuAy" target="_blank" rel="noopener">LINE 洽詢</a>
+</div></header>
 
 <main id="top">
 <section class="hero">
@@ -481,8 +470,10 @@ const ml = $('#mail-link'); ml.textContent = MAIL; ml.href = 'mailto:' + MAIL;
 
 /* 選單 */
 const mb = $('.menu'), nl = $('#nav-links');
+if (mb && nl) {
 mb.addEventListener('click', () => { const o = nl.classList.toggle('open'); mb.setAttribute('aria-expanded', o); });
 nl.addEventListener('click', e => { if (e.target.tagName === 'A') { nl.classList.remove('open'); mb.setAttribute('aria-expanded', false); } });
+}
 
 /* 首屏影片：手機用直式版 */
 (function(){

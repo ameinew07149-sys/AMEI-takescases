@@ -637,24 +637,15 @@ footer a{color:#9ED0BB}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 </style>
+<link rel="stylesheet" href="shared/amei-nav.css">
+<style>.hero{padding-top:4.5rem}@media (max-width:768px){.hero{padding-top:2.5rem}}</style>
 </head>
 <body>
-<header>
-  <nav aria-label="頁面導覽">
-    <div class="logo">AMEI 阿梅<span class="logo-sub">標案企劃</span></div>
-    <button class="menu-toggle" aria-label="開啟選單" aria-expanded="false" aria-controls="nav-links">☰</button>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="#pain">常見卡關</a></li>
-      <li><a href="#services">服務方案</a></li>
-      <li><a href="web/#works">網站作品</a></li>
-      <li><a href="#projects">活動紀錄</a></li>
-      <li><a href="party/">婚禮・尾牙</a></li>
-      <li><a href="seaside/">活動互動</a></li>
-      <li><a href="web/">一頁式網站</a></li>
-      <li><a href="#contact">聯絡預約</a></li>
-    </ul>
-  </nav>
-</header>
+<header class="amei-top"><div class="in">
+  <a class="lg" href="./">AMEI 阿梅<small>活動企劃</small></a>
+  <nav class="tb" aria-label="AMEI 服務"><a href="./" class="on" aria-current="page">企劃服務</a><a href="party/">婚禮・尾牙</a><a href="seaside/">活動互動<span class="d">APP</span></a><a href="web/">一頁式網站</a></nav>
+  <a class="ln" href="https://lin.ee/y8NnuAy" target="_blank" rel="noopener">LINE 洽詢</a>
+</div></header>
 
 <section class="hero">
   <div class="hero-grid hero-solo" id="hero-grid">
@@ -1061,6 +1052,9 @@ loadSheet();
 /* ========== 導覽：平滑捲動到區塊、目前位置標示、回到頂端 ========== */
 (function(){
   const nav = $('.nav-links'), toggle = $('.menu-toggle'), header = $('header');
+  if (!nav || !toggle){ const topBtn = $('#to-top'); const reduce0 = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.addEventListener('scroll', () => topBtn.classList.toggle('show', window.scrollY > 700), { passive:true });
+    topBtn.onclick = () => window.scrollTo({ top:0, behavior: reduce0 ? 'auto' : 'smooth' }); return; }
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const setMenu = open => { nav.classList.toggle('open', open); toggle.setAttribute('aria-expanded', open); toggle.setAttribute('aria-label', open ? '關閉選單' : '開啟選單'); };
   toggle.onclick = () => setMenu(!nav.classList.contains('open'));

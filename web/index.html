@@ -348,6 +348,38 @@ header .btn{padding:8px 16px;font-size:13.5px}
 .wk b{display:block;font-family:var(--serif);font-size:20px;margin:2px 0}
 .wk span{font-size:13.5px;color:var(--ink2)}
 .wk em{display:inline-block;margin-top:8px;font-style:normal;font-size:12px;font-weight:700;background:var(--paper2);border-radius:999px;padding:3px 10px}
+
+/* T4 interactive map */
+.t4m{background:#EAF0E2;color:#2b2723}
+.t4m .mapbg{position:absolute;inset:0;width:100%;height:100%}
+.t4m .prog{position:absolute;left:12px;top:10px;background:#fff;border-radius:10px;padding:5px 10px;font-size:11px;box-shadow:0 3px 10px rgba(0,0,0,.08);display:flex;gap:8px;align-items:center}
+.t4m .st4{display:flex;gap:2px}.t4m .st4 svg{width:13px;height:13px;fill:#D9CFBD;transition:fill .3s}.t4m .st4 svg.on{fill:#E4A04A}
+.t4m .pin{position:absolute;transform:translate(-50%,-100%);border:0;background:none;padding:0;cursor:pointer;font:inherit;display:flex;flex-direction:column;align-items:center}
+.t4m .pin i{width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#D3542F;box-shadow:0 4px 8px rgba(0,0,0,.2);display:block;position:relative;transition:background .3s}
+.t4m .pin i::after{content:'';position:absolute;left:8px;top:8px;width:10px;height:10px;border-radius:50%;background:#fff}
+.t4m .pin::before{content:'';position:absolute;bottom:-6px;width:30px;height:10px;border-radius:50%;background:rgba(211,84,47,.3);animation:pls 1.8s infinite}
+@keyframes pls{0%{transform:scale(.5);opacity:1}100%{transform:scale(1.6);opacity:0}}
+.t4m .pin span{order:-1;font-size:10.5px;font-weight:700;background:#fff;border-radius:6px;padding:1px 6px;margin-bottom:4px;box-shadow:0 2px 6px rgba(0,0,0,.08);white-space:nowrap}
+.t4m .pin.done i{background:#2F6B5A}.t4m .pin.done::before{display:none}
+.t4m .pin.cur i{transform:rotate(-45deg) scale(1.2)}
+.t4m .info{position:absolute;right:12px;top:12px;bottom:12px;width:178px;background:#fff;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.14);padding:12px;transform:translateX(220px);transition:transform .45s cubic-bezier(.3,1.2,.5,1)}
+.t4m .info.on{transform:none}
+.t4m .info .ic{width:44px;height:44px;border-radius:12px;background:#F6EFE2;display:flex;align-items:center;justify-content:center;animation:bob 1.6s ease-in-out infinite}
+.t4m .info .ic svg{width:30px;height:30px;fill:none;stroke:#8a5a3a;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@keyframes bob{50%{transform:translateY(-3px) rotate(-3deg)}}
+.t4m .info b{display:block;font-family:var(--serif);font-size:15px;margin-top:6px}
+.t4m .info p{font-size:10.5px;line-height:1.55;color:#5c5850;margin-top:3px}
+.t4m .qz{margin-top:8px;border-top:1px dashed #E3DDD0;padding-top:7px}
+.t4m .qz small{font-size:10px;font-weight:700;display:block;margin-bottom:5px}
+.t4m .op{display:flex;gap:5px}
+.t4m .op button{flex:1;border:1.5px solid #D9CFBD;background:#fff;border-radius:7px;padding:5px 2px;font:inherit;font-size:10.5px;font-weight:700;cursor:pointer;transition:.25s}
+.t4m .op button.ok{background:#2F6B5A;border-color:#2F6B5A;color:#fff}
+.t4m .op button.ng{background:#FBE9E4;border-color:#D3542F;color:#B03A2E;animation:shk .3s}
+@keyframes shk{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+.t4m .stp{position:absolute;right:12px;bottom:10px;border:2px solid #B03A2E;color:#B03A2E;font-weight:900;font-size:11px;padding:1px 8px;border-radius:6px;transform:rotate(-8deg) scale(1.6);opacity:0;transition:all .3s cubic-bezier(.3,1.6,.5,1)}
+.t4m .stp.on{opacity:1;transform:rotate(-8deg) scale(1)}
+.t4m .hint4{position:absolute;left:12px;bottom:10px;font-size:10.5px;font-weight:700;color:#2F6B5A;background:rgba(255,255,255,.85);border-radius:6px;padding:2px 8px;transition:opacity .3s}
+.wk em.dz{background:rgba(201,164,92,.18);color:#7a5f2c}
 /* ===== pain ===== */
 .pain{margin-top:40px;display:grid;gap:12px}
 .pr2{display:grid;grid-template-columns:1fr 46px 1fr;align-items:center;gap:10px;background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:18px 22px}
@@ -408,18 +440,14 @@ footer a{color:rgba(243,238,226,.85)}
 @media(max-width:700px){.line-fab{display:inline-flex}section{padding:76px 0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.chg li{opacity:1!important;transform:none!important}}
 </style>
+<link rel="stylesheet" href="../shared/amei-nav.css">
 </head>
 <body>
 
-<header><div class="wrap">
-  <a class="logo" href="../">AMEI 阿梅</a>
-  <nav class="tabs" aria-label="AMEI 服務">
-    <a href="../">企劃服務</a>
-    <a href="../party/">婚禮・尾牙</a>
-    <a href="../seaside/">活動互動</a>
-    <a class="on" href="./" aria-current="page">一頁式網站</a>
-  </nav>
-  <a class="btn b-line" href="https://lin.ee/y8NnuAy" target="_blank" rel="noopener">LINE 洽詢</a>
+<header class="amei-top"><div class="in">
+  <a class="lg" href="../">AMEI 阿梅<small>活動企劃</small></a>
+  <nav class="tb" aria-label="AMEI 服務"><a href="../">企劃服務</a><a href="../party/">婚禮・尾牙</a><a href="../seaside/">活動互動<span class="d">APP</span></a><a href="../web/" class="on" aria-current="page">一頁式網站</a></nav>
+  <a class="ln" href="https://lin.ee/y8NnuAy" target="_blank" rel="noopener">LINE 洽詢</a>
 </div></header>
 
 <!-- HERO -->
@@ -451,6 +479,25 @@ footer a{color:rgba(243,238,226,.85)}
       </div></div>
     </div>
     <div class="steps4" id="bsteps"><div class="on"><b>01</b>框架</div><div><b>02</b>內容</div><div><b>03</b>視覺</div><div><b>04</b>動態</div></div>
+  </div>
+</div></section>
+
+<!-- CASES -->
+<section id="cases"><div class="wrap">
+  <div class="eb rv">BEFORE ／ AFTER</div>
+  <h2 class="rv">不同的網站，要的東西不一樣</h2>
+  <p class="sub rv">沒有一套公式。先判斷這類網站最重要的是什麼，再決定框架和美感。<br>拖動把手比較，情境皆為虛構示範。</p>
+  <div class="ctabs rv" id="ctabs"></div>
+  <div class="cgrid">
+    <div class="rv">
+      <div class="br"><div class="bar"><i></i><i></i><i></i><span id="curl"></span></div>
+        <div class="cmpbox" id="cmp"><div class="scale" id="scale">
+          <div class="lay before" id="lb"></div><div class="lay after" id="la"></div>
+        </div><div class="handle" id="hd"></div><span class="tagx l">改版前</span><span class="tagx r">改版後</span></div>
+      </div>
+      <div class="hint">← 拖動比較 →</div>
+    </div>
+    <div><div class="focus rv" id="focus"><small>這類網站最重要的是</small><b id="fb"></b><p id="fw"></p></div><ul class="chg" id="chg"></ul></div>
   </div>
 </div></section>
 
@@ -499,30 +546,18 @@ footer a{color:rgba(243,238,226,.85)}
 <div class="pane" id="ty3o"><div class="ok"><div class="c"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></div><b>報名完成</b><p>收據已寄到信箱<br>後台自動記錄付款狀態</p></div></div>
 </div></div></div></div></div>
 <div class="tx"><div class="no">TYPE 03</div><h3>短期報名型</h3><div class="fit"><b>適合：</b>工作坊、講座、市集攤位招募</div><ul><li>報名表單</li><li>名額即時更新</li><li>線上付款</li></ul><div class="warn"><b>串接金流前，先評估建置與維護成本</b>金流平台的申請審核、交易手續費、退款流程與後台維護都要算進去。報名量不大時，「表單＋轉帳對帳」可能更划算，會先幫你評估再報價。</div></div></article>
-    <article class="tcard rv"><div class="vis"><div class="br"><div class="bar"><i></i><i></i><i></i><span>oldstreet-quest.tw</span></div><div class="tbox"><div class="tv t4" id="ty4"><div class="scene"></div><div class="tree" style="left:40px"></div><div class="tree" style="left:120px;transform:scale(.8)"></div><div class="hut"></div>
-<div class="who" id="ty4w" style="left:60px"><div class="hd2"></div><div class="bd"></div></div>
-<div class="bub"><b>關卡 2・老街的米店</b>這間米店已經開了幾年？<div class="ch"><span>30 年</span><span data-ok="1">80 年</span><span>150 年</span></div></div>
-<div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"/></svg></div></div></div></div></div>
-<div class="tx"><div class="no">TYPE 04</div><h3>互動教學型</h3><div class="fit"><b>適合：</b>在地文史介紹、社區導覽、校園教學</div><ul><li>故事關卡</li><li>選擇題闖關</li><li>可做成小遊戲</li></ul></div></article>
-  </div>
-</div></section>
-
-<!-- CASES -->
-<section id="cases"><div class="wrap">
-  <div class="eb rv">BEFORE ／ AFTER</div>
-  <h2 class="rv">不同的網站，要的東西不一樣</h2>
-  <p class="sub rv">沒有一套公式。先判斷這類網站最重要的是什麼，再決定框架和美感。<br>拖動把手比較，情境皆為虛構示範。</p>
-  <div class="ctabs rv" id="ctabs"></div>
-  <div class="cgrid">
-    <div class="rv">
-      <div class="br"><div class="bar"><i></i><i></i><i></i><span id="curl"></span></div>
-        <div class="cmpbox" id="cmp"><div class="scale" id="scale">
-          <div class="lay before" id="lb"></div><div class="lay after" id="la"></div>
-        </div><div class="handle" id="hd"></div><span class="tagx l">改版前</span><span class="tagx r">改版後</span></div>
-      </div>
-      <div class="hint">← 拖動比較 →</div>
-    </div>
-    <div><div class="focus rv" id="focus"><small>這類網站最重要的是</small><b id="fb"></b><p id="fw"></p></div><ul class="chg" id="chg"></ul></div>
+    <article class="tcard rv"><div class="vis"><div class="br"><div class="bar"><i></i><i></i><i></i><span>oldstreet-quest.tw</span></div><div class="tbox"><div class="tv t4m" id="ty4">
+<svg class="mapbg" viewBox="0 0 480 270" aria-hidden="true"><rect width="480" height="270" fill="#EAF0E2"/><path d="M0 238 C90 214,160 252,250 232 S400 206,480 226 V270 H0z" fill="#BFD8E0"/><path d="M380 0 C400 70,360 130,400 270" stroke="#BFD8E0" stroke-width="18" fill="none"/>
+<path d="M52 156 C90 150,120 98,148 90 S236 112,244 152 M148 90 C144 130,142 170,148 210" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round"/>
+<path d="M52 156 C90 150,120 98,148 90 S236 112,244 152 M148 90 C144 130,142 170,148 210" stroke="#D9CFBD" stroke-width="6" fill="none" stroke-dasharray="2 10" stroke-linecap="round"/>
+<circle cx="50" cy="60" r="16" fill="#C9DDB0"/><circle cx="70" cy="48" r="12" fill="#B9D3A0"/><circle cx="330" cy="50" r="14" fill="#C9DDB0"/></svg>
+<div class="prog"><b>走讀進度 <span id="ty4n">0</span>/4</b><span class="st4"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"/></svg></span></div>
+<button type="button" class="pin" data-i="0" style="left:52px;top:150px" aria-label="老街米店"><i></i><span>老街米店</span></button><button type="button" class="pin" data-i="1" style="left:148px;top:78px" aria-label="百年廟埕"><i></i><span>百年廟埕</span></button><button type="button" class="pin" data-i="2" style="left:244px;top:146px" aria-label="港邊燈塔"><i></i><span>港邊燈塔</span></button><button type="button" class="pin" data-i="3" style="left:148px;top:206px" aria-label="糖廠煙囪"><i></i><span>糖廠煙囪</span></button>
+<div class="info" id="ty4c"><div class="ic"><svg viewBox="0 0 48 48" id="ty4ic"></svg></div><b id="ty4t"></b><p id="ty4p"></p>
+<div class="qz"><small id="ty4q"></small><div class="op" id="ty4o"></div></div><div class="stp" id="ty4s">✓ 蓋章</div></div>
+<span class="hint4" id="ty4h">點地圖上的地點看看 →</span>
+</div></div></div></div>
+<div class="tx"><div class="no">TYPE 04</div><h3>互動教學型</h3><div class="fit"><b>適合：</b>在地文史介紹、社區導覽、校園教學</div><ul><li>地圖點擊探索</li><li>解說小動畫</li><li>闖關蓋章小遊戲</li></ul></div></article>
   </div>
 </div></section>
 
@@ -584,8 +619,8 @@ footer a{color:rgba(243,238,226,.85)}
 <section id="works"><div class="wrap">
   <div class="eb rv">REAL WORKS</div>
   <h2 class="rv">實際做過的網站</h2>
-  <p class="sub rv">受公部門委託製作，點開就是實際上線的網站。</p>
-  <div class="wk"><a class="rv" href="https://justtwohow123.wixsite.com/tauyaun-summer-map" target="_blank" rel="noopener"><div class="im"><img src="https://static.wixstatic.com/media/3db37c_96ec330237bd4662b402508ff31bf327%7Emv2.png/v1/fit/w_2500,h_1330,al_c/3db37c_96ec330237bd4662b402508ff31bf327%7Emv2.png" alt="桃源涼夏風味旅圖網站首頁" loading="lazy"></div><div class="bd"><small>高雄市桃源區公所・產業行銷網站</small><b>桃源涼夏風味旅圖 ↗</b><span>整理各里景點、店家、旅宿與時令作物，讓遊客查得到、用得上</span><br><em>資訊展示型・產業行銷</em></div></a><a class="rv" href="https://justtwohow123.wixsite.com/tauyaun-summer-map/webinar-registration" target="_blank" rel="noopener"><div class="im"><img src="https://static.wixstatic.com/media/3db37c_a608bc57ef3145a7a5eec651db788d99~mv2.png/v1/fill/w_658,h_624,al_c,lg_1,q_90,enc_avif,quality_auto/3db37c_a608bc57ef3145a7a5eec651db788d99~mv2.png" alt="桃源精品咖啡頁面主視覺" loading="lazy"></div><div class="bd"><small>同網站專題頁</small><b>桃源精品咖啡 ↗</b><span>113 年第一屆精品咖啡示範評鑑專題，影片由我剪輯</span><br><em>資訊展示型・專題頁</em></div></a></div>
+  <p class="sub rv">受公部門委託，與設計師合作製作，點開就是實際上線的網站。</p>
+  <div class="wk"><a class="rv" href="https://justtwohow123.wixsite.com/tauyaun-summer-map" target="_blank" rel="noopener"><div class="im"><img src="https://static.wixstatic.com/media/3db37c_96ec330237bd4662b402508ff31bf327%7Emv2.png/v1/fit/w_2500,h_1330,al_c/3db37c_96ec330237bd4662b402508ff31bf327%7Emv2.png" alt="桃源涼夏風味旅圖網站首頁" loading="lazy"></div><div class="bd"><small>高雄市桃源區公所・產業行銷網站</small><b>桃源涼夏風味旅圖 ↗</b><span>整理各里景點、店家、旅宿與時令作物，讓遊客查得到、用得上</span><br><em>資訊展示型・產業行銷</em> <em class="dz">與設計師合作製作</em></div></a><a class="rv" href="https://justtwohow123.wixsite.com/tauyaun-summer-map/webinar-registration" target="_blank" rel="noopener"><div class="im"><img src="https://static.wixstatic.com/media/3db37c_a608bc57ef3145a7a5eec651db788d99~mv2.png/v1/fill/w_658,h_624,al_c,lg_1,q_90,enc_avif,quality_auto/3db37c_a608bc57ef3145a7a5eec651db788d99~mv2.png" alt="桃源精品咖啡頁面主視覺" loading="lazy"></div><div class="bd"><small>同網站專題頁</small><b>桃源精品咖啡 ↗</b><span>113 年第一屆精品咖啡示範評鑑專題，影片由我剪輯</span><br><em>資訊展示型・專題頁</em> <em class="dz">與設計師合作製作</em></div></a></div>
 </div></section>
 
 <!-- PRICE -->
@@ -597,7 +632,8 @@ footer a{color:rgba(243,238,226,.85)}
       <ul><li>標出卻步點</li><li>區塊順序建議</li><li>挑出你的特點</li><li>30 分鐘線上說明</li></ul></div>
     <div class="plan main rv"><span class="badge">最常選</span><div class="tg">一次做好</div><h3>一頁式網站</h3><div class="p"><small>NT$</small>8,000<small>起</small></div><div class="nt">依區塊數量與功能報價</div>
       <ul><li>含架構健檢</li><li>框架與文案順序</li><li>基本視覺設計</li><li>捲動動態</li><li>手機優先</li><li class="hl">風格與佈局修改 3 次</li></ul>
-      <div class="addon"><b>＋ 專屬編輯後台</b><span>登入就能改文字、價格、公告與照片｜依可編輯欄位另行報價</span></div></div>
+      <div class="addon"><b>＋ 專屬編輯後台</b><span>登入就能改文字、價格、公告與照片｜依可編輯欄位另行報價</span></div>
+      <div class="addon"><b>＋ 專屬設計師合作</b><span>由合作設計師繪製特色圖樣、設計版面編排，展現個人風格｜另行報價</span></div></div>
   </div>
   <div class="flow">
     <div class="rv"><b><i>01</i>健檢</b>找出卻步點</div>
@@ -605,7 +641,7 @@ footer a{color:rgba(243,238,226,.85)}
     <div class="rv"><b><i>03</i>製作</b>可修改 3 次</div>
     <div class="rv"><b><i>04</i>上線</b>附更新說明</div>
   </div>
-  <p class="foot-note rv">＊每輪修改彙整後算 1 次，錯字等小修正不計。＊插畫或特殊美術風格，與合作設計師製作，<b>另行報價</b>。</p>
+  <p class="foot-note rv">＊每輪修改彙整後算 1 次，錯字等小修正不計。</p>
 </div></section>
 
 <!-- FAMILY -->
@@ -781,9 +817,15 @@ const CASES=[
   const show=k=>{[a,p,o].forEach((x,j)=>x.classList.toggle('on',j===k));st.forEach((x,j)=>x.classList.toggle('on',j<=k))};
   if(RM){show(2);return}
   while(true){show(0);await W(1800);show(1);await W(1800);show(2);left=left>1?left-1:6;n.textContent=left;b.style.width=(left/20*100+40)+'%';await W(2200)}});
- onV($('#ty4'),async()=>{const ch=[...document.querySelectorAll('#ty4 .ch span')],stars=[...document.querySelectorAll('#ty4 .stars svg')],who=$('#ty4w');let s=0;
-  if(RM){ch[1].classList.add('ok');return}
-  while(true){ch.forEach(c=>c.className='');who.style.left='60px';await W(1400);ch.forEach(c=>c.classList.add(c.dataset.ok?'ok':'no'));s=(s%3)+1;stars.forEach((x,k)=>x.classList.toggle('on',k<s));await W(800);who.style.left='250px';await W(2400)}});
+ onV($('#ty4'),async()=>{const D=[{"n": "老街米店", "t": "開業 80 年的碾米店，老闆每天清晨四點就開機碾米。", "q": "米店靠什麼機器把稻穀變成白米？", "o": ["碾米機", "咖啡機"], "a": 0, "ic": "<rect x=\"10\" y=\"20\" width=\"28\" height=\"20\" rx=\"2\"/><path d=\"M6 20l18-12 18 12\"/><path d=\"M20 40V30h8v10\"/>"}, {"n": "百年廟埕", "t": "廟前廣場是社區的客廳，節慶時會擺滿流水席。", "q": "廟埕節慶時最常擺什麼？", "o": ["溜冰場", "流水席"], "a": 1, "ic": "<path d=\"M6 18h36M10 18l14-10 14 10M12 18v20M36 18v20M8 38h32M20 38V26h8v12\"/>"}, {"n": "港邊燈塔", "t": "守護漁船回港的白色燈塔，傍晚最適合拍照。", "q": "燈塔最重要的功能是？", "o": ["指引船隻", "收集雨水"], "a": 0, "ic": "<path d=\"M19 40l3-26h4l3 26z\"/><path d=\"M18 14h12M21 8h6v6h-6zM14 40h20\"/><path d=\"M30 10l8-3M30 13l8 2\" stroke-dasharray=\"2 2\"/>"}, {"n": "糖廠煙囪", "t": "日治時期的糖廠遺址，紅磚煙囪仍矗立在田中央。", "q": "糖廠以前主要生產什麼？", "o": ["鐵釘", "砂糖"], "a": 1, "ic": "<path d=\"M20 40l2-30h6l2 30z\"/><path d=\"M8 40h32M22 18h6M21 28h8\"/><path d=\"M27 8c2-3 6-3 7-6\"/>"}];const pins=[...document.querySelectorAll('#ty4 .pin')],card=$('#ty4c'),stars=[...document.querySelectorAll('#ty4 .st4 svg')],hint=$('#ty4h');let done=new Set(),user=false,busy=false;
+  const upd=()=>{$('#ty4n').textContent=done.size;stars.forEach((x,k)=>x.classList.toggle('on',k<done.size))};
+  function open(i){const d=D[i];pins.forEach((p,k)=>p.classList.toggle('cur',k===i));$('#ty4ic').innerHTML=d.ic;$('#ty4t').textContent=d.n;$('#ty4p').textContent=d.t;$('#ty4q').textContent='小問題：'+d.q;$('#ty4s').classList.remove('on');
+   const o=$('#ty4o');o.innerHTML='';d.o.forEach((t,k)=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.onclick=e=>{if(e.isTrusted)user=true;answer(i,k,b)};o.append(b)});card.classList.add('on');hint.style.opacity=0}
+  function answer(i,k,b){if(k===D[i].a){b.classList.add('ok');$('#ty4s').classList.add('on');done.add(i);pins[i].classList.add('done');upd()}else{b.classList.add('ng');setTimeout(()=>b.classList.remove('ng'),500)}}
+  pins.forEach((p,i)=>p.addEventListener('click',e=>{if(e.isTrusted)user=true;open(i)}));
+  if(RM)return;let i=0;
+  while(!user){await W(1200);if(user)break;open(i);await W(1500);if(user)break;const bs=[...$('#ty4o').children];answer(i,D[i].a,bs[D[i].a]);await W(1800);if(user)break;i=(i+1)%4;if(i===0){await W(600);done.clear();pins.forEach(p=>p.classList.remove('done'));upd()}}
+ });
 })();
 </script>
 </body>
