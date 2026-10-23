@@ -392,7 +392,10 @@ header .btn{padding:8px 16px;font-size:13.5px}
 
 /* ===== price ===== */
 .price{background:var(--paper2)}
-.plans{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;margin-top:40px}
+.plans{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:18px;margin-top:40px}
+.plan.demo{border:2px dashed var(--gold2)}
+@media(max-width:1080px) and (min-width:801px){.plans{grid-template-columns:1fr 1fr}.plan.main{grid-column:1/-1}}
+.plan.demo .tg{color:#8a5a1c}
 @media(max-width:800px){.plans{grid-template-columns:1fr}}
 .plan{background:var(--sheet);border:1px solid var(--line);border-radius:22px;padding:30px 28px;position:relative}
 .plan.main{background:var(--green);color:#F3EEE2;border:0}
@@ -626,10 +629,12 @@ footer a{color:rgba(243,238,226,.85)}
 <!-- PRICE -->
 <section class="price" id="price"><div class="wrap">
   <div class="eb rv">PRICING</div>
-  <h2 class="rv">先健檢，合拍再製作</h2>
+  <h2 class="rv">先健檢、先做 Demo，合拍再製作</h2>
   <div class="plans">
     <div class="plan rv"><div class="tg">先試試看</div><h3>架構健檢</h3><div class="p"><small>NT$</small>2,000</div><div class="nt">下單製作全額折抵</div>
       <ul><li>標出卻步點</li><li>區塊順序建議</li><li>挑出你的特點</li><li>30 分鐘線上說明</li></ul></div>
+    <div class="plan demo rv"><div class="tg">投標・申請補助用</div><h3>提案用 DEMO</h3><div class="p"><small>NT$</small>2,000</div><div class="nt">評選時讓評審實際點開</div>
+      <ul><li>首屏＋2 個重點區塊</li><li>套入計畫名稱與主色</li><li>書審用 QR code＋截圖</li><li>連結保留至評選結束</li></ul></div>
     <div class="plan main rv"><span class="badge">最常選</span><div class="tg">一次做好</div><h3>一頁式網站</h3><div class="p"><small>NT$</small>8,000<small>起</small></div><div class="nt">依區塊數量與功能報價</div>
       <ul><li>含架構健檢</li><li>框架與文案順序</li><li>基本視覺設計</li><li>捲動動態</li><li>手機優先</li><li class="hl">風格與佈局修改 3 次</li></ul>
       <div class="addon"><b>＋ 專屬編輯後台</b><span>登入就能改文字、價格、公告與照片｜依可編輯欄位另行報價</span></div>

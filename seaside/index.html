@@ -452,6 +452,17 @@ section.sec{padding:84px 0}
 .plan li::before{content:"";position:absolute;left:0;top:.55em;width:.75em;height:.42em;border-left:2px solid var(--sea);border-bottom:2px solid var(--sea);transform:rotate(-45deg)}
 .plan .btn{margin-top:auto}
 .plan.hot .btn{background:var(--sea);border-color:var(--sea);color:var(--sheet)}
+.demo-deal{display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;margin:0 auto 26px;background:var(--deep);color:var(--sheet);border-radius:14px;padding:22px 26px;position:relative;overflow:hidden}
+.demo-deal::after{content:'';position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:rgba(228,160,74,.16)}
+.demo-deal .lbl{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;color:var(--sun)}
+.demo-deal h3{font-size:1.5rem;margin:2px 0 0}
+.demo-deal .pr{font-family:var(--hand);font-size:2.4rem;color:var(--sun);line-height:1;white-space:nowrap}
+.demo-deal .pr small{font-size:.9rem;margin-right:2px}
+.demo-deal ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.92rem;color:rgba(248,248,242,.85)}
+.demo-deal li::before{content:'✓ ';color:var(--sun);font-weight:700}
+.demo-deal .who{font-size:.85rem;color:rgba(248,248,242,.65);margin-top:6px}
+.demo-deal .btn{background:var(--sun);border-color:var(--sun);color:var(--deep);position:relative;z-index:1}
+@media (max-width:900px){.demo-deal{grid-template-columns:1fr;gap:12px;max-width:460px}}
 .addons{max-width:780px;margin:28px auto 0;display:grid;gap:10px}
 .addons div{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;background:var(--paper);border-radius:8px;padding:12px 18px}
 .addons b{font-family:var(--hand);font-size:1.1rem}
@@ -594,7 +605,7 @@ footer .r{margin-left:auto}
       </div>
       <div class="c reveal"><div class="k">DEMO FOR REVIEW</div><h3>評選現場，直接讓評審玩</h3>
         <div class="flow4" id="flow4">
-          <div class="on"><i><svg class="ico " aria-hidden="true"><use href="#i-demo"/></svg></i><b>先做 Demo</b><span>套入你的活動</span></div>
+          <div class="on"><i><svg class="ico " aria-hidden="true"><use href="#i-demo"/></svg></i><b>先做 Demo</b><span>NT$2,000 起</span></div>
           <div><i><svg class="ico " aria-hidden="true"><use href="#i-proposal"/></svg></i><b>寫進建議書</b><span>附 QR code</span></div>
           <div><i><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="11" y="4" width="26" height="40" rx="4.5"/><path d="M17 15v-4h4M31 15v-4h-4M17 27v4h4M31 27v4h-4" stroke="var(--ac)"/><path class="scl" d="M18 19h12" stroke="var(--ac)" stroke-width="2.6"/><path d="M21.5 39h5"/></svg></i><b>評審掃碼玩</b><span>比文字有說服力</span></div>
           <div><i><svg class="ico " aria-hidden="true"><use href="#i-win"/></svg></i><b>得標延續</b><span>不用重做</span></div>
@@ -732,6 +743,12 @@ footer .r{margin-left:auto}
       <h2>方案與價格</h2>
       <p>一場活動的製作費用，可以直接寫進標案或補助案經費。南高屏地區免收交通費。</p>
     </div>
+    <div class="demo-deal reveal">
+      <div><div class="lbl">FOR PROPOSAL</div><h3>提案用 DEMO 製作</h3><div class="pr"><small>NT$</small>2,000</div></div>
+      <div><ul><li>套入計畫名稱與主色</li><li>1 種玩法・3 個點位可實際操作</li><li>書審用 QR code 與畫面截圖</li><li>連結保留至評選結束</li></ul>
+        <div class="who">適合：投標或申請補助，評選時需要讓評審實際操作的客戶</div></div>
+      <a class="btn" href="#contact" data-plan="提案用 DEMO">預約製作</a>
+    </div>
     <div class="plans">
       <div class="plan reveal">
         <h3>模板快速版</h3><div class="sub">單一玩法・一日活動</div>
@@ -801,7 +818,7 @@ footer .r{margin-left:auto}
       <label>電話或 LINE（選填）<input name="contact" maxlength="50"></label>
       <label>活動日期（選填）<input name="date" type="date"></label>
       <label>活動類型<select name="type"><option value="">請選擇…</option><option>市集・園遊會</option><option>走讀導覽・小旅行</option><option>校外教學・環境教育</option><option>社區節慶・成果發表</option><option>其他</option></select></label>
-      <label>有興趣的方案<select name="plan"><option value="">還不確定</option><option>模板快速版</option><option>在地客製版</option><option>全客製版</option></select></label>
+      <label>有興趣的方案<select name="plan"><option value="">還不確定</option><option>提案用 DEMO</option><option>模板快速版</option><option>在地客製版</option><option>全客製版</option></select></label>
       <label class="full">活動內容與想要的玩法<textarea name="need" required maxlength="2000" placeholder="例：梓官漁港小旅行，約 8 個攤位，想介紹在地漁業與信仰，預計 300 人參加…"></textarea></label>
       <div class="hp" aria-hidden="true"><label>網站（請勿填寫）<input name="website" tabindex="-1" autocomplete="off"></label></div>
       <p class="privacy-note full">您填寫的資料僅用於回覆本次詢問與後續報價聯繫，不會提供給第三方；需要刪除時來信告知即可。</p>
