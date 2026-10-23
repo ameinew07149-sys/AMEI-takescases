@@ -66,6 +66,32 @@ section.sec{padding:84px 0}
 .sec-head h2{font-size:clamp(1.8rem,3.4vw,2.5rem);margin-top:8px}
 .sec-head p{color:var(--soft);margin:12px 0 0}
 .sheet-band{background:var(--sheet)}
+.exp{background:var(--deep);color:var(--sheet)}
+.exp .sec-head p{color:rgba(248,248,242,.72)}
+.exp .stamp{color:var(--sun)}
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:860px){.exp-grid{grid-template-columns:1fr}}
+.exp-card{background:rgba(248,248,242,.06);border:1px solid rgba(248,248,242,.16);border-radius:22px;padding:30px 28px}
+.exp-card h3{font-size:1.55rem;margin:6px 0 16px}
+.exp-card .k{font-family:var(--mono);font-size:.75rem;letter-spacing:.16em;color:var(--sun)}
+.exp-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.exp-nums div{background:rgba(248,248,242,.07);border-radius:14px;padding:12px 10px;text-align:center}
+.exp-nums b{display:block;font-family:var(--hand);font-size:1.7rem;color:var(--sun);line-height:1.2}
+.exp-nums span{font-size:.78rem;color:rgba(248,248,242,.7)}
+.exp-list{list-style:none;margin:0;padding:0}
+.exp-list li{padding:9px 0 9px 28px;position:relative;border-top:1px dashed rgba(248,248,242,.16);font-size:.98rem}
+.exp-list li:before{content:"✓";position:absolute;left:4px;color:var(--sun);font-weight:700}
+.exp-list li small{display:block;color:rgba(248,248,242,.6);font-size:.85rem}
+.demo-flow{list-style:none;margin:0;padding:0;counter-reset:d}
+.demo-flow li{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:start;padding:10px 0}
+.demo-flow li i{counter-increment:d;width:36px;height:36px;border-radius:50%;background:var(--sun);color:var(--deep);font-style:normal;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono)}
+.demo-flow li i:before{content:counter(d,decimal-leading-zero)}
+.demo-flow b{display:block;font-size:1.02rem}
+.demo-flow span{font-size:.88rem;color:rgba(248,248,242,.68)}
+.judge{margin-top:16px;display:flex;align-items:center;gap:14px;background:rgba(228,160,74,.14);border:1px dashed rgba(228,160,74,.6);border-radius:16px;padding:14px 16px}
+.judge .qr{width:56px;height:56px;flex:none;border-radius:8px;background:#fff;background-image:linear-gradient(90deg,#1C3F4B 50%,transparent 0),linear-gradient(#1C3F4B 50%,transparent 0);background-size:8px 8px;opacity:.9}
+.judge p{margin:0;font-size:.92rem}
+
 @media (max-width:700px){section.sec{padding:60px 0}}
 
 .why{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -412,6 +438,39 @@ footer .r{margin-left:auto}
           <ul id="try-list"></ul>
           <div class="acts"><a class="btn solid" id="try-open" href="app.html?t=sea" target="_blank" rel="noopener">用手機開啟示範 ↗</a></div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec exp" id="why-amei">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="stamp">Why AMEI</div>
+      <h2>做過活動的人做的互動，<br>才知道要放在哪裡</h2>
+      <p>互動不是加上去就好。點位放哪、故事怎麼寫、評審想看到什麼，都是現場累積出來的判斷。</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card reveal">
+        <div class="k">FIELD EXPERIENCE</div>
+        <h3>懂活動現場，也會寫地方故事</h3>
+        <div class="exp-nums"><div><b>100+</b><span>場活動實際執行</span></div><div><b>50+</b><span>份標案企劃</span></div><div><b>10+</b><span>農遊體驗方案</span></div></div>
+        <ul class="exp-list">
+          <li>知道人潮會在哪裡散掉<small>暗號放在對的攤位、對的時段，才帶得動交流與停留</small></li>
+          <li>寫得出有溫度的在地內容<small>高雄美濃、大寮、燕巢、大樹、旗山、桃源等地方的體驗與文化內容撰寫</small></li>
+          <li>從結案往回設計<small>參與人次、答對率、滿意度一開始就規劃好，成果報告不用事後補數字</small></li>
+        </ul>
+      </div>
+      <div class="exp-card reveal">
+        <div class="k">DEMO FOR REVIEW</div>
+        <h3>評選現場，直接讓評審玩</h3>
+        <ol class="demo-flow">
+          <li><i></i><div><b>投標前先做可操作 Demo</b><span>套入你的活動名稱、點位與在地故事</span></div></li>
+          <li><i></i><div><b>寫進服務建議書</b><span>附上 QR code 與畫面截圖，書審就看得到</span></div></li>
+          <li><i></i><div><b>簡報時評審掃碼試玩</b><span>比起「預計製作互動網頁」，實際能玩的作品更有說服力</span></div></li>
+          <li><i></i><div><b>得標後直接延續製作</b><span>Demo 就是正式版的基礎，不用重做</span></div></li>
+        </ol>
+        <div class="judge"><p>📑 同時需要服務建議書？我也寫標案企劃，<a href="../">企劃與互動一起規劃</a>，內容前後對得上。</p></div>
       </div>
     </div>
   </div>
