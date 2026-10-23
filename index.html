@@ -646,7 +646,7 @@ footer a{color:#9ED0BB}
     <ul class="nav-links" id="nav-links">
       <li><a href="#pain">常見卡關</a></li>
       <li><a href="#services">服務方案</a></li>
-      <li><a href="#works">作品</a></li>
+      <li><a href="web/#works">網站作品</a></li>
       <li><a href="#projects">活動紀錄</a></li>
       <li><a href="party/">婚禮・尾牙</a></li>
       <li><a href="seaside/">活動互動</a></li>
@@ -743,112 +743,6 @@ footer a{color:#9ED0BB}
     <article class="card sv rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="38" height="30" rx="3"/><path d="M5 17h38M19 25l-5 4 5 4M29 25l5 4-5 4"/></svg><span class="k">網站製作</span><h3>一頁式網站</h3><p>先搭框架再設計，可加專屬後台</p><div class="pr">NT$8,000<small>起</small></div><div class="pn">架構健檢 NT$2,000（可折抵）</div><div class="go"><a href="web/">看介紹</a><a class="p" href="#contact" onclick="selectService('網站・互動遊戲・app')">預約諮詢</a></div></article>
   </div>
 </div></section>
-<section id="try"><div class="container">
-  <h2 class="section-title">試看看活動網頁怎麼建</h2>
-  <p class="lead-c">改左邊的資料表，右邊網頁即時更新。</p>
-    <div class="live-demo" aria-label="活動網頁建置示範">
-      <div class="demo-panes">
-      <div>
-        <div class="pane-name"><b>活動資料表</b><span>主辦方填這裡</span></div>
-        <table class="sheet">
-          <tr><th scope="row"><label for="d-title">活動名稱</label></th><td><input id="d-title" data-k="title" value="龍眼樹下的餐桌" maxlength="24"></td></tr>
-          <tr><th scope="row"><label for="d-date">日期</label></th><td><input id="d-date" data-k="date" value="10/18（六）上午 10 點" maxlength="20"></td></tr>
-          <tr><th scope="row"><label for="d-place">地點</label></th><td><input id="d-place" data-k="place" value="老廟埕" maxlength="20"></td></tr>
-          <tr><th scope="row"><label for="d-seats">名額</label></th><td><input id="d-seats" data-k="seats" value="40" inputmode="numeric" maxlength="4"></td></tr>
-          <tr><th scope="row"><label for="d-desc">活動內容</label></th><td><textarea id="d-desc" data-k="desc" rows="3" maxlength="120">用在地龍眼和當季食材，跟社區長輩一起備一桌午餐，在老龍眼樹下共食。</textarea></td></tr>
-        </table>
-        <div class="flow-head"><span>活動流程</span><button type="button" class="add-row" id="add-flow">＋ 新增流程</button></div>
-        <table class="sheet flow-sheet"><tbody id="flow-rows"></tbody></table>
-      </div>
-      <div>
-        <div class="pane-name"><b>活動網頁</b><span>自動更新</span></div>
-        <div class="browser">
-          <div class="browser-bar" role="tablist" aria-label="切換檢視"><i></i><i></i><i></i>
-            <button type="button" role="tab" class="btab on" id="tab-page" aria-selected="true" aria-controls="view-page">活動報名頁</button>
-            <button type="button" role="tab" class="btab" id="tab-admin" aria-selected="false" aria-controls="view-admin">後台管理</button>
-          </div>
-          <div class="ev" id="view-page" role="tabpanel" aria-labelledby="tab-page">
-            <span class="ev-date" data-f="date"></span>
-            <span class="ev-title" data-f="title"></span>
-            <span class="ev-place">地點：<span data-f="place"></span></span>
-            <p class="ev-desc" data-f="desc"></p>
-            <div class="ev-flow" id="ev-flow-wrap"><b>活動流程</b><ol id="ev-flow"></ol></div>
-            <div class="ev-foot"><span>剩餘名額 <b id="ev-left"></b>／<span data-f="seats"></span> 人</span><button type="button" class="ev-join" id="ev-join">我要報名</button></div>
-          </div>
-          <div class="adm" id="view-admin" role="tabpanel" aria-labelledby="tab-admin" hidden>
-            <div class="adm-top"><div><small>報名管理</small><b data-f="title"></b></div>
-              <label class="adm-switch"><input type="checkbox" id="adm-open" checked><span>開放報名</span></label></div>
-            <div class="adm-stats">
-              <div><small>已報名</small><b id="adm-count">0</b></div>
-              <div><small>名額</small><b data-f="seats"></b></div>
-              <div><small>剩餘</small><b id="adm-left">0</b></div>
-            </div>
-            <div class="adm-bar"><i id="adm-bar"></i></div>
-            <div class="adm-table"><table><thead><tr><th>姓名</th><th>手機</th><th>人數</th><th>報名時間</th><th><span class="sr">刪除</span></th></tr></thead><tbody id="adm-rows"></tbody></table></div>
-            <div class="adm-foot"><span id="adm-note" aria-live="polite"></span><button type="button" class="add-row" id="adm-export">匯出名單（CSV）</button></div>
-          </div>
-        </div>
-      </div>
-      </div>
-      <a class="demo-cta" href="#contact">不容易嗎？讓我來幫您！</a>
-    </div>
-
-  <dialog class="reg" id="reg" aria-labelledby="reg-title">
-    <form method="dialog" class="reg-form" id="reg-form" novalidate>
-      <button type="button" class="reg-x" id="reg-x" aria-label="關閉">×</button>
-      <small>活動報名</small>
-      <h3 id="reg-title" data-f="title"></h3>
-      <p class="reg-meta"><span data-f="date"></span>・<span data-f="place"></span></p>
-      <label>姓名<input name="n" maxlength="12" autocomplete="off" required></label>
-      <label>手機<input name="p" inputmode="numeric" maxlength="10" placeholder="09xxxxxxxx" autocomplete="off" required></label>
-      <label>報名人數<select name="c"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
-      <p class="reg-msg" id="reg-msg" role="status"></p>
-      <button type="submit" class="reg-go">送出報名</button>
-      <p class="reg-demo">這是示範：資料只留在這個頁面，不會真的送出。</p>
-    </form>
-    <div class="reg-done" id="reg-done" hidden>
-      <small>活動報名</small>
-      <h3>報名成功！</h3>
-      <p id="reg-done-txt"></p>
-      <button type="button" class="reg-go" id="reg-to-admin">到主辦方後台看看</button>
-      <button type="button" class="reg-link" id="reg-close">關閉</button>
-    </div>
-  </dialog>
-</div></section>
-
-<section id="works" class="band"><div class="container">
-  <h2 class="section-title">網站作品</h2>
-  <p class="lead-c">受公部門委託製作的產業行銷網站。</p>
-
-  <article class="case">
-    <a class="case-shot" href="https://justtwohow123.wixsite.com/tauyaun-summer-map" target="_blank" rel="noopener"><img src="https://static.wixstatic.com/media/3db37c_96ec330237bd4662b402508ff31bf327%7Emv2.png/v1/fit/w_2500,h_1330,al_c/3db37c_96ec330237bd4662b402508ff31bf327%7Emv2.png" alt="桃源涼夏風味旅圖網站首頁" loading="lazy"></a>
-    <div class="case-body">
-      <span class="card-meta">高雄市桃源區公所・產業行銷網站</span>
-      <h3 class="case-title">桃源涼夏風味旅圖</h3>
-      <ul class="pts"><li>整理各里景點、店家、旅宿與時令作物，讓遊客查得到、用得上</li></ul>
-      <div class="detail-item"><span>網站內容</span><span>景點地圖、桃源好店、旅宿、遊程推薦、時令作物、交通方式</span></div>
-      <div class="detail-item"><span>我負責</span><span>網頁建置</span></div>
-      <a class="btn-lively" href="https://justtwohow123.wixsite.com/tauyaun-summer-map" target="_blank" rel="noopener">開啟網站</a>
-    </div>
-  </article>
-
-  <article class="case case-sub">
-    <a class="case-shot" href="https://justtwohow123.wixsite.com/tauyaun-summer-map/webinar-registration" target="_blank" rel="noopener"><img src="https://static.wixstatic.com/media/3db37c_a608bc57ef3145a7a5eec651db788d99~mv2.png/v1/fill/w_658,h_624,al_c,lg_1,q_90,enc_avif,quality_auto/3db37c_a608bc57ef3145a7a5eec651db788d99~mv2.png" alt="桃源精品咖啡頁面主視覺" loading="lazy"></a>
-    <div class="case-body">
-      <span class="card-meta">同網站專題頁</span>
-      <h3 class="case-title">桃源精品咖啡</h3>
-      <ul class="pts"><li>113 年第一屆精品咖啡示範評鑑專題，影片由我剪輯</li></ul>
-      <div class="detail-item"><span>我負責</span><span>頁面建置、影片剪輯</span></div>
-      <a class="btn-lively" href="https://justtwohow123.wixsite.com/tauyaun-summer-map/webinar-registration" target="_blank" rel="noopener">開啟頁面</a>
-    </div>
-  </article>
-  <p class="works-note">需要客人自己就能更新的網站？<a href="web/">看一頁式網站與專屬後台 →</a></p>
-</div></section>
-
-
-
-
-
 <section id="projects"><div class="container">
   <h2 class="section-title">活動與文化紀錄</h2>
   <p class="lead-c">寫企劃的人自己拍，知道成果報告需要哪些畫面。</p>
