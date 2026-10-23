@@ -495,6 +495,147 @@ footer a{color:#9ED0BB}
 .kit-link span:not(.kit-tag){grid-column:1;font-size:.85rem;color:var(--text-light);line-height:1.6}
 .kit-link i{grid-column:2;grid-row:1/4;font-style:normal;font-size:1.3rem;color:var(--accent)}
 @media (prefers-reduced-motion:reduce){.kit-link{transition:none}}
+
+/* ===== v30：重整版 — 痛點動畫、一條龍流程、精簡服務卡 ===== */
+.fit-box{position:relative;width:100%;overflow:hidden}
+.fit-box>.cv{position:absolute;left:0;top:0;transform-origin:0 0}
+.lead-s{text-align:center;color:var(--text-light);margin:-2.2rem auto 2.6rem;max-width:34em}
+.hero-copy .lede{font-size:1.1rem;color:var(--text-light);margin:0 0 1.6rem;max-width:30em}
+.hero-acts{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.6rem 0 1.2rem}
+.hero-acts .btn{text-decoration:none;display:inline-flex;align-items:center}
+.btn-ghost{display:inline-flex;align-items:center;padding:.85rem 1.5rem;border:1.5px solid var(--text);border-radius:4px;font-weight:700;color:var(--text);text-decoration:none}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.svc-chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.svc-chips a{font-size:.88rem;padding:.35rem .9rem;border-radius:99px;border:1px solid var(--border);background:#fff;color:var(--text-light)}
+.svc-chips a:hover{border-color:var(--accent);color:var(--accent)}
+.svc-chips a b{color:var(--accent);margin-right:.3em}
+/* pain */
+.pz-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.6rem}
+@media (max-width:900px){.pz-grid{grid-template-columns:1fr}}
+.pz{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.4rem 1.4rem 1.2rem;display:flex;flex-direction:column;gap:.9rem}
+.pz-head{display:grid;gap:.35rem}
+.pz-pain{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.pz-pain i{font-style:normal;font-size:.72rem;font-weight:700;letter-spacing:.15em;color:#B03A2E;border:1.5px solid #B03A2E;border-radius:6px;padding:0 .5em}
+.pz-pain s{color:var(--text-light);font-weight:700;text-decoration-color:#B03A2E;text-decoration-thickness:2px}
+.pz-fix{font-family:var(--serif);font-size:1.4rem;font-weight:700;line-height:1.35}
+.pz-fix b{color:var(--accent)}
+.pz .stage{border-radius:10px;background:#F6F3EC;overflow:hidden}
+.scn{position:relative;width:440px;height:230px;font-family:'Noto Sans TC',sans-serif;color:#1F1D1A}
+.tg{position:absolute;right:10px;bottom:8px;font-size:10px;color:#9A948A;letter-spacing:.1em}
+/* P1 評選配分 */
+.p1 .rows{position:absolute;left:18px;top:18px;width:250px}
+.p1 .r{display:grid;grid-template-columns:20px 1fr 40px;gap:8px;align-items:center;height:34px;font-size:12.5px;font-weight:700}
+.p1 .r .ck{width:18px;height:18px;border-radius:50%;border:2px solid #D6CFBF;display:flex;align-items:center;justify-content:center;transition:.3s}
+.p1 .r .ck svg{width:11px;height:11px;stroke:#fff;stroke-width:3;fill:none;opacity:0;transition:.3s}
+.p1 .r.on .ck{background:#2F6B5A;border-color:#2F6B5A}.p1 .r.on .ck svg{opacity:1}
+.p1 .r em{font-style:normal;color:#9A7B3E;text-align:right}
+.p1 .doc{position:absolute;left:290px;top:18px;width:132px;height:194px;background:#fff;border-radius:8px;box-shadow:0 6px 16px rgba(40,35,25,.1);padding:12px 10px}
+.p1 .doc small{font-size:9.5px;color:#9A948A;letter-spacing:.1em}
+.p1 .sec{height:22px;border-radius:5px;background:#F1EDE4;margin-top:8px;font-size:10px;display:flex;align-items:center;padding:0 7px;color:#9A948A;transition:.35s}
+.p1 .sec.on{background:rgba(47,107,90,.15);color:#2F6B5A;font-weight:700}
+.p1 .sum{position:absolute;left:18px;top:196px;width:250px;font-size:11px;color:#5C5850}
+.p1 .sum .bar{height:8px;border-radius:4px;background:#E6E0D3;margin-top:4px;overflow:hidden}
+.p1 .sum .bar i{display:block;height:100%;width:0;background:#2F6B5A;transition:width .5s}
+/* P2 期程甘特 */
+.p2 .gt{position:absolute;left:18px;top:16px;width:404px}
+.p2 .hd{display:grid;grid-template-columns:80px repeat(6,1fr);font-size:10px;color:#9A948A;margin-bottom:6px}
+.p2 .row{display:grid;grid-template-columns:80px 1fr;align-items:center;height:30px;font-size:12px;font-weight:700}
+.p2 .tr{position:relative;height:16px;background:repeating-linear-gradient(90deg,transparent 0 calc(100%/6 - 1px),#E6E0D3 calc(100%/6 - 1px) calc(100%/6))}
+.p2 .tr i{position:absolute;top:0;height:100%;border-radius:5px;background:#8FB8A8;transition:all .8s cubic-bezier(.4,0,.2,1)}
+.p2 .row.bad .tr i{background:#D9705F}
+.p2 .row.bad .tr i::after{content:'人力不足';position:absolute;left:100%;margin-left:6px;top:-1px;font-size:10px;color:#B03A2E;white-space:nowrap}
+.p2 .row.ok .tr i{background:#2F6B5A}
+.p2 .row.ok .tr i::after{content:'✓ 可執行';position:absolute;left:100%;margin-left:6px;top:-1px;font-size:10px;color:#2F6B5A;white-space:nowrap}
+/* P3 經費對應 */
+.p3 .colA,.p3 .colB{position:absolute;top:22px;width:150px}
+.p3 .colA{left:18px}.p3 .colB{right:18px}
+.p3 .colA div,.p3 .colB div{height:30px;margin-bottom:9px;border-radius:7px;background:#fff;box-shadow:0 2px 6px rgba(40,35,25,.06);font-size:11.5px;font-weight:700;display:flex;align-items:center;padding:0 10px;transition:.3s}
+.p3 .colB div{justify-content:flex-end;color:#5C5850}
+.p3 .colA div.on,.p3 .colB div.on{box-shadow:0 0 0 2px #2F6B5A inset}
+.p3 svg.ln{position:absolute;inset:0;pointer-events:none}
+.p3 svg.ln path{fill:none;stroke:#2F6B5A;stroke-width:2;stroke-dasharray:140;stroke-dashoffset:140;transition:stroke-dashoffset .6s}
+.p3 svg.ln path.on{stroke-dashoffset:0}
+.p3 .stamp{position:absolute;left:50%;top:186px;transform:translateX(-50%) rotate(-6deg) scale(1.6);border:2.5px solid #B03A2E;color:#B03A2E;font-weight:900;font-size:14px;padding:2px 12px;border-radius:6px;letter-spacing:.15em;opacity:0;transition:all .35s cubic-bezier(.3,1.5,.5,1)}
+.p3.done .stamp{opacity:1;transform:translateX(-50%) rotate(-6deg) scale(1)}
+/* P4 查證 */
+.p4 .paper{position:absolute;left:24px;top:16px;width:270px;height:198px;background:#fff;border-radius:8px;box-shadow:0 6px 16px rgba(40,35,25,.1);padding:14px 16px}
+.p4 .ln2{height:9px;border-radius:4px;background:#ECE7DC;margin-bottom:11px;position:relative;transition:background .3s}
+.p4 .ln2.hl{background:#F3C9C0}
+.p4 .ln2.fx{background:#CFE3DA}
+.p4 .mag{position:absolute;left:30px;top:18px;width:60px;height:60px;transition:transform 1.4s cubic-bezier(.5,0,.3,1)}
+.p4 .mag svg{width:100%;height:100%;fill:none;stroke:#2F6B5A;stroke-width:3.5;stroke-linecap:round}
+.p4 .note{position:absolute;left:304px;width:118px;border-radius:9px;padding:8px 10px;font-size:11px;font-weight:700;opacity:0;transform:translateX(10px);transition:all .4s}
+.p4 .n1{top:40px;background:#FBE9E4;color:#B03A2E}
+.p4 .n2{top:132px;background:#E3EFEA;color:#2F6B5A}
+.p4.s1 .n1,.p4.s2 .n1,.p4.s2 .n2{opacity:1;transform:none}
+/* one-stop pipeline */
+.one{background:var(--accent);color:#fff}
+.one .section-title{color:#fff}.one .section-title::after{background:#fff}.one .section-title::before{background:var(--accent);color:#fff}
+.one .lead-s{color:rgba(255,255,255,.75)}
+.one .container{padding-bottom:3.5rem}
+.pipe{position:relative;width:1080px;height:210px}
+.pipe .track{position:absolute;left:70px;right:70px;top:52px;height:3px;background:rgba(255,255,255,.25)}
+.pipe .track i{position:absolute;left:0;top:0;height:100%;width:0;background:#E9C77B;transition:width .6s linear}
+.pipe .nd{position:absolute;top:10px;width:140px;margin-left:-70px;text-align:center}
+.pipe .nd .c{width:86px;height:86px;margin:0 auto;border-radius:50%;background:#245446;border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .4s}
+.pipe .nd .c svg{width:44px;height:44px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pipe .nd.on .c{background:#E9C77B;border-color:#E9C77B;transform:scale(1.08)}
+.pipe .nd.on .c svg{stroke:#1F3A33}
+.pipe .nd b{display:block;font-family:var(--serif);font-size:20px;margin-top:12px}
+.pipe .nd span{font-size:14px;color:rgba(255,255,255,.7)}
+.pipe-mob{display:none}
+@media (max-width:700px){.pipe-box{display:none}.pipe-mob{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;text-align:center}.pipe-mob div{background:rgba(255,255,255,.08);border-radius:12px;padding:.8rem .4rem;font-size:.85rem}.pipe-mob svg{width:34px;height:34px;fill:none;stroke:#E9C77B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto .3rem}.pipe-mob b{display:block;font-family:var(--serif)}}
+/* record */
+.rc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+@media (max-width:760px){.rc-grid{grid-template-columns:1fr}}
+.rc{text-align:center;padding:2rem 1rem}
+.rc b{display:block;font-family:var(--serif);font-size:clamp(3.2rem,6vw,4.4rem);line-height:1;color:var(--accent)}
+.rc b small{font-size:.4em;margin-left:.1em}
+.rc span{display:block;margin-top:.5rem;font-weight:700}
+.rc em{display:block;font-style:normal;color:var(--text-light);font-size:.9rem;margin-top:.2rem}
+.badges{display:grid;grid-template-columns:1.4fr 1fr;gap:1.4rem;margin-top:1.6rem}
+@media (max-width:860px){.badges{grid-template-columns:1fr}}
+.bdg{display:flex;gap:1rem;align-items:center;background:#fff;border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem}
+.bdg>svg{width:52px;height:52px;flex:none;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bdg b{display:block;font-family:var(--serif);font-size:1.1rem}
+.pins{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.35rem}
+.pins span{font-size:.8rem;padding:.1rem .6rem;border-radius:99px;background:var(--accent-soft);color:var(--accent);font-weight:700}
+/* services compact */
+.sv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+@media (max-width:960px){.sv-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.sv-grid{grid-template-columns:1fr}}
+.sv{display:flex;flex-direction:column;padding:1.4rem;background:#fff;position:relative}
+.sv>svg{width:2.4rem;height:2.4rem;color:var(--accent);margin-bottom:.7rem}
+.sv .k{font-size:.75rem;letter-spacing:.18em;color:var(--accent);font-weight:700}
+.sv h3{font-size:1.3rem;margin:.2rem 0 .3rem}
+.sv p{margin:0 0 .8rem;color:var(--text-light);font-size:.92rem;flex:1}
+.sv .pr{font-family:var(--serif);font-size:1.7rem;font-weight:700;color:var(--text);line-height:1.1}
+.sv .pr small{font-size:.5em;color:var(--text-light);margin-left:.2em}
+.sv .pn{font-size:.8rem;color:var(--text-light);margin-top:.25rem;min-height:1.3em}
+.sv .go{display:flex;gap:.5rem;margin-top:1rem}
+.sv .go a{flex:1;text-align:center;padding:.55rem 0;border-radius:6px;font-weight:700;font-size:.9rem;border:1px solid var(--accent);color:var(--accent)}
+.sv .go a.p{background:var(--accent);color:#fff}
+.sv .go a:hover{transform:translateY(-1px)}
+.sv.hot{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.sv .rib{position:absolute;top:14px;right:14px;font-size:.72rem;font-weight:700;background:var(--accent);color:#fff;padding:.15rem .6rem;border-radius:99px}
+/* process */
+.flow2{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;position:relative;list-style:none;padding:0;margin:0}
+.flow2::before{content:'';position:absolute;left:12%;right:12%;top:26px;height:2px;background:var(--border)}
+.flow2 .fill{position:absolute;left:12%;top:26px;height:2px;background:var(--accent);width:0;transition:width 1.8s ease}
+.flow2.in .fill{width:76%}
+.flow2 li{text-align:center;position:relative}
+.flow2 li i{display:flex;width:54px;height:54px;margin:0 auto .7rem;border-radius:50%;background:#fff;border:2px solid var(--accent);align-items:center;justify-content:center}
+.flow2 li i svg{width:26px;height:26px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.flow2 b{display:block;font-family:var(--serif);font-size:1.1rem}
+.flow2 span{font-size:.88rem;color:var(--text-light)}
+@media (max-width:700px){.flow2{grid-template-columns:1fr 1fr}.flow2::before,.flow2 .fill{display:none}}
+.about-chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:.4rem 0 1rem}
+.about-chips span{font-size:.88rem;padding:.3rem .8rem;border-radius:99px;background:var(--accent-soft);color:var(--accent);font-weight:700}
+.works-note{margin-top:1.6rem;text-align:center;color:var(--text-light);font-size:.95rem}
+.works-note a{color:var(--accent);font-weight:700;border-bottom:1px solid var(--border)}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
@@ -503,11 +644,10 @@ footer a{color:#9ED0BB}
     <div class="logo">AMEI 阿梅<span class="logo-sub">標案企劃</span></div>
     <button class="menu-toggle" aria-label="開啟選單" aria-expanded="false" aria-controls="nav-links">☰</button>
     <ul class="nav-links" id="nav-links">
-      <li><a href="#record">實績</a></li>
-      <li><a href="#try">網頁試做</a></li>
-      <li><a href="#works">網站作品</a></li>
-      <li><a href="#projects">活動紀錄</a></li>
+      <li><a href="#pain">常見卡關</a></li>
       <li><a href="#services">服務方案</a></li>
+      <li><a href="#works">作品</a></li>
+      <li><a href="#projects">活動紀錄</a></li>
       <li><a href="party/">婚禮・尾牙</a></li>
       <li><a href="seaside/">活動互動</a></li>
       <li><a href="web/">一頁式網站</a></li>
@@ -522,51 +662,90 @@ footer a{color:#9ED0BB}
       <h1>全方位標案企劃，<br>幫你寫這一場。</h1>
       <p class="tagline">政府標案 · 社區發展企劃 · 網站製作 · 活動攝影</p>
       <ul class="hstats">
-        <li><b>50<i>+</i></b>場標案企劃撰寫</li>
-        <li><b>100<i>+</i></b>場活動實際執行</li>
-        <li><b>2<i>年</i></b>地方機關服務</li>
+        <li><b><span class="cnt" data-n="50">50</span><i>+</i></b>份標案企劃</li>
+        <li><b><span class="cnt" data-n="100">100</span><i>+</i></b>場活動執行</li>
+        <li><b><span class="cnt" data-n="2">2</span><i>年</i></b>地方機關服務</li>
       </ul>
-      <ul class="pts hero-pts"><li>六年標案企劃經驗，精準打中機關需求</li><li>架構對得上項目、經費對得上內容、結案順利核銷</li><li>需要做網頁？活動現場小遊戲？甚至是當天攝影？一站滿足！</li></ul>
-      <div class="hero-links"><a class="skip" href="#works">看網站作品</a><a class="skip" href="#try">試看看怎麼建網頁</a><a class="skip" href="#contact">直接聯絡預約</a><a class="skip" href="party/">婚禮・尾牙互動套組 →</a><a class="skip" href="seaside/">活動互動APP製作 →</a><a class="skip" href="web/">一頁式網站 →</a></div>
+      <p class="lede">評選過得了、得標做得出、結案核銷得掉。</p>
+      <div class="hero-acts"><a class="btn" href="#contact">預約諮詢</a><a class="btn-ghost" href="#pain">看我解決哪些問題</a></div>
+      <div class="svc-chips"><a href="seaside/"><b>→</b>活動互動APP</a><a href="party/"><b>→</b>婚禮・尾牙互動</a><a href="web/"><b>→</b>一頁式網站</a></div>
     </div>
     <figure class="hero-shots" id="hero-shots" hidden>
       <div class="shots" id="shots"></div>
       <figcaption><span>活動現場紀錄，照片皆為本人拍攝</span><a href="#projects">看全部活動紀錄</a></figcaption>
     </figure>
-
   </div>
 </section>
 
 <main>
+<section id="pain" class="band"><div class="container">
+  <h2 class="section-title">標案最常卡在這四關</h2>
+  <p class="lead-s">AI 幾分鐘就生得出企劃書，但這四關它幫不了你。</p>
+  <div class="pz-grid">
+    <article class="pz rv"><div class="pz-head"><div class="pz-pain"><i>痛點</i><s>企劃書寫得很漂亮，評選卻沒過</s></div><div class="pz-fix">逐條對照<b>評選配分</b>寫</div></div><div class="stage"><div class="fit-box" data-w="440" data-h="230"><div class="cv scn p1" id="pz1">
+  <div class="rows">
+    <div class="r"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>計畫完整性<em>30%</em></div>
+    <div class="r"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>執行能力與經驗<em>25%</em></div>
+    <div class="r"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>經費合理性<em>20%</em></div>
+    <div class="r"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>創意與效益<em>15%</em></div>
+    <div class="r"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>簡報與答詢<em>10%</em></div>
+  </div>
+  <div class="sum">評選項目對應率<div class="bar"><i></i></div></div>
+  <div class="doc"><small>服務建議書</small><div class="sec">壹、計畫目標</div><div class="sec">貳、團隊與實績</div><div class="sec">參、經費概算</div><div class="sec">肆、創新亮點</div><div class="sec">伍、簡報重點</div></div>
+  <span class="tg">示意</span></div></div></div></article>
+    <article class="pz rv"><div class="pz-head"><div class="pz-pain"><i>痛點</i><s>得標了，才發現期程跑不動</s></div><div class="pz-fix">用<b>實際執行經驗</b>排期程</div></div><div class="stage"><div class="fit-box" data-w="440" data-h="230"><div class="cv scn p2" id="pz2"><div class="gt">
+  <div class="hd"><span></span><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span></div>
+  <div class="row"><span>籌備招募</span><div class="tr"><i style="left:0;width:33%"></i></div></div>
+  <div class="row"><span>文宣設計</span><div class="tr"><i style="left:16%;width:25%"></i></div></div>
+  <div class="row" id="pz2bad"><span>場地布置</span><div class="tr"><i id="pz2bar" style="left:62%;width:9%"></i></div></div>
+  <div class="row"><span>活動當天</span><div class="tr"><i style="left:83%;width:6%"></i></div></div>
+  <div class="row"><span>成果報告</span><div class="tr"><i style="left:88%;width:12%"></i></div></div>
+  </div><span class="tg">示意</span></div></div></div></article>
+    <article class="pz rv"><div class="pz-head"><div class="pz-pain"><i>痛點</i><s>結案時經費對不上，核銷卡關</s></div><div class="pz-fix">每筆經費<b>對上活動內容</b></div></div><div class="stage"><div class="fit-box" data-w="440" data-h="230"><div class="cv scn p3" id="pz3">
+  <div class="colA"><div>講師鐘點</div><div>場地布置</div><div>餐點</div><div>文宣印製</div></div>
+  <div class="colB"><div>講座鐘點費</div><div>材料費</div><div>膳費</div><div>印刷費</div></div>
+  <svg class="ln" viewBox="0 0 440 230"><path d="M168 37 C220 37,220 37,272 37"/><path d="M168 76 C220 76,220 76,272 76"/><path d="M168 115 C220 115,220 115,272 115"/><path d="M168 154 C220 154,220 154,272 154"/></svg>
+  <div class="stamp">核銷 OK</div><span class="tg">示意</span></div></div></div></article>
+    <article class="pz rv"><div class="pz-head"><div class="pz-pain"><i>痛點</i><s>AI 寫的內容看似合理，其實有錯</s></div><div class="pz-fix">法規與數據<b>逐一查證</b></div></div><div class="stage"><div class="fit-box" data-w="440" data-h="230"><div class="cv scn p4" id="pz4">
+  <div class="paper"><div class="ln2" style="width:90%"></div><div class="ln2" style="width:76%"></div><div class="ln2" style="width:84%"></div><div class="ln2" id="pz4l" style="width:88%"></div><div class="ln2" style="width:70%"></div><div class="ln2" style="width:82%"></div><div class="ln2" style="width:60%"></div><div class="ln2" style="width:78%"></div></div>
+  <div class="mag" id="pz4m"><svg viewBox="0 0 48 48"><circle cx="20" cy="20" r="13"/><path d="M30 30l12 12"/></svg></div>
+  <div class="note n1">引用條號錯誤<br><span style="font-weight:400">AI 寫得很像，但查無此條</span></div>
+  <div class="note n2">✓ 已查證修正<br><span style="font-weight:400">附上正確出處</span></div>
+  <span class="tg">示意</span></div></div></div></article>
+  </div>
+</div></section>
+<section class="one"><div class="container">
+  <h2 class="section-title">從調查到結案，不用換人</h2>
+  <p class="lead-s">寫企劃的人，也做網站、跑現場、拍照片。前後對得上，溝通只要一次。</p>
+  <div class="fit-box pipe-box" data-w="1080" data-h="210"><div class="cv pipe" id="pipe"><div class="track"><i></i></div><div class="nd" style="left:70px"><div class="c"><svg viewBox="0 0 48 48"><circle cx="21" cy="21" r="13"/><path d="M31 31l11 11M15 21h12M21 15v12"/></svg></div><b>現況調查</b><span>走訪・訪談</span></div><div class="nd" style="left:258px"><div class="c"><svg viewBox="0 0 48 48"><path d="M12 5h17l9 9v29H12z"/><path d="M29 5v9h9M18 22h14M18 29h14M18 36h8"/></svg></div><b>企劃書</b><span>標案・補助案</span></div><div class="nd" style="left:446px"><div class="c"><svg viewBox="0 0 48 48"><rect x="5" y="9" width="38" height="30" rx="3"/><path d="M5 17h38M19 25l-5 4 5 4M29 25l5 4-5 4"/></svg></div><b>網站・互動</b><span>報名頁・APP</span></div><div class="nd" style="left:634px"><div class="c"><svg viewBox="0 0 48 48"><path d="M24 5c-6 0-10 4.5-10 10 0 7.5 10 18 10 18s10-10.5 10-18c0-5.5-4-10-10-10z"/><circle cx="24" cy="15" r="3.5"/><path d="M8 38c4-3 8-3 12 0s8 3 12 0 8-3 8-3"/></svg></div><b>活動現場</b><span>執行・控場</span></div><div class="nd" style="left:822px"><div class="c"><svg viewBox="0 0 48 48"><path d="M6 15h9l3-5h12l3 5h9v24H6z"/><circle cx="24" cy="26" r="8"/></svg></div><b>活動攝影</b><span>成果照片</span></div><div class="nd" style="left:1010px"><div class="c"><svg viewBox="0 0 48 48"><path d="M10 6h20l8 8v28H10z"/><path d="M16 27l6 6 11-12"/></svg></div><b>結案核銷</b><span>成果報告</span></div></div></div>
+  <div class="pipe-mob"><div><svg viewBox="0 0 48 48"><circle cx="21" cy="21" r="13"/><path d="M31 31l11 11M15 21h12M21 15v12"/></svg><b>現況調查</b>走訪・訪談</div><div><svg viewBox="0 0 48 48"><path d="M12 5h17l9 9v29H12z"/><path d="M29 5v9h9M18 22h14M18 29h14M18 36h8"/></svg><b>企劃書</b>標案・補助案</div><div><svg viewBox="0 0 48 48"><rect x="5" y="9" width="38" height="30" rx="3"/><path d="M5 17h38M19 25l-5 4 5 4M29 25l5 4-5 4"/></svg><b>網站・互動</b>報名頁・APP</div><div><svg viewBox="0 0 48 48"><path d="M24 5c-6 0-10 4.5-10 10 0 7.5 10 18 10 18s10-10.5 10-18c0-5.5-4-10-10-10z"/><circle cx="24" cy="15" r="3.5"/><path d="M8 38c4-3 8-3 12 0s8 3 12 0 8-3 8-3"/></svg><b>活動現場</b>執行・控場</div><div><svg viewBox="0 0 48 48"><path d="M6 15h9l3-5h12l3 5h9v24H6z"/><circle cx="24" cy="26" r="8"/></svg><b>活動攝影</b>成果照片</div><div><svg viewBox="0 0 48 48"><path d="M10 6h20l8 8v28H10z"/><path d="M16 27l6 6 11-12"/></svg><b>結案核銷</b>成果報告</div></div>
+</div></section>
 <section id="record" class="container">
   <h2 class="section-title">實績</h2>
-  <p class="lead-c">企劃書寫得漂亮不難，難的是：評選會過、得標後做得出來、結案時核銷得掉。</p>
-  <div class="rec-grid">
-    <article class="card rec"><b>50<i>+</i></b><h3>場標案企劃撰寫</h3><ul class="pts"><li>從需求說明書、評選項目分析</li><li>服務建議書、經費概算表整套都寫</li></ul></article>
-    <article class="card rec"><b>100<i>+</i></b><h3>場活動實際執行</h3><ul class="pts"><li>期程和經費是依據經驗估算，不是紙上談兵</li><li>寫的時候要知道得標後做不做得出來</li></ul></article>
-    <article class="card rec"><b>2<i>年</i></b><h3>地方機關服務</h3><ul class="pts"><li>熟悉公部門的文件、流程與用語</li><li>知道承辦人員在意什麼</li></ul></article>
+  <div class="rc-grid">
+    <div class="card rc rv"><b><span class="cnt" data-n="50">50</span><small>+</small></b><span>份標案企劃撰寫</span><em>需求分析到經費概算整套</em></div>
+    <div class="card rc rv"><b><span class="cnt" data-n="100">100</span><small>+</small></b><span>場活動實際執行</span><em>期程經費依經驗估算</em></div>
+    <div class="card rc rv"><b><span class="cnt" data-n="2">2</span><small>年</small></b><span>地方機關服務</span><em>知道承辦人在意什麼</em></div>
   </div>
-  <div class="rec-more">
-    <div><h3>高雄農遊體驗方案 10 件以上</h3><ul class="pts"><li>地點：美濃獅山、大寮永芳、燕巢金山、大樹龍目、旗山南勝、桃源復興</li><li>內容：農事體驗、在地餐食、文化據點與導覽</li></ul></div>
-    <div><h3>採購專業人員基礎訓練及格證書</h3><ul class="pts"><li>受過政府採購法規的完整訓練</li><li>熟悉招標、決標到履約驗收的程序</li><li>執行中可諮詢相關內容</li></ul></div>
+  <div class="badges">
+    <div class="bdg rv"><svg viewBox="0 0 48 48"><path d="M5 12l12-5 14 5 12-5v29l-12 5-14-5-12 5z"/><path d="M17 7v29M31 12v29"/></svg><div><b>高雄農遊體驗方案 10 件以上</b><div class="pins"><span>美濃獅山</span><span>大寮永芳</span><span>燕巢金山</span><span>大樹龍目</span><span>旗山南勝</span><span>桃源復興</span></div></div></div>
+    <div class="bdg rv"><svg viewBox="0 0 48 48"><circle cx="24" cy="19" r="12"/><path d="M18 19l4 4 8-8"/><path d="M16 29l-4 14 8-4 4 6 4-6 8 4-4-14"/></svg><div><b>採購專業人員基礎訓練及格</b><span style="font-size:.88rem;color:var(--text-light)">熟悉招標、決標到履約驗收</span></div></div>
   </div>
 </section>
-
-<section id="why" class="band"><div class="container">
-  <h2 class="section-title"><span class="nw">AI 寫得出企劃書，</span><span class="nw">不一定寫得出能實做的企劃書</span></h2>
-  <p class="lead-c">現在誰都能在幾分鐘內生出一本企劃書。但評選看的不是頁數，是這幾件事對不對得上：</p>
-  <div class="why-grid">
-    <div><h3>對得上需求</h3><p>逐條對照需求說明書與評選配分，有時可以從中看出在意項目，強調優勢。</p></div>
-    <div><h3>查得到出處</h3><p>引用的法規與數據逐一查證，不讓看似合理的錯誤進到委員手上。</p></div>
-    <div><h3>做得出來</h3><p>期程與人力用實際執行過的經驗檢查，不寫現場跑不動的流程。</p></div>
-    <div><h3>算得過去</h3><p>經費依編列基準、對上活動內容，得標後核銷得掉。</p></div>
+<section id="services" class="band"><div class="container">
+  <h2 class="section-title">服務與報價</h2>
+  <div class="sv-grid">
+    <article class="card sv rv hot"><span class="rib">主力服務</span><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5h17l9 9v29H12z"/><path d="M29 5v9h9M18 22h14M18 29h14M18 36h8"/></svg><span class="k">政府標案</span><h3>標案企劃書</h3><p>對照評選配分，交付 PDF 成果檔</p><div class="pr">NT$7,000<small>起／件</small></div><div class="pn">預算 150 萬以上：預算 1–2%</div><div class="go"><a class="p" href="#contact" onclick="selectService('政府標案企劃')">預約諮詢</a></div></article>
+    <article class="card sv rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24L24 9l18 15"/><path d="M11 21v19h26V21"/><path d="M20 40V29h8v11"/></svg><span class="k">社區發展</span><h3>社區・補助案企劃</h3><p>含現況調查，經費一筆筆對上活動</p><div class="pr">NT$5,000<small>起／件</small></div><div class="pn">依社區規模與調查範圍調整</div><div class="go"><a class="p" href="#contact" onclick="selectService('社區發展・補助案企劃')">預約諮詢</a></div></article>
+    <article class="card sv rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15h9l3-5h12l3 5h9v24H6z"/><circle cx="24" cy="26" r="8"/></svg><span class="k">加值服務</span><h3>懂核銷的活動攝影</h3><p>成果報告用照片，快速交件</p><div class="pr">NT$4,000<small>起／場</small></div><div class="pn">南高屏・原民文化活動另有優惠</div><div class="go"><a class="p" href="#contact" onclick="selectService('活動攝影')">預約諮詢</a></div></article>
+    <article class="card sv rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="13" height="13" rx="2"/><rect x="28" y="7" width="13" height="13" rx="2"/><rect x="7" y="28" width="13" height="13" rx="2"/><path d="M28 28h5v5h-5zM36 36h5v5h-5zM28 38v3M38 28h3"/></svg><span class="k">活動互動</span><h3>活動互動APP製作</h3><p>市集集章・走讀導覽・教學問答・問卷抽獎</p><div class="pr">NT$8,000<small>起</small></div><div class="pn">可先做評選 Demo</div><div class="go"><a href="seaside/">看介紹</a><a class="p" href="#contact" onclick="selectService('網站・互動遊戲・app')">預約諮詢</a></div></article>
+    <article class="card sv rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40S7 30 7 18a8.5 8.5 0 0 1 17-2.5A8.5 8.5 0 0 1 41 18c0 12-17 22-17 22z"/><path d="M16 18h4l2-3 3 6 2-3h5"/></svg><span class="k">婚禮・尾牙</span><h3>三端連動互動套組</h3><p>祝福牆・即時問答・手機燈海</p><div class="pr">NT$3,800<small>起</small></div><div class="pn">6 款風格模板</div><div class="go"><a href="party/">看介紹</a><a class="p" href="#contact" onclick="selectService('網站・互動遊戲・app')">預約諮詢</a></div></article>
+    <article class="card sv rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="38" height="30" rx="3"/><path d="M5 17h38M19 25l-5 4 5 4M29 25l5 4-5 4"/></svg><span class="k">網站製作</span><h3>一頁式網站</h3><p>先搭框架再設計，可加專屬後台</p><div class="pr">NT$8,000<small>起</small></div><div class="pn">架構健檢 NT$2,000（可折抵）</div><div class="go"><a href="web/">看介紹</a><a class="p" href="#contact" onclick="selectService('網站・互動遊戲・app')">預約諮詢</a></div></article>
   </div>
-  <p class="why-cta"><a class="skip" href="#contact">要投標了嗎？讓我幫您寫一本做得到的企劃書</a></p>
 </div></section>
-
 <section id="try"><div class="container">
   <h2 class="section-title">試看看活動網頁怎麼建</h2>
-  <p class="lead-c">填寫活動資料表，活動網頁會即時跟著更新。</p>
+  <p class="lead-c">改左邊的資料表，右邊網頁即時更新。</p>
     <div class="live-demo" aria-label="活動網頁建置示範">
       <div class="demo-panes">
       <div>
@@ -639,14 +818,14 @@ footer a{color:#9ED0BB}
 
 <section id="works" class="band"><div class="container">
   <h2 class="section-title">網站作品</h2>
-  <p class="lead-c">受公部門委託製作的產業行銷網站。點圖片或按鈕可以開啟實際網站。</p>
+  <p class="lead-c">受公部門委託製作的產業行銷網站。</p>
 
   <article class="case">
     <a class="case-shot" href="https://justtwohow123.wixsite.com/tauyaun-summer-map" target="_blank" rel="noopener"><img src="https://static.wixstatic.com/media/3db37c_96ec330237bd4662b402508ff31bf327%7Emv2.png/v1/fit/w_2500,h_1330,al_c/3db37c_96ec330237bd4662b402508ff31bf327%7Emv2.png" alt="桃源涼夏風味旅圖網站首頁" loading="lazy"></a>
     <div class="case-body">
       <span class="card-meta">高雄市桃源區公所・產業行銷網站</span>
       <h3 class="case-title">桃源涼夏風味旅圖</h3>
-      <ul class="pts"><li>協助桃源區公所建置，發布產業行銷與旅遊資訊</li><li>整理各里的景點、店家、旅宿與時令作物</li><li>讓遊客查得到、用得上</li></ul>
+      <ul class="pts"><li>整理各里景點、店家、旅宿與時令作物，讓遊客查得到、用得上</li></ul>
       <div class="detail-item"><span>網站內容</span><span>景點地圖、桃源好店、旅宿、遊程推薦、時令作物、交通方式</span></div>
       <div class="detail-item"><span>我負責</span><span>網頁建置</span></div>
       <a class="btn-lively" href="https://justtwohow123.wixsite.com/tauyaun-summer-map" target="_blank" rel="noopener">開啟網站</a>
@@ -658,101 +837,31 @@ footer a{color:#9ED0BB}
     <div class="case-body">
       <span class="card-meta">同網站專題頁</span>
       <h3 class="case-title">桃源精品咖啡</h3>
-      <ul class="pts"><li>介紹 113 年桃源區第一屆精品咖啡示範評鑑</li><li>介紹參與評鑑的在地店家</li><li>影片由我所剪輯</li></ul>
+      <ul class="pts"><li>113 年第一屆精品咖啡示範評鑑專題，影片由我剪輯</li></ul>
       <div class="detail-item"><span>我負責</span><span>頁面建置、影片剪輯</span></div>
       <a class="btn-lively" href="https://justtwohow123.wixsite.com/tauyaun-summer-map/webinar-registration" target="_blank" rel="noopener">開啟頁面</a>
     </div>
   </article>
-
-  <div class="how-grid">
-    <div><h3>內容可以接 Google 試算表</h3><ul class="pts"><li>主辦方改表格，網頁就更新</li><li>這一頁的活動紀錄照片就是這樣載入的</li></ul></div>
-    <div><h3>表單直接收進信箱與表格</h3><ul class="pts"><li>報名、詢問表單用 Google 收件</li><li>不必另外租伺服器</li><li>這一頁的聯絡表單就是這樣做的</li></ul></div>
-  </div>
+  <p class="works-note">需要客人自己就能更新的網站？<a href="web/">看一頁式網站與專屬後台 →</a></p>
 </div></section>
+
 
 
 
 
 <section id="projects"><div class="container">
   <h2 class="section-title">活動與文化紀錄</h2>
-  <p class="lead-c">於火與光之間。文化祭儀、活動的現場紀錄——寫企劃的人自己拍，知道成果報告需要哪些畫面。點開看完整系列。</p>
+  <p class="lead-c">寫企劃的人自己拍，知道成果報告需要哪些畫面。</p>
   <div class="photo-grid" id="project-grid"><p class="grid-note">載入作品中…</p></div>
-</div></section>
-
-<section id="services" class="band"><div class="container">
-  <h2 class="section-title">服務與報價</h2>
-  <div class="services-grid">
-    <article class="card service-card">
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6h18l8 8v28H12z"/><path d="M30 6v8h8M18 22h14M18 29h14M18 36h8"/></svg>
-      <span class="service-subtitle">政府標案</span>
-      <h3 class="service-title">標案企劃書撰寫</h3>
-      <ul class="pts service-desc"><li>服務建議書</li><li>迅速抓招標文件重點，可收急件</li><li>頁數、份數、用印等規定逐條核對確認</li><li>負責把企劃書寫完；得標後的執行另議</li></ul>
-      <div class="detail-item"><span>內容</span><span>架構、活動、期程、經費概算、效益、CSR</span></div>
-      <div class="detail-item"><span>交付</span><span>PDF成果檔</span></div>
-      <div class="price">
-        <span class="price-label">未達公告金額（預算未滿 150 萬元）</span>
-        <b class="price-main">NT$7,000<small>起／件</small></b>
-        <span class="price-note">預算 150 萬元以上：收取預算金額 1–2%</span>
-      </div>
-      <a href="#contact" class="btn-lively" onclick="selectService('政府標案企劃')">預約諮詢</a>
-    </article>
-    <article class="card service-card">
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24L24 9l18 15"/><path d="M11 21v19h26V21"/><path d="M20 40V29h8v11"/></svg>
-      <span class="service-subtitle">社區發展</span>
-      <h3 class="service-title">社區發展・補助案企劃</h3>
-      <ul class="pts service-desc"><li>社區發展協會、在地團體申請補助用的計畫書</li><li>把活動規劃成真的做得出來的樣子</li><li>經費抓準，和活動內容一筆一筆對上</li></ul>
-      <div class="detail-item"><span>內容</span><span>現況調查、活動規劃、預算、合作意向</span></div>
-      <div class="detail-item"><span>對象</span><span>社區發展協會、在地團體</span></div>
-      <div class="price">
-        <span class="price-label">含現況調查</span>
-        <b class="price-main">NT$5,000<small>起／件</small></b>
-        <span class="price-note">依社區規模與調查範圍調整</span>
-      </div>
-      <a href="#contact" class="btn-lively" onclick="selectService('社區發展・補助案企劃')">預約諮詢</a>
-    </article>
-    <article class="card service-card feature">
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="38" height="30" rx="3"/><path d="M5 17h38M19 25l-5 4 5 4M29 25l5 4-5 4"/></svg>
-      <span class="service-subtitle">我的特色</span>
-      <h3 class="service-title">網站、互動遊戲與 app 製作</h3>
-      <ul class="pts service-desc"><li>最常做活動一頁式網站：介紹、流程、報名集中在一頁</li><li>手機打開就看得懂</li><li>也做報名頁、線上互動遊戲與手機 app</li><li>內容接 Google 試算表，主辦方改表格就能更新</li><li>可先做成可操作版本寫進企劃書，評選時現場展示</li></ul>
-      <div class="detail-item"><span>類型</span><span>一頁式活動網站、報名頁、導覽解謎、線上集章</span></div>
-      <div class="detail-item"><span>用途</span><span>活動宣傳與報名、寫進企劃書、評選現場展示</span></div>
-      <div class="price">
-        <span class="price-label">活動一頁式網站</span>
-        <b class="price-main">NT$8,000<small>起</small></b>
-        <span class="price-note">含基本視覺設計；插畫或特殊美術風格另外報價</span>
-        <span class="price-note">報名頁、互動遊戲等其他項目依內容報價</span>
-      </div>
-      <a class="kit-link" href="party/"><span class="kit-tag">套組方案</span><b>婚禮・尾牙互動套組</b><span>照片祝福牆、即時問答、手機燈海，風格量身打造，NT$3,800 起</span><i aria-hidden="true">→</i></a>
-      <a class="kit-link" href="seaside/"><span class="kit-tag">套組方案</span><b>活動互動APP製作</b><span>市集集章・走讀導覽・教學問答・問卷抽獎，四種用途一套系統，NT$8,000 起</span><i aria-hidden="true">→</i></a>
-      <a class="kit-link" href="web/"><span class="kit-tag">網站服務</span><b>一頁式網站</b><span>先搭框架再設計，看完就選中你；架構健檢 NT$2,000，網站 NT$8,000 起</span><i aria-hidden="true">→</i></a>
-      <a href="#contact" class="btn-lively" onclick="selectService('網站・互動遊戲・app')">預約諮詢</a>
-    </article>
-    <article class="card service-card" id="static-photo">
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15h9l3-5h12l3 5h9v24H6z"/><circle cx="24" cy="26" r="8"/></svg>
-      <span class="service-subtitle">加值服務</span>
-      <h3 class="service-title">懂核銷的活動攝影</h3>
-      <ul class="pts service-desc"><li>活動紀錄與成果報告用照片</li><li>不做後製精修，快速出照片放新聞稿</li><li>拍出長官氣勢、呈現人潮洶湧、結案順利</li></ul>
-      <div class="detail-item"><span>地區</span><span>南高屏地區</span></div>
-      <div class="detail-item"><span>可搭配</span><span>成果／結案報告協助</span></div>
-      <div class="price">
-        <span class="price-label">活動紀錄攝影</span>
-        <b class="price-main">NT$4,000<small>起／場</small></b>
-        <span class="price-note">原民文化活動另有優惠方案</span>
-      </div>
-      <a href="#contact" class="btn-lively" onclick="selectService('活動攝影')">預約諮詢</a>
-    </article>
-  </div>
-  
 </div></section>
 
 <section><div class="container">
   <h2 class="section-title">合作流程</h2>
-  <ol class="flow">
-    <li><h3>留下需求</h3><p>我回信和您約時間聊。</p></li>
-    <li><h3>提供文件</h3><p>您提供招標文件或補助簡章，我回覆企劃架構與報價。</p></li>
-    <li><h3>初稿確認</h3><p>我寫初稿，您確認方向和經費。</p></li>
-    <li><h3>定稿交付</h3><p>修改定稿，交付 PDF 成果檔。</p></li>
+  <ol class="flow2 rv" id="flow2"><span class="fill"></span>
+    <li><i><svg viewBox="0 0 48 48"><path d="M7 9h34v22H22l-9 8v-8H7z"/><path d="M15 18h18M15 24h11"/></svg></i><b>留下需求</b><span>我回信約時間</span></li>
+    <li><i><svg viewBox="0 0 48 48"><path d="M12 5h17l9 9v29H12z"/><path d="M29 5v9h9M18 24h12M18 31h8"/></svg></i><b>提供文件</b><span>回覆架構與報價</span></li>
+    <li><i><svg viewBox="0 0 48 48"><path d="M30 8l10 10-20 20H10V28z"/><path d="M26 12l10 10"/></svg></i><b>初稿確認</b><span>確認方向與經費</span></li>
+    <li><i><svg viewBox="0 0 48 48"><path d="M6 22l36-14-12 34-7-14z"/><path d="M23 28l19-20"/></svg></i><b>定稿交付</b><span>交付 PDF 成果檔</span></li>
   </ol>
 </div></section>
 
@@ -761,7 +870,7 @@ footer a{color:#9ED0BB}
   <div class="contact-layout">
     <div class="contact-info">
       <h3>關於 AMEI</h3>
-      <ul class="pts"><li>六年標案企劃經驗</li><li>寫過 50 場以上標案、執行過 100 場以上活動</li><li>曾在地方機關服務兩年</li><li>持有採購專業人員基礎訓練及格證書，懂採購法與核銷</li><li>會寫企劃、會做網站、會拍照，從調查寫到結案不用換人</li></ul>
+      <div class="about-chips"><span>六年標案企劃</span><span>50+ 份企劃</span><span>100+ 場活動</span><span>地方機關 2 年</span><span>採購訓練及格</span></div><p>會寫企劃、會做網站、會拍照，從調查到結案不用換人。</p><p style="color:var(--accent);font-weight:700">加入 LINE 好友洽詢，另有優惠</p>
       <p class="contact-mail">✉ <a id="mail-link" href="#contact">ameinew07149［at］gmail.com</a></p>
       <p class="line-add"><a href="https://lin.ee/y8NnuAy" target="_blank" rel="noopener"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36" border="0"></a></p>
     </div>
@@ -1092,6 +1201,44 @@ loadSheet();
   topBtn.onclick = () => { window.scrollTo({ top:0, behavior: reduce ? 'auto' : 'smooth' }); history.replaceState(null, '', location.pathname + location.search); };
   spy();
   if (location.hash && document.getElementById(location.hash.slice(1))) setTimeout(() => go(location.hash.slice(1)), 300);
+})();
+</script>
+
+<script>
+(()=>{
+ const RM=matchMedia('(prefers-reduced-motion: reduce)').matches,W=ms=>new Promise(r=>setTimeout(r,ms));
+ const fit=()=>document.querySelectorAll('.fit-box').forEach(b=>{if(!b.offsetParent)return;const s=b.clientWidth/+b.dataset.w;b.style.height=(+b.dataset.h*s)+'px';b.firstElementChild.style.transform=`scale(${s})`});
+ fit();addEventListener('resize',fit);
+ const onView=(el,fn,th=.3)=>{if(!el)return;const o=new IntersectionObserver(es=>{if(es[0].isIntersecting){o.disconnect();fn()}},{threshold:th});o.observe(el)};
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target,sib=[...el.parentElement.children].filter(x=>x.classList.contains('rv'));el.style.transitionDelay=Math.min(sib.indexOf(el),5)*90+'ms';el.classList.add('in');io.unobserve(el)}}),{threshold:.12});
+ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+ // counters
+ document.querySelectorAll('.cnt').forEach(el=>onView(el,()=>{if(RM)return;const to=+el.dataset.n,t0=performance.now();const f=t=>{const r=Math.min((t-t0)/1300,1);el.textContent=Math.round(to*(1-Math.pow(1-r,3)));if(r<1)requestAnimationFrame(f)};el.textContent='0';requestAnimationFrame(f)},.6));
+ // P1
+ onView(document.getElementById('pz1'),async()=>{const sc=document.getElementById('pz1'),rs=[...sc.querySelectorAll('.r')],ss=[...sc.querySelectorAll('.sec')],bar=sc.querySelector('.sum i');
+  const w=[30,25,20,15,10];if(RM){rs.forEach(r=>r.classList.add('on'));ss.forEach(x=>x.classList.add('on'));bar.style.width='100%';return}
+  while(true){rs.forEach(r=>r.classList.remove('on'));ss.forEach(x=>x.classList.remove('on'));bar.style.width='0';let t=0;await W(700);
+   for(let i=0;i<5;i++){rs[i].classList.add('on');ss[i].classList.add('on');t+=w[i];bar.style.width=t+'%';await W(650)}await W(2400)}});
+ // P2
+ onView(document.getElementById('pz2'),async()=>{const row=document.getElementById('pz2bad'),bar=document.getElementById('pz2bar');
+  if(RM){row.classList.add('ok');bar.style.left='45%';bar.style.width='26%';return}
+  while(true){row.className='row';bar.style.left='62%';bar.style.width='9%';await W(900);row.classList.add('bad');await W(1700);row.classList.remove('bad');bar.style.left='45%';bar.style.width='26%';await W(800);row.classList.add('ok');await W(2600)}});
+ // P3
+ onView(document.getElementById('pz3'),async()=>{const sc=document.getElementById('pz3'),A=[...sc.querySelectorAll('.colA div')],B=[...sc.querySelectorAll('.colB div')],L=[...sc.querySelectorAll('.ln path')];
+  if(RM){[...A,...B,...L].forEach(x=>x.classList.add('on'));sc.classList.add('done');return}
+  while(true){[...A,...B,...L].forEach(x=>x.classList.remove('on'));sc.classList.remove('done');await W(700);
+   for(let i=0;i<4;i++){A[i].classList.add('on');await W(250);L[i].classList.add('on');await W(400);B[i].classList.add('on');await W(250)}sc.classList.add('done');await W(2600)}});
+ // P4
+ onView(document.getElementById('pz4'),async()=>{const sc=document.getElementById('pz4'),m=document.getElementById('pz4m'),l=document.getElementById('pz4l');
+  const set=n=>{sc.className=sc.className.replace(/\bs\d\b/g,'').trim()+(n?' s'+n:'')};
+  if(RM){l.classList.add('fx');set(2);return}
+  while(true){set(0);l.className='ln2';m.style.transform='translate(0,0)';await W(500);m.style.transform='translate(170px,10px)';await W(1400);m.style.transform='translate(60px,62px)';await W(1400);l.classList.add('hl');set(1);await W(1600);l.classList.remove('hl');l.classList.add('fx');set(2);await W(2600)}});
+ // pipeline
+ onView(document.getElementById('pipe'),async()=>{const p=document.getElementById('pipe'),N=[...p.querySelectorAll('.nd')],tr=p.querySelector('.track i');
+  if(RM){N.forEach(n=>n.classList.add('on'));tr.style.width='100%';return}
+  while(true){N.forEach(n=>n.classList.remove('on'));tr.style.transition='none';tr.style.width='0';await W(60);tr.style.transition='';
+   for(let i=0;i<N.length;i++){N[i].classList.add('on');tr.style.width=(i/(N.length-1)*100)+'%';await W(700)}await W(2200)}});
+ onView(document.getElementById('flow2'),()=>document.getElementById('flow2').classList.add('in'),.4);
 })();
 </script>
 </body>
