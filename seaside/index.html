@@ -132,6 +132,177 @@ section.sec{padding:84px 0}
 .cta p{color:var(--soft);margin:12px auto 26px;max-width:32em}
 .cta .acts{justify-content:center}
 
+
+/* ===== animated scenes ===== */
+.fit-box{position:relative;width:100%;overflow:hidden}
+.fit-box>.cv{position:absolute;left:0;top:0;transform-origin:0 0}
+.cap3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px;text-align:center}
+.cap3 div{font-family:var(--hand);font-size:1.15rem}
+.cap3 small{display:block;font-family:var(--sans);font-size:.85rem;color:var(--soft)}
+.cap3 b{font-family:var(--mono);color:var(--roe);margin-right:6px;font-size:.85rem}
+@media (max-width:640px){.cap3{gap:6px}.cap3 div{font-size:.95rem}.cap3 small{display:none}}
+.how3{position:relative;width:1040px;height:390px}
+.how3 .pn{position:absolute;top:20px;width:300px;height:350px;border-radius:20px;background:var(--paper);box-shadow:0 1px 0 var(--line),0 20px 40px -26px rgba(28,63,75,.5);overflow:hidden}
+.how3 .pA{left:0}.how3 .pB{left:370px;top:10px;background:transparent;box-shadow:none;overflow:visible}.how3 .pC{left:740px;background:#18323B;color:#E8EDE9}
+.stall .awn{height:54px;background:repeating-linear-gradient(90deg,#B4613A 0 30px,#F8F8F2 30px 60px);border-radius:0 0 14px 14px;box-shadow:0 6px 0 rgba(0,0,0,.06)}
+.stall .sign{position:absolute;left:50%;top:84px;transform:translateX(-50%) rotate(-2deg);width:200px;background:#C9A271;border-radius:10px;padding:16px 14px;text-align:center;color:#3b2a1c;box-shadow:0 10px 20px -10px rgba(0,0,0,.4);border:3px solid #9b7546}
+.stall .sign b{display:block;font-family:var(--hand);font-size:1.45rem}
+.stall .sign .cw{margin-top:8px;background:#F8F8F2;border-radius:8px;padding:6px;font-size:.95rem;font-weight:700}
+.stall .sign .cw em{font-style:normal;color:var(--roe);font-family:var(--hand);font-size:1.3rem}
+.stall .leg{position:absolute;bottom:0;width:12px;height:110px;background:#8a6a44}
+.stall .table{position:absolute;left:20px;right:20px;bottom:50px;height:26px;background:#9b7546;border-radius:6px}
+.stall .goods{position:absolute;left:40px;right:40px;bottom:76px;display:flex;justify-content:space-around;font-size:30px}
+.how3 .hand{position:absolute;left:236px;top:262px;font-size:46px;transition:transform .8s cubic-bezier(.3,.7,.2,1),opacity .4s;opacity:0}
+.how3.s1 .hand,.how3.s2 .hand{opacity:1;transform:translate(-6px,-46px) rotate(-12deg)}
+.how3 .vl{display:none;position:absolute;left:20px;font-family:var(--hand);font-size:1.25rem}
+.how3 .vl b{font-family:var(--mono);color:var(--roe);font-size:.9rem;margin-right:6px}
+.how3.vert{width:340px;height:1210px}.how3.vert .vl{display:block}
+.how3.vert .pA{left:20px;top:40px}.how3.vert .pB{left:20px;top:455px}.how3.vert .pC{left:20px;top:870px}
+.how3.vert .hand{left:256px;top:302px}
+.how3.vert .wire{width:4px;height:40px;left:300px;background:repeating-linear-gradient(180deg,var(--line) 0 8px,transparent 8px 14px)}
+.how3.vert .w1{top:400px}.how3.vert .w2{top:828px}
+.how3.vert .wire i{left:-5px;top:0}
+.how3.vert.s1 .w1 i,.how3.vert.s3 .w2 i{animation:travelv .9s ease-in-out forwards}
+@keyframes travelv{0%{opacity:1;top:0}100%{opacity:1;top:28px}}
+@media (max-width:640px){.cap3{display:none}}
+.ph2{position:absolute;left:50%;top:0;transform:translateX(-50%);width:200px;height:370px;border-radius:30px;background:#0e1a1f;padding:9px;box-shadow:0 26px 40px -24px rgba(28,63,75,.7)}
+.ph2 .sc{height:100%;border-radius:22px;background:var(--sheet);padding:20px 14px;position:relative;overflow:hidden}
+.ph2 .tt{font-family:var(--hand);font-size:1.1rem}
+.ph2 .lb2{font-size:.72rem;color:var(--soft);margin-top:14px}
+.ph2 .ip{margin-top:6px;border:2px solid var(--line);border-radius:10px;height:42px;display:flex;align-items:center;padding:0 12px;font-family:var(--hand);font-size:1.3rem;transition:border-color .3s}
+.how3.s1 .ph2 .ip{border-color:var(--sun)}
+.ph2 .go{margin-top:10px;background:var(--ink);color:var(--sheet);border-radius:10px;text-align:center;padding:9px;font-weight:700;font-size:.9rem;transition:transform .15s}
+.how3.s2 .ph2 .go{transform:scale(.95)}
+.ph2 .unl{position:absolute;inset:0;background:rgba(248,248,242,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .4s}
+.ph2 .unl .stk{font-size:64px;transform:scale(.2) rotate(-30deg);transition:transform .6s cubic-bezier(.3,1.6,.5,1)}
+.ph2 .unl b{font-family:var(--hand);font-size:1.15rem;margin-top:6px}
+.ph2 .unl span{font-size:.75rem;color:var(--soft)}
+.how3.s2 .ph2 .unl,.how3.s3 .ph2 .unl{opacity:1}
+.how3.s2 .ph2 .unl .stk,.how3.s3 .ph2 .unl .stk{transform:none}
+.dash{padding:20px 18px}
+.dash .k{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;color:#8FB7C2}
+.dash .big{font-family:var(--hand);font-size:2.6rem;line-height:1.1;margin:2px 0 14px;transition:color .3s}
+.how3.s3 .dash .big{color:var(--sun)}
+.dash .row{display:grid;grid-template-columns:76px 1fr 30px;gap:8px;align-items:center;font-size:.78rem;margin-bottom:9px}
+.dash .bar{height:10px;border-radius:6px;background:rgba(232,237,233,.14);overflow:hidden}
+.dash .bar i{display:block;height:100%;background:#8FB7C2;border-radius:6px;transition:width .8s}
+.dash .row.hl .bar i{background:var(--sun)}
+.dash .toast{position:absolute;left:16px;right:16px;bottom:16px;background:var(--sun);color:#1C3F4B;border-radius:10px;padding:9px 12px;font-size:.82rem;font-weight:700;transform:translateY(80px);transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.how3.s3 .dash .toast{transform:none}
+.how3 .wire{position:absolute;top:195px;height:4px;width:70px;background:repeating-linear-gradient(90deg,var(--line) 0 8px,transparent 8px 14px)}
+.how3 .w1{left:300px}.how3 .w2{left:670px}
+.how3 .wire i{position:absolute;top:-5px;left:0;width:14px;height:14px;border-radius:50%;background:var(--sun);opacity:0}
+.how3.s1 .w1 i{animation:travel .9s ease-in-out forwards}
+.how3.s3 .w2 i{animation:travel .9s ease-in-out forwards}
+@keyframes travel{0%{opacity:1;left:0}100%{opacity:1;left:56px}}
+/* feature scenes */
+.fimg.anim{aspect-ratio:560/360;background:var(--sheet)}
+.scn{position:relative;width:560px;height:360px;font-family:var(--sans);color:var(--ink)}
+.tagdemo{position:absolute;right:12px;bottom:10px;font-size:.66rem;color:var(--soft);letter-spacing:.1em}
+.mph{position:absolute;width:150px;height:290px;border-radius:24px;background:#0e1a1f;padding:7px;box-shadow:0 22px 36px -22px rgba(28,63,75,.7)}
+.mph .sc{width:100%;height:100%;border-radius:18px;background:var(--paper);overflow:hidden;position:relative}
+/* F1 share */
+.f1 .p1{left:60px;top:35px;transition:transform .7s}
+.f1 .card916{position:absolute;left:10px;right:10px;top:12px;height:200px;border-radius:12px;background:linear-gradient(180deg,#F2A65A,#F6D08A 42%,#3D7585 43%,#1C3F4B);padding:10px;color:#fff;transition:transform .9s cubic-bezier(.6,0,.3,1),opacity .4s}
+.f1 .card916 b{font-family:var(--hand);font-size:.95rem;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.f1 .card916 .st{position:absolute;bottom:10px;left:10px;display:flex;gap:4px;font-size:18px}
+.f1 .shr{position:absolute;left:12px;right:12px;bottom:14px;background:var(--roe);color:#fff;border-radius:12px;text-align:center;padding:8px;font-size:.8rem;font-weight:700;transition:transform .15s}
+.f1.s1 .shr{transform:scale(.92)}
+.f1.s2 .card916,.f1.s3 .card916{transform:translate(272px,-2px) scale(.98);opacity:0}
+.f1 .p2{left:330px;top:35px}
+.f1 .done{position:absolute;left:0;right:0;top:90px;text-align:center;font-family:var(--hand);color:var(--sea);font-size:1rem;opacity:0;transition:opacity .4s .6s}
+.f1.s2 .done,.f1.s3 .done{opacity:1}
+.f1 .p2 .sc{background:#111}
+.f1 .story{position:absolute;inset:6px;border-radius:14px;background:linear-gradient(180deg,#F2A65A,#F6D08A 42%,#3D7585 43%,#1C3F4B);opacity:0;transform:scale(.8);transition:all .5s .5s}
+.f1.s2 .story,.f1.s3 .story{opacity:1;transform:none}
+.f1 .story b{position:absolute;left:10px;top:28px;color:#fff;font-family:var(--hand);font-size:.95rem}
+.f1 .story .bars{position:absolute;left:8px;right:8px;top:8px;height:3px;background:rgba(255,255,255,.5);border-radius:3px}
+.f1 .story .tagx{position:absolute;left:10px;bottom:40px;background:#fff;color:#1C3F4B;font-size:.65rem;font-weight:700;border-radius:6px;padding:2px 6px}
+.f1 .reach{position:absolute;left:236px;top:120px;width:88px;text-align:center;opacity:0;transition:opacity .4s}
+.f1.s3 .reach{opacity:1}
+.f1 .reach b{display:block;font-family:var(--hand);font-size:1.5rem;color:var(--roe)}
+.f1 .reach span{font-size:.7rem;color:var(--soft)}
+.f1 .hrt{position:absolute;font-size:18px;opacity:0}
+.f1.s3 .hrt{animation:floatup 1.6s ease-out forwards}
+.f1 .hrt:nth-of-type(2){animation-delay:.3s!important}.f1 .hrt:nth-of-type(3){animation-delay:.6s!important}
+@keyframes floatup{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-90px)}}
+/* F2 tour */
+.f2 .map{position:absolute;left:24px;top:24px;width:300px;height:312px;border-radius:16px;background:#DCE6DD;overflow:hidden}
+.f2 .map .blk{position:absolute;background:#EEF2EC;border-radius:6px}
+.f2 .lst{position:absolute;left:344px;top:24px;width:192px}
+.f2 .now{background:var(--deep);color:var(--sheet);border-radius:14px;padding:12px 14px}
+.f2 .now small{font-size:.68rem;color:#8FB7C2;letter-spacing:.1em}
+.f2 .now b{display:block;font-family:var(--hand);font-size:1.15rem;margin:2px 0 8px}
+.f2 .wave{display:flex;gap:3px;align-items:center;height:26px}
+.f2 .wave i{flex:1;background:var(--sun);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{0%,100%{height:20%}50%{height:100%}}
+.f2 .ear{margin-top:10px;background:var(--paper);border-radius:14px;padding:10px 14px;font-size:.8rem;display:flex;align-items:center;gap:10px}
+.f2 .ear b{font-family:var(--hand);font-size:1.6rem;color:var(--sea)}
+.f2 .old{margin-top:10px;height:96px;border-radius:12px;overflow:hidden;position:relative;display:flex}
+.f2 .old div{flex:1}
+.f2 .old .sl{position:absolute;top:0;bottom:0;width:3px;background:#fff;left:50%;animation:slide 4s ease-in-out infinite}
+@keyframes slide{0%,100%{left:22%}50%{left:78%}}
+/* F3 quiz */
+.f3 .q{position:absolute;left:24px;top:24px;width:290px;background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 0 var(--line)}
+.f3 .tm{height:8px;background:var(--paper);border-radius:6px;overflow:hidden}
+.f3 .tm i{display:block;height:100%;background:var(--sun);width:100%}
+.f3.s1 .tm i,.f3.s2 .tm i{width:35%;transition:width 1.8s linear}
+.f3 .q h4{margin:10px 0;font-size:.98rem}
+.f3 .op{border-radius:10px;padding:8px 12px;margin-bottom:7px;font-size:.85rem;font-weight:700;color:#fff;transition:all .4s}
+.f3.s2 .op:not(.ok){opacity:.35}
+.f3.s2 .op.ok{box-shadow:0 0 0 3px #1C3F4B inset;transform:scale(1.03)}
+.f3 .plus{position:absolute;left:250px;top:150px;font-family:var(--hand);font-size:2rem;color:var(--roe);opacity:0}
+.f3.s2 .plus{animation:floatup 1.4s ease-out forwards}
+.f3 .tch{position:absolute;left:334px;top:24px;width:202px;background:var(--deep);color:var(--sheet);border-radius:16px;padding:14px}
+.f3 .tch small{font-size:.68rem;color:#8FB7C2;letter-spacing:.1em}
+.f3 .tch .r{display:grid;grid-template-columns:24px 1fr 34px;gap:6px;align-items:center;font-size:.75rem;margin-top:10px}
+.f3 .tch .r .b{height:9px;background:rgba(232,237,233,.15);border-radius:5px;overflow:hidden}
+.f3 .tch .r .b i{display:block;height:100%;border-radius:5px;width:0;transition:width 1s}
+.f3.s2 .tch .r .b i{width:var(--w)}
+.f3 .tip{margin-top:12px;font-size:.75rem;background:rgba(228,160,74,.2);border-radius:8px;padding:7px 9px;opacity:0;transition:opacity .4s .6s}
+.f3.s2 .tip{opacity:1}
+/* F4 survey */
+.f4 .p1{left:50px;top:35px}
+.f4 .dots{display:flex;gap:4px;padding:14px 12px 0}
+.f4 .dots i{flex:1;height:5px;border-radius:3px;background:var(--line);transition:background .3s}
+.f4 .dots i.on{background:var(--roe)}
+.f4 .qq{padding:10px 12px;font-size:.78rem;font-weight:700}
+.f4 .opt{margin:0 12px 6px;border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;font-size:.72rem;background:#fff}
+.f4 .opt.on{border-color:var(--roe);background:#FBE9E4}
+.f4 .wh{position:absolute;left:50%;top:44%;width:120px;height:120px;margin-left:-60px;border-radius:50%;background:conic-gradient(#B4613A 0 60deg,#E4A04A 0 120deg,#7A2E2A 0 180deg,#F2D49A 0 240deg,#C2552F 0 300deg,#F6E2B8 0 360deg);box-shadow:0 0 0 5px #7A2E2A,0 0 0 8px #E4A04A;opacity:0;transition:opacity .4s}
+.f4.s2 .wh,.f4.s3 .wh{opacity:1}
+.f4.s2 .wh{animation:spin 1.6s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes spin{to{transform:rotate(1150deg)}}
+.f4 .code{position:absolute;left:10px;right:10px;bottom:12px;background:#FFF6E5;border:1.5px dashed var(--roe);border-radius:10px;text-align:center;padding:6px;font-family:var(--hand);color:var(--roe);font-size:1.05rem;opacity:0;transition:opacity .4s}
+.f4.s3 .code{opacity:1}
+.f4 .cmp{position:absolute;left:240px;top:40px;width:290px}
+.f4 .cmp .r{margin-bottom:22px}
+.f4 .cmp .r span{font-size:.85rem;font-weight:700}
+.f4 .cmp .r .b{height:26px;border-radius:8px;background:var(--paper);margin-top:6px;overflow:hidden;position:relative}
+.f4 .cmp .r .b i{display:block;height:100%;border-radius:8px;width:0;transition:width 1.4s cubic-bezier(.3,.7,.2,1)}
+.f4 .cmp .r .b em{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-style:normal;font-family:var(--hand);font-size:1.1rem}
+.f4.s1 .cmp .r .b i,.f4.s2 .cmp .r .b i,.f4.s3 .cmp .r .b i{width:var(--w)}
+.f4 .auto{background:var(--deep);color:var(--sheet);border-radius:12px;padding:10px 14px;font-size:.8rem}
+.f4 .auto b{color:var(--sun)}
+/* why amei compact */
+.wa{display:grid;grid-template-columns:1fr 1.2fr;gap:22px}
+@media (max-width:860px){.wa{grid-template-columns:1fr}}
+.wa .c{background:rgba(248,248,242,.06);border:1px solid rgba(248,248,242,.16);border-radius:22px;padding:26px}
+.wa h3{font-size:1.4rem;margin-bottom:14px}
+.wa .k{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;color:var(--sun)}
+.chips3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.chips3 div{background:rgba(248,248,242,.07);border-radius:14px;padding:14px 8px;text-align:center;font-size:.85rem}
+.chips3 div i{display:block;font-style:normal;font-size:1.6rem;margin-bottom:4px}
+.flow4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;position:relative}
+.flow4 div{text-align:center;padding:14px 6px;border-radius:14px;background:rgba(248,248,242,.05);border:1.5px solid transparent;transition:all .4s;font-size:.85rem}
+.flow4 div i{display:block;font-style:normal;font-size:1.8rem;margin-bottom:6px;transition:transform .4s}
+.flow4 div b{display:block;font-family:var(--hand);font-size:1.05rem;color:var(--sheet)}
+.flow4 div span{color:rgba(248,248,242,.6);font-size:.75rem}
+.flow4 div.on{border-color:var(--sun);background:rgba(228,160,74,.14)}
+.flow4 div.on i{transform:scale(1.2)}
+@media (max-width:560px){.flow4{grid-template-columns:repeat(2,1fr)}}
+.wa .judge{margin-top:14px}
+
 /* 首屏影片 */
 .hero .q{display:block;font-family:var(--sans);font-size:.42em;color:var(--soft);letter-spacing:.06em;margin-bottom:.35em}
 .hero h1 em{font-style:normal;color:var(--sea)}
@@ -337,12 +508,61 @@ footer .r{margin-left:auto}
     <div class="sec-head reveal">
       <div class="stamp">How it works</div>
       <h2>現場、手機、後台，三端連動</h2>
-      <p>不用下載 App，掃 QR code 就能玩。參加者在現場定點拿到暗號，手機立刻解鎖內容，主辦單位在後台同步看到。</p>
+      <p>走到現場拿暗號，手機解鎖，後台同步跳動。</p>
     </div>
-    <div class="trio">
-      <div class="t reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 3h14v12H5zM9 15l-2 6M15 15l2 6M8 7h8M8 10.5h5"/></svg></div><h3>現場定點</h3><p>攤位立牌、導覽解說牌、闖關關卡牌，每個定點一組暗號，參加者得真的走到現場才拿得到。</p></div>
-      <div class="t reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></div><h3>參加者手機</h3><p>依活動用途集章做剪貼簿、聽語音導覽、闖關作答或填問卷抽獎，最後存下圖卡、打卡紀錄或成績。</p></div>
-      <div class="t reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><h3>主辦後台</h3><p>打卡、作答、問卷、抽獎，參加者一有動作，後台與大螢幕就即時更新。下方試玩可以直接體驗。</p></div>
+    <div class="fit-box reveal" data-w="1040" data-h="390"><div class="cv how3 s0" id="how3">
+      <div class="vl" style="top:0"><b>01</b>現場找暗號</div><div class="vl" style="top:415px"><b>02</b>手機解鎖</div><div class="vl" style="top:830px"><b>03</b>後台即時跳動</div>
+      <div class="pn pA stall">
+        <div class="awn"></div>
+        <div class="sign"><b>阿嬤的烏魚子</b><div class="cw">暗號：<em>海風</em></div></div>
+        <div class="table"></div><div class="goods"><span>🐟</span><span>🦐</span><span>🍶</span></div>
+        <div class="leg" style="left:30px"></div><div class="leg" style="right:30px"></div>
+      </div>
+      <div class="hand">📱</div>
+      <div class="wire w1"><i></i></div>
+      <div class="pn pB"><div class="ph2"><div class="sc">
+        <div class="tt">茄萣海邊剪貼簿</div>
+        <div class="lb2">輸入攤位上的暗號</div>
+        <div class="ip" id="howIp"></div>
+        <div class="go">拾起貼紙</div>
+        <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px"><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div><div style="height:54px;border-radius:8px;background:var(--paper);border:1.5px dashed var(--line)"></div></div>
+        <div class="unl"><div class="stk">🐟</div><b>拾到「烏魚子」貼紙</b><span>附上攤主的在地小故事</span></div>
+      </div></div></div>
+      <div class="wire w2"><i></i></div>
+      <div class="pn pC dash">
+        <div class="k">主辦後台 ・ LIVE</div>
+        <div class="big" id="howNum">1,246</div>
+        <div class="row hl"><span>烏魚子攤</span><div class="bar"><i id="howBar" style="width:58%"></i></div><span id="howBn">58</span></div>
+        <div class="row"><span>手作陶杯</span><div class="bar"><i style="width:44%"></i></div><span>44</span></div>
+        <div class="row"><span>海邊咖啡</span><div class="bar"><i style="width:71%"></i></div><span>71</span></div>
+        <div class="row"><span>漁村故事</span><div class="bar"><i style="width:36%"></i></div><span>36</span></div>
+        <div class="toast">⚡ 剛剛：烏魚子攤 +1</div>
+      </div>
+    </div></div>
+    <div class="cap3 reveal"><div><b>01</b>現場找暗號<small>攤位立牌・解說牌・關卡牌</small></div><div><b>02</b>手機解鎖<small>不用下載 App</small></div><div><b>03</b>後台即時跳動<small>結案報告直接有數字</small></div></div>
+  </div>
+</section>
+
+<section class="sec exp" id="why-amei">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="stamp">Why AMEI</div>
+      <h2>做過活動的人做的互動，<br>才知道要放在哪裡</h2>
+    </div>
+    <div class="wa">
+      <div class="c reveal"><div class="k">FIELD EXPERIENCE</div><h3>懂活動現場，也會寫地方故事</h3>
+        <div class="exp-nums"><div><b class="cnt" data-n="100">0</b><span>場活動執行</span></div><div><b class="cnt" data-n="50">0</b><span>份標案企劃</span></div><div><b class="cnt" data-n="10">0</b><span>農遊體驗方案</span></div></div>
+        <div class="chips3"><div><i>📍</i>知道人潮<br>在哪散掉</div><div><i>✍️</i>寫得出<br>在地故事</div><div><i>📊</i>從結案<br>往回設計</div></div>
+      </div>
+      <div class="c reveal"><div class="k">DEMO FOR REVIEW</div><h3>評選現場，直接讓評審玩</h3>
+        <div class="flow4" id="flow4">
+          <div class="on"><i>🛠️</i><b>先做 Demo</b><span>套入你的活動</span></div>
+          <div><i>📑</i><b>寫進建議書</b><span>附 QR code</span></div>
+          <div><i>📱</i><b>評審掃碼玩</b><span>比文字有說服力</span></div>
+          <div><i>🚀</i><b>得標延續</b><span>不用重做</span></div>
+        </div>
+        <div class="judge"><p>📑 也寫標案企劃，<a href="../">企劃與互動一起規劃</a>，內容前後對得上。</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -351,7 +571,7 @@ footer .r{margin-left:auto}
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="stamp">Pain ． Solution</div>
-      <h2>四種活動用途，<br>各自解決不同的老問題</h2>
+      <h2>四種用途，各自解決老問題</h2>
     </div>
 
     <article class="feat">
@@ -359,10 +579,14 @@ footer .r{margin-left:auto}
         <div class="no">01 ／ 市集集章</div>
         <div class="pain"><i class="x"></i><span class="l">痛點</span><s>集章只是跑點蓋章，攤商沒被認識</s></div>
         <h3><span class="sol">解法</span>暗號藏在攤位，<br><em>聊兩句才拾得到</em></h3>
-        <p>暗號寫在攤位立牌上，參加者得走近攤位、跟攤主聊兩句才拿得到。拾到的貼紙做成照片剪貼簿，生成帶活動名稱的 9:16 圖卡，分享到限時動態就是免費宣傳。</p>
         <ul class="pts"><li><b>交流</b>帶人潮走進每一攤</li><li><b>曝光</b>9:16 分享圖卡</li><li><b>同步</b>圖卡即時上牆</li><li><b>故事</b>貼紙即在地知識</li></ul>
       </div>
-      <div class="fimg reveal"><img src="img/f1.webp" alt="攤位立牌上的暗號、參加者手機輸入暗號、主辦後台即時同步" loading="lazy" width="1400" height="868"></div>
+      <div class="fimg anim reveal"><div class="fit-box" data-w="560" data-h="360"><div class="cv scn f1 s0">
+  <div class="mph p1"><div class="sc"><div class="card916"><b>茄萣海邊剪貼簿</b><div class="st"><span>🐚</span><span>🐟</span><span>🌅</span></div></div><div class="done">✓ 已分享<br><small style="font-size:.7rem;color:var(--soft)">圖卡帶活動名稱</small></div><div class="shr">一鍵分享限動 ↗</div></div></div>
+  <div class="reach"><b class="rn">0</b><span>👀 觸及人次</span></div>
+  <span class="hrt" style="left:410px;top:240px">❤️</span><span class="hrt" style="left:440px;top:250px">💛</span><span class="hrt" style="left:385px;top:255px">❤️</span>
+  <div class="mph p2"><div class="sc"><div class="story"><div class="bars"></div><b>茄萣海邊剪貼簿</b><span class="tagx">#港邊秋日市集</span></div></div></div>
+  <span class="tagdemo">示意數據</span></div></div></div>
     </article>
 
     <article class="feat">
@@ -370,10 +594,17 @@ footer .r{margin-left:auto}
         <div class="no">02 ／ 走讀導覽</div>
         <div class="pain"><i class="x"></i><span class="l">痛點</span><s>導覽員一個人帶不動，後排聽不到</s></div>
         <h3><span class="sol">解法</span>每人手機一位導覽員，<br><em>語音解說加今昔對比</em></h3>
-        <p>手機上有路線地圖，走到每一站就能播放語音解說，參加者戴上耳機自己聽，不用擠在導覽員身邊。在解說牌輸入暗號打卡，一站一站走完全程。</p>
         <ul class="pts"><li><b>分流</b>不必等導覽員</li><li><b>語音</b>戴耳機自己聽</li><li><b>打卡</b>一站一站走完</li><li><b>同步</b>後台看到訪人數</li></ul>
       </div>
-      <div class="fimg reveal"><img src="img/f2.webp" alt="走讀導覽：路線地圖、解說牌打卡、主辦後台即時同步" loading="lazy" width="1400" height="868"></div>
+      <div class="fimg anim reveal"><div class="fit-box" data-w="560" data-h="360"><div class="cv scn f2">
+  <div class="map"><div class="blk" style="left:20px;top:30px;width:90px;height:60px"></div><div class="blk" style="left:160px;top:20px;width:110px;height:70px"></div><div class="blk" style="left:30px;top:190px;width:100px;height:90px"></div><div class="blk" style="left:180px;top:200px;width:90px;height:80px"></div>
+   <svg viewBox="0 0 300 312" style="position:absolute;inset:0"><path id="rt" d="M30 280 C80 230,60 160,130 150 S250 120,240 40" fill="none" stroke="#3D7585" stroke-width="5" stroke-dasharray="10 8" stroke-linecap="round"/>
+   <circle cx="30" cy="280" r="10" fill="#1C3F4B"/><circle cx="130" cy="150" r="10" fill="#1C3F4B"/><circle cx="240" cy="40" r="10" fill="#fff" stroke="#1C3F4B" stroke-width="3"/>
+   <circle r="9" fill="#E4A04A" stroke="#fff" stroke-width="3"><animateMotion dur="6s" repeatCount="indefinite" rotate="auto"><mpath href="#rt"/></animateMotion></circle></svg></div>
+  <div class="lst"><div class="now"><small>NOW PLAYING</small><b>第 2 站・老街米店</b><div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+   <div class="ear">🎧 <div><b class="ln">0</b> 人同時收聽</div></div>
+   <div class="old"><div style="background:linear-gradient(135deg,#9C8A6A,#6E5E44);filter:sepia(.5)"></div><div style="background:linear-gradient(135deg,#8FB7C9,#4F7F67)"></div><span class="sl"></span></div></div>
+  <span class="tagdemo">示意畫面</span></div></div></div>
     </article>
 
     <article class="feat">
@@ -381,10 +612,18 @@ footer .r{margin-left:auto}
         <div class="no">03 ／ 教學問答</div>
         <div class="pain"><i class="x"></i><span class="l">痛點</span><s>學習單寫完就丟，看不出學到什麼</s></div>
         <h3><span class="sol">解法</span>走到定點才能答，<br><em>答完馬上有解說</em></h3>
-        <p>在關卡牌輸入暗號打開題目，限時作答、越快答對分數越高，答完馬上看到解說。邊走邊學，比寫學習單更記得住。</p>
         <ul class="pts"><li><b>闖關</b>走到定點才能答</li><li><b>即時</b>答完就有解說</li><li><b>計分</b>越快答對越高分</li><li><b>同步</b>老師即時看作答</li></ul>
       </div>
-      <div class="fimg reveal"><img src="img/f3.webp" alt="教學問答：限時作答、即時解說、老師後台即時同步" loading="lazy" width="1400" height="868"></div>
+      <div class="fimg anim reveal"><div class="fit-box" data-w="560" data-h="360"><div class="cv scn f3 s0">
+  <div class="q"><div class="tm"><i></i></div><h4>紅樹林最重要的功能是？</h4>
+   <div class="op ok" style="background:#3D7585">A. 過濾水質、保護海岸</div><div class="op" style="background:#B4613A">B. 增加鹽分</div><div class="op" style="background:#E4A04A">C. 提高水溫</div><div class="op" style="background:#5E7D5A">D. 減少氧氣</div></div>
+  <div class="plus">+120</div>
+  <div class="tch"><small>老師後台・全班答對率</small>
+   <div class="r"><span>Q1</span><div class="b"><i style="--w:92%;background:#8FB7C2"></i></div><span>92%</span></div>
+   <div class="r"><span>Q2</span><div class="b"><i style="--w:41%;background:#E4A04A"></i></div><span>41%</span></div>
+   <div class="r"><span>Q3</span><div class="b"><i style="--w:78%;background:#8FB7C2"></i></div><span>78%</span></div>
+   <div class="tip">💡 Q2 答對率偏低，回教室再講一次</div></div>
+  <span class="tagdemo">示意數據</span></div></div></div>
     </article>
 
     <article class="feat">
@@ -392,10 +631,14 @@ footer .r{margin-left:auto}
         <div class="no">04 ／ 問卷抽獎</div>
         <div class="pain"><i class="x"></i><span class="l">痛點</span><s>滿意度問卷回收率低，紙本統計累</s></div>
         <h3><span class="sol">解法</span>填完問卷才能抽獎，<br><em>回收率自然提高</em></h3>
-        <p>問卷一題一頁、點選就能填，填完才能轉燈籠輪盤抽獎，拿到兌獎碼到服務台兌換。不用再一張張發紙本問卷、事後輸入。</p>
         <ul class="pts"><li><b>回收</b>抽獎帶動填答</li><li><b>好填</b>一題一頁點選</li><li><b>免紙本</b>手機直接填</li><li><b>同步</b>回收份數即時更新</li></ul>
       </div>
-      <div class="fimg reveal"><img src="img/f4.webp" alt="問卷抽獎：一題一頁的問卷、抽獎兌獎碼、主辦後台即時同步" loading="lazy" width="1400" height="868"></div>
+      <div class="fimg anim reveal"><div class="fit-box" data-w="560" data-h="360"><div class="cv scn f4 s0">
+  <div class="mph p1"><div class="sc"><div class="dots"><i></i><i></i><i></i><i></i><i></i></div><div class="qq">從哪裡得知活動？</div><div class="opt">臉書・IG</div><div class="opt">親友介紹</div><div class="opt">里辦公處</div><div class="wh"></div><div class="code">兌獎碼 K7Q2</div></div></div>
+  <div class="cmp"><div class="r"><span>📄 紙本問卷 回收率</span><div class="b"><i style="--w:32%;background:#C9D3CF"></i><em>32%</em></div></div>
+   <div class="r"><span>📱 填完才能抽獎</span><div class="b"><i style="--w:86%;background:#B4613A"></i><em>86%</em></div></div>
+   <div class="auto">滿意度・年齡層・資訊來源<br><b>自動統計，直接放進成果報告</b></div></div>
+  <span class="tagdemo">示意數據</span></div></div></div>
     </article>
   </div>
 </section>
@@ -405,7 +648,7 @@ footer .r{margin-left:auto}
     <div class="sec-head reveal">
       <div class="stamp">Four activities</div>
       <h2>一套系統，四種活動用途</h2>
-      <p>四種玩法可以單獨使用，也可以組合，例如走讀導覽結束後接問卷抽獎。配色、插畫與內容都會依活動重新設計。</p>
+      <p>可單獨使用，也能組合。配色、插畫依活動重新設計。</p>
     </div>
   </div>
   <div class="marq"><div class="track" id="trk"></div></div>
@@ -443,38 +686,6 @@ footer .r{margin-left:auto}
   </div>
 </section>
 
-<section class="sec exp" id="why-amei">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="stamp">Why AMEI</div>
-      <h2>做過活動的人做的互動，<br>才知道要放在哪裡</h2>
-      <p>互動不是加上去就好。點位放哪、故事怎麼寫、評審想看到什麼，都是現場累積出來的判斷。</p>
-    </div>
-    <div class="exp-grid">
-      <div class="exp-card reveal">
-        <div class="k">FIELD EXPERIENCE</div>
-        <h3>懂活動現場，也會寫地方故事</h3>
-        <div class="exp-nums"><div><b>100+</b><span>場活動實際執行</span></div><div><b>50+</b><span>份標案企劃</span></div><div><b>10+</b><span>農遊體驗方案</span></div></div>
-        <ul class="exp-list">
-          <li>知道人潮會在哪裡散掉<small>暗號放在對的攤位、對的時段，才帶得動交流與停留</small></li>
-          <li>寫得出有溫度的在地內容<small>高雄美濃、大寮、燕巢、大樹、旗山、桃源等地方的體驗與文化內容撰寫</small></li>
-          <li>從結案往回設計<small>參與人次、答對率、滿意度一開始就規劃好，成果報告不用事後補數字</small></li>
-        </ul>
-      </div>
-      <div class="exp-card reveal">
-        <div class="k">DEMO FOR REVIEW</div>
-        <h3>評選現場，直接讓評審玩</h3>
-        <ol class="demo-flow">
-          <li><i></i><div><b>投標前先做可操作 Demo</b><span>套入你的活動名稱、點位與在地故事</span></div></li>
-          <li><i></i><div><b>寫進服務建議書</b><span>附上 QR code 與畫面截圖，書審就看得到</span></div></li>
-          <li><i></i><div><b>簡報時評審掃碼試玩</b><span>比起「預計製作互動網頁」，實際能玩的作品更有說服力</span></div></li>
-          <li><i></i><div><b>得標後直接延續製作</b><span>Demo 就是正式版的基礎，不用重做</span></div></li>
-        </ol>
-        <div class="judge"><p>📑 同時需要服務建議書？我也寫標案企劃，<a href="../">企劃與互動一起規劃</a>，內容前後對得上。</p></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section class="sec sheet-band" id="plans">
   <div class="wrap">
@@ -714,6 +925,36 @@ document.getElementById('plans').addEventListener('click', e => {
     } catch(err) { say('傳送失敗。請檢查網路後再試一次，或直接來信 ' + MAIL + '。', 'err'); }
     finally { btn.disabled = false; }
   });
+})();
+</script>
+
+<script>
+(()=>{
+ const RM=matchMedia('(prefers-reduced-motion: reduce)').matches,W=ms=>new Promise(r=>setTimeout(r,ms));
+ // expand ${...} repeats written in static html
+ function fit(){document.querySelectorAll('.fit-box').forEach(b=>{const cv=b.firstElementChild,v=cv.classList.contains('how3')&&b.clientWidth<640;if(cv.classList.contains('how3'))cv.classList.toggle('vert',v);const w=v?340:+b.dataset.w,h=v?1210:+b.dataset.h,s=b.clientWidth/w;b.style.height=h*s+'px';b.firstElementChild.style.transform=`scale(${s})`})}
+ fit();addEventListener('resize',fit);
+ const onView=(el,fn)=>{const o=new IntersectionObserver(es=>{if(es[0].isIntersecting){o.disconnect();fn()}},{threshold:.3});o.observe(el)};
+ const setS=(el,n)=>{el.className=el.className.replace(/\bs\d\b/,'s'+n)};
+ const fmt=n=>n.toLocaleString('en-US');
+ const count=(el,to,ms)=>{const from=+(el.textContent.replace(/,/g,''))||0,t0=performance.now();const f=t=>{const r=Math.min((t-t0)/ms,1);el.textContent=fmt(Math.round(from+(to-from)*(1-Math.pow(1-r,3))));if(r<1)requestAnimationFrame(f)};requestAnimationFrame(f)};
+ // how3
+ const h=document.getElementById('how3');if(h){const ip=document.getElementById('howIp'),num=document.getElementById('howNum'),bar=document.getElementById('howBar'),bn=document.getElementById('howBn');let n=1246,bv=58;
+  onView(h,async()=>{if(RM){setS(h,3);return}while(true){setS(h,0);ip.textContent='';await W(900);setS(h,1);for(const c of '海風'){await W(380);ip.textContent+=c}await W(500);setS(h,2);await W(1300);setS(h,3);n++;bv++;count(num,n,500);bar.style.width=bv+'%';bn.textContent=bv;await W(2600);if(bv>70){bv=58;bar.style.width='58%';bn.textContent=58}}})}
+ // why counters + flow
+ document.querySelectorAll('.cnt').forEach(el=>onView(el,()=>{count(el,+el.dataset.n,1400);setTimeout(()=>el.textContent+='+',1450)}));
+ const fl=document.getElementById('flow4');if(fl&&!RM){let i=0;setInterval(()=>{i=(i+1)%4;[...fl.children].forEach((d,k)=>d.classList.toggle('on',k===i))},1500)}
+ // f1 share
+ document.querySelectorAll('.f1').forEach(sc=>onView(sc,async()=>{const rn=sc.querySelector('.rn');if(RM){setS(sc,3);rn.textContent='1,240';return}while(true){setS(sc,0);rn.textContent='0';await W(1200);setS(sc,1);await W(400);setS(sc,2);await W(1400);setS(sc,3);count(rn,1240,1500);await W(3000)}}));
+ // f2 listeners
+ document.querySelectorAll('.f2').forEach(sc=>onView(sc,()=>{const ln=sc.querySelector('.ln');count(ln,24,1500);if(!RM)setInterval(()=>{ln.textContent=20+Math.floor(Math.random()*9)},2200)}));
+ // f3 quiz
+ document.querySelectorAll('.f3').forEach(sc=>onView(sc,async()=>{if(RM){setS(sc,2);return}while(true){setS(sc,0);await W(700);setS(sc,1);await W(1800);setS(sc,2);await W(3200)}}));
+ // f4 survey
+ document.querySelectorAll('.f4').forEach(sc=>onView(sc,async()=>{const dots=[...sc.querySelectorAll('.dots i')],opts=[...sc.querySelectorAll('.opt')];if(RM){setS(sc,3);dots.forEach(d=>d.classList.add('on'));return}
+  while(true){setS(sc,0);dots.forEach(d=>d.classList.remove('on'));opts.forEach(o=>o.classList.remove('on'));await W(600);setS(sc,1);
+   for(let i=0;i<5;i++){dots[i].classList.add('on');opts.forEach(o=>o.classList.remove('on'));opts[i%3].classList.add('on');await W(420)}
+   opts.forEach(o=>o.style.display='none');setS(sc,2);await W(1700);setS(sc,3);await W(2600);opts.forEach(o=>o.style.display='')}}));
 })();
 </script>
 </body>
