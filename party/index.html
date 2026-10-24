@@ -10,7 +10,7 @@
 <meta property="og:title" content="AMEI 活動互動套組｜互動體驗 為你而設">
 <meta property="og:description" content="婚禮・尾牙互動遊戲：照片祝福牆、即時問答、手機燈海，風格量身打造。">
 <meta property="og:url" content="https://ameinew07149-sys.github.io/AMEI-takescases/party/">
-<meta property="og:image" content="https://ameinew07149-sys.github.io/AMEI-takescases/party/img/poster-h.webp">
+<meta property="og:image" content="https://ameinew07149-sys.github.io/AMEI-takescases/party/og.png">
 <meta property="og:locale" content="zh_TW">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -238,6 +238,8 @@ footer a{color:var(--gold2);text-decoration:none}
 footer .r{margin-left:auto}
 </style>
 <link rel="stylesheet" href="../shared/amei-nav.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "name": "婚禮・尾牙三端連動互動套組", "serviceType": "活動互動遊戲", "url": "https://ameinew07149-sys.github.io/AMEI-takescases/party/", "provider": {"@type": "ProfessionalService", "@id": "https://ameinew07149-sys.github.io/AMEI-takescases/#amei", "name": "AMEI 阿梅｜活動企劃", "url": "https://ameinew07149-sys.github.io/AMEI-takescases/"}, "areaServed": [{"@type": "City", "name": "高雄市"}, {"@type": "City", "name": "台南市"}, {"@type": "City", "name": "屏東縣"}], "description": "照片祝福牆、即時問答、手機燈海，賓客手機、投影大螢幕、主持控台即時連動，免下載 App。", "offers": [{"@type": "Offer", "name": "婚禮 模板自助版", "priceCurrency": "TWD", "price": "3800"}, {"@type": "Offer", "name": "婚禮 半客製版", "priceCurrency": "TWD", "price": "7000"}, {"@type": "Offer", "name": "婚禮 全客製版", "priceCurrency": "TWD", "price": "9600", "description": "起"}, {"@type": "Offer", "name": "尾牙・春酒 模板自助版", "priceCurrency": "TWD", "price": "6400"}, {"@type": "Offer", "name": "尾牙・春酒 半客製版", "priceCurrency": "TWD", "price": "12000"}, {"@type": "Offer", "name": "尾牙・春酒 全客製版", "priceCurrency": "TWD", "price": "16000", "description": "起，300 人以上另行報價"}, {"@type": "Offer", "name": "現場控台人員", "priceCurrency": "TWD", "price": "3000", "description": "／場"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "賓客需要下載 App 嗎？", "acceptedAnswer": {"@type": "Answer", "text": "不需要。用手機相機掃描 QR code 就能直接在瀏覽器裡玩，iPhone 和 Android 都可以。"}}, {"@type": "Question", "name": "現場需要準備什麼？", "acceptedAnswer": {"@type": "Answer", "text": "一台可以接投影機或電視的筆電，以及穩定的網路。宴會廳通常都有投影設備，報名控台人員的話，我們會協助確認現場設備。"}}, {"@type": "Question", "name": "主持人不太會用電腦，可以自己操作嗎？", "acceptedAnswer": {"@type": "Answer", "text": "可以。後台把每個環節都做成一個按鈕，活動前也會提供操作說明與線上演練；擔心的話建議加購控台人員。"}}, {"@type": "Question", "name": "賓客上傳的照片會不會有不適合的內容？", "acceptedAnswer": {"@type": "Answer", "text": "後台可以即時隱藏任何一張照片，也能設定「先審核再上牆」。"}}, {"@type": "Question", "name": "多久前要預約？", "acceptedAnswer": {"@type": "Answer", "text": "模板版建議活動前 2 週，半客製與全客製建議 1 個月以上，尾牙旺季（11 月至隔年 2 月）請盡早預約。"}}, {"@type": "Question", "name": "婚禮・尾牙互動套組多少錢？", "acceptedAnswer": {"@type": "Answer", "text": "婚禮：模板自助版 NT$3,800、半客製版 NT$7,000、全客製版 NT$9,600 起。尾牙・春酒：模板自助版 NT$6,400、半客製版 NT$12,000、全客製版 NT$16,000 起（300 人以上另行報價）。現場控台人員 NT$3,000／場。"}}]}</script>
 </head>
 <body>
 <header class="amei-top"><div class="in">
@@ -375,7 +377,19 @@ footer .r{margin-left:auto}
       <button type="button" role="tab" data-pv="wy" aria-selected="false">尾牙・春酒</button>
     </div>
     <div class="deal-bar"><b>諮詢優惠 8 折</b><span>以下為優惠後價格</span></div>
-    <div class="plans pv-wed" id="plan-box"></div>
+    <div class="plans pv-wed" id="plan-box"><div class="plan">
+    <h3>模板自助版</h3><div class="sub">輕鬆入門</div>
+    <div class="price"><small>NT$</small>3,800</div><div class="orig">原價 NT$4,800</div>
+    <ul><li>6 款風格任選</li><li>新人姓名、日期、照片替換</li><li>照片祝福牆＋祝福留言</li><li>介面簡單，主持人自行操作</li></ul>
+    <a class="btn" href="#contact" data-plan="模板自助版" data-type="婚禮">預約諮詢</a></div><div class="plan hot"><span class="tag">推薦</span>
+    <h3>半客製版</h3><div class="sub">最多人選</div>
+    <div class="price"><small>NT$</small>7,000</div><div class="orig">原價 NT$8,800</div>
+    <ul><li>模板版全部內容</li><li>專屬配色與相框標章</li><li>客製新人問答題目</li><li>加選燈海或即時問答</li></ul>
+    <a class="btn" href="#contact" data-plan="半客製版" data-type="婚禮">預約諮詢</a></div><div class="plan">
+    <h3>全客製版</h3><div class="sub">獨一無二</div>
+    <div class="price"><small>NT$</small>9,600<sup>起</sup></div><div class="orig">原價 NT$12,000 起</div>
+    <ul><li>依新人故事從零設計</li><li>祝福牆、問答、燈海全玩法</li><li>電子相簿匯出</li><li>建議搭配現場控台</li></ul>
+    <a class="btn" href="#contact" data-plan="全客製版" data-type="婚禮">預約諮詢</a></div></div>
     <div class="staff">
       <div><b>現場控台人員</b><br><span>含彩排、全程控場與即時應變，免收交通費</span></div>
       <div class="p">NT$3,000<small>／場</small></div>
@@ -405,6 +419,7 @@ footer .r{margin-left:auto}
       <details><summary>主持人不太會用電腦，可以自己操作嗎？</summary><p>可以。後台把每個環節都做成一個按鈕，活動前也會提供操作說明與線上演練；擔心的話建議加購控台人員。</p></details>
       <details><summary>賓客上傳的照片會不會有不適合的內容？</summary><p>後台可以即時隱藏任何一張照片，也能設定「先審核再上牆」。</p></details>
       <details><summary>多久前要預約？</summary><p>模板版建議活動前 2 週，半客製與全客製建議 1 個月以上，尾牙旺季（11 月至隔年 2 月）請盡早預約。</p></details>
+      <details><summary>婚禮・尾牙互動套組多少錢？</summary><p>婚禮：模板自助版 NT$3,800、半客製版 NT$7,000、全客製版 NT$9,600 起。尾牙・春酒：模板自助版 NT$6,400、半客製版 NT$12,000、全客製版 NT$16,000 起（300 人以上另行報價）。現場控台人員 NT$3,000／場。</p></details>
     </div>
   </div>
 </section>
