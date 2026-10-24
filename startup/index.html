@@ -138,6 +138,20 @@ details.help .hb b{color:var(--ink)}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 #tProd input[type=number]{width:84px}
 #tProd td:first-child input{min-width:110px}
+#tProd input.auto{background:var(--paper2);border-style:dashed;color:var(--green2);font-weight:700}
+.bomt-btn{font-family:inherit;font-size:12.5px;font-weight:700;color:var(--green2);background:none;border:1.5px solid #BFD3CB;border-radius:999px;padding:3px 10px;cursor:pointer;white-space:nowrap}
+.bomt-btn.on{background:var(--green2);border-color:var(--green2);color:#fff}
+/* 成本拆解面板 */
+.bom{margin-top:12px;background:#F5F9F7;border:1.5px dashed #BFD3CB;border-radius:12px;padding:12px}
+.bom h4{font-size:13.5px;color:var(--green2);margin-bottom:6px}
+.bom .tbl input,.bom .tbl select{font-size:13.5px;padding:6px 8px}
+.bom .tbl input[type=number]{width:78px}
+.bom .tbl input.nm{min-width:120px}
+.bom .tbl input.un{width:58px}
+.bom .tbl select{width:auto}
+.bom small{display:block;font-size:12.5px;color:#8a8478;margin-top:6px}
+.cbar{display:flex;height:10px;border-radius:99px;overflow:hidden;min-width:120px;background:var(--paper2)}
+.cbar i{display:block;height:100%}
 #tStart input[type=number]{width:120px}
 #tStart td:first-child input{min-width:130px}
 #tStart select{width:auto}
@@ -409,6 +423,27 @@ const CH_TYPE={
   bento:[['現金',60,0],['行動支付',25,2.5],['外送平台',10,32],['企業團訂（匯款）',5,0]],
   eplat:[['平台成交手續費',100,6],['金流服務費',100,2],['免運・活動方案加收',60,6]]
 };
+/* 單位成本拆解：類別依業態，每項＝進貨價 ÷ 進貨量 × 每份用量 */
+const COMP={
+  food:['主原料','配料・醬料','包材','其他耗材'],retail:['商品進價','進貨運費・關稅','包裝材料','其他'],
+  ecom:['商品進價','進貨運費・關稅','包裝材料','其他'],service:['產品・藥劑','耗材','其他'],
+  lodging:['備品','清潔洗滌','早餐','其他'],project:['外包','素材・字型授權','印刷打樣','其他']
+};
+const COMP_COL=['#8A6D3B','#C9A45C','#2F6B5A','#9a948a'];
+const BOM_TPL={
+  food:[['主原料','例：茶葉、肉、麵粉','g'],['配料・醬料','例：糖、奶、醬汁','ml'],['包材','例：杯子、餐盒、提袋','個']],
+  retail:[['商品進價','例：每件批價','件'],['進貨運費・關稅','例：一箱運費 ÷ 件數','件'],['包裝材料','例：紙袋、包裝紙','個']],
+  ecom:[['商品進價','例：每件批價','件'],['進貨運費・關稅','例：一箱運費 ÷ 件數','件'],['包裝材料','例：紙箱、緩衝材','個']],
+  service:[['產品・藥劑','例：凝膠、染劑','ml'],['耗材','例：棉片、手套、毛巾','個']],
+  lodging:[['備品','例：盥洗包、拖鞋','組'],['清潔洗滌','例：床單布巾送洗','套'],['早餐','例：每人早餐食材','份']],
+  project:[['外包','例：攝影、文案外包','次'],['素材・字型授權','例：圖庫、字型','次'],['印刷打樣','例：打樣、色票','次']]
+};
+const DRINK_BOM=[['主原料','紅茶葉',300,600,'g',10],['主原料','奶精',120,1000,'ml',30],['配料・醬料','果糖',250,2500,'ml',15],['包材','杯子＋封膜＋吸管',4500,1000,'組',1],['包材','提袋',600,500,'個',0.5],['其他耗材','冰塊',300,25000,'g',150]]
+  .map(([c,n,pr,q,u,use])=>({c,n,pr,q,u,use}));
+const bomCost=b=>n(b.q)>0?n(b.pr)/n(b.q)*n(b.use):0;
+const hasBom=r=>Array.isArray(r.bom)&&r.bom.some(b=>bomCost(b)>0);
+const pcost=r=>hasBom(r)?r.bom.reduce((a,b)=>a+bomCost(b),0):n(r.c);
+const bomOpen=new Set();
 const chFor=key=>(CH_TYPE[key]||CH[TYPES[key].kind]).map(([n,s,r])=>({n,s,r}));
 const WORD={
   food:{t:'客單價',c:'每日來客數',u:'人',n:'客人'},retail:{t:'客單價',c:'每日來客數',u:'人',n:'客人'},
@@ -448,6 +483,8 @@ function applyType(key){
   const reno=S.startup.filter(r=>r.c==='reno').reduce((a,r)=>a+r.v,0);
   S.h.ping=reno?Math.max(1,Math.round(reno/S.h.perPing)):10;
   S.products=T.products.map(([n,p,c,m])=>({n,p,c,m}));
+  if(key==='drink')S.products[0].bom=JSON.parse(JSON.stringify(DRINK_BOM));
+  bomOpen.clear();
   applyReport();
 }
 /* 營業報表 → 客單價、每日筆數、毛利 */
@@ -503,8 +540,10 @@ function calc(){
   o.invest=o.startTotal-o.cat.dep;
   o.depr=o.depM.reno+o.depM.equip;
   const mix=S.products.reduce((a,r)=>a+n(r.m),0);
-  const sp=S.products.reduce((a,r)=>a+n(r.p)*n(r.m),0), sc=S.products.reduce((a,r)=>a+n(r.c)*n(r.m),0);
+  const sp=S.products.reduce((a,r)=>a+n(r.p)*n(r.m),0), sc=S.products.reduce((a,r)=>a+pcost(r)*n(r.m),0);
   o.avgP=mix?sp/mix:0;
+  /* 依銷售占比加權的成本結構（只算有拆解的品項） */
+  o.costMix={};S.products.forEach(r=>{if(hasBom(r))r.bom.forEach(b=>{o.costMix[b.c]=(o.costMix[b.c]||0)+bomCost(b)*n(r.m)})});
   o.gmItems=sp?(sp-sc)/sp:0;
   o.gmReport=n(S.rptRev)>0?1-n(S.rptCogs)/n(S.rptRev):0;
   o.useReport=open&&S.gmMode==='report'&&n(S.rptRev)>0;
@@ -656,13 +695,14 @@ const STEPS=[
   skipLabel:'沒有報表，用估的'},
  {id:'products',chip:'產品毛利',title:'你賣什麼？每一份賺多少？',why:'毛利是一切的基礎：售價扣掉「做出一份要花的材料錢」。銷售占比是預估每 100 份裡，各品項大概佔幾份。',
   body:o=>(S.mode==='open'&&n(S.rptRev)>0&&n(S.rptCogs)>0?`<div class="seg"><button type="button" data-gm="report" class="${S.gmMode==='report'?'on':''}">用報表的毛利率（${pct(o.gmReport)}）</button><button type="button" data-gm="items" class="${S.gmMode==='items'?'on':''}">用下面的品項計算</button></div>`:'')
-   +`<div class="scroll"><table class="tbl" id="tProd"><thead><tr><th>品項</th><th class="r">售價</th><th class="r">單位成本</th><th class="r">占比 %</th><th class="r">毛利</th><th class="r">毛利率</th><th></th></tr></thead><tbody>${prodRows()}</tbody></table></div>
+   +`<div class="scroll"><table class="tbl" id="tProd"><thead><tr><th>品項</th><th class="r">售價</th><th class="r">單位成本</th><th class="r">占比 %</th><th class="r">毛利</th><th class="r">毛利率</th><th></th><th></th></tr></thead><tbody>${prodRows()}</tbody></table></div>
+    <div id="bomPanel">${bomPanel()}</div>
     <button class="add" type="button" id="addProd">＋ 新增品項</button>`
-   +help('「單位成本」怎麼算？',`<p>拿一份的<b>配方或用料</b>，把每樣材料「用量 × 單價」加起來：</p>
-    <p>例：一杯奶茶＝茶葉 10g（6 元）＋ 奶精 30ml（4 元）＋ 糖漿（1 元）＋ 杯子封膜吸管（5 元）＋ 冰塊（1 元）≈ <b>17 元</b>。</p>
+   +help('「單位成本」怎麼算？',`<p>按每個品項的<b>「拆解成本」</b>，把做出一份要用到的東西一項一項列出來：<b>進貨價 ÷ 進貨量 × 每份用量</b>，系統會自動加總。範例「招牌奶茶」已經拆好，可以打開來看。</p>
+    <p>例：紅茶葉 600 g 進價 300 元、一杯用 10 g → 5 元；杯子封膜吸管 1000 組 4,500 元 → 4.5 元；加上奶精、果糖、提袋、冰塊 ≈ <b>17 元</b>。</p>
     <ul><li>餐飲：食材＋醬料＋<b>包材</b>（最常漏）。</li><li>零售、電商：商品進價＋<b>運到你手上的運費</b>。</li><li>服務業：每次用掉的耗材、產品。</li><li>品項很多時，挑銷量前 5 名就好，或把同價位的合成一類。</li></ul>`)
    +help('銷售占比不知道怎麼抓？','<p>還沒開店：想像一天賣 100 份，主力商品通常佔 4–6 成。已開店：POS 的「商品銷售排行」可以直接看到各品項份數。占比不用加起來剛好 100，系統會自動換算。</p>'),
-  live:o=>kpi('加權平均單價',money(o.avgP),'依銷售占比')+kpi('毛利率',dot(gmL(o))+pct(o.gm),`${o.useReport?'採用報表數字，':''}${KN[kind()]}目標 ${TH.gm[kind()][0]*100}% 以上`)},
+  live:o=>kpi('加權平均單價',money(o.avgP),'依銷售占比')+(Object.keys(o.costMix).length?kpi('成本結構',costBar(o.costMix),mixText(o.costMix)):'')+kpi('毛利率',dot(gmL(o))+pct(o.gm),`${o.useReport?'採用報表數字，':''}${KN[kind()]}目標 ${TH.gm[kind()][0]*100}% 以上`)},
  {id:'ticket',chip:()=>S.type?W().t:'客單價',title:()=>kind()==='project'?'平均一個案子報價多少？':`平均每${TYPES[S.type].help==='room'?'間房每晚':'筆'}收多少錢？`,why:()=>kind()==='project'?'把常接的案子平均起來，一個案子實際收到多少錢（含稅前、不含代墊的印刷費）。':TYPES[S.type].help==='room'?'平日、假日、淡旺季平均起來，一間房一晚實際收到多少。':'一位客人（一筆訂單）平均付多少錢。不是菜單上最便宜的價格，而是大家實際買的平均。',
   body:o=>`<div class="grid">${fld('ticket',W().t,'元','','lg')}</div>
    ${kind()==='project'?`<div class="calc"><h4>小算盤：從時薪推算報價</h4><div class="grid">${fld('h.rate','希望的時薪','元／小時','至少要高於上班的時薪，因為接案沒有勞健保、年終')}${fld('h.ph','一個案子平均做幾小時','小時','含溝通、提案、修改的時間')}${fld('h.buf','修改與溝通緩衝','%','客戶多改幾次的預留，一般 20–30%')}</div>
@@ -816,13 +856,37 @@ function custCalc(){
   return `<div class="calc"><h4>小算盤：${C[0]}</h4><div class="grid">${C[1].join('')}</div>
     <div class="res">推算結果：每天約 <b id="hCust">${custHelperVal().toFixed(1)}</b> ${W().u}<button class="btn b-dark b-sm" type="button" data-apply="cust">用這個數字</button></div></div>${C[2]}`;
 }
-function prodRows(){return S.products.map((r,i)=>`<tr data-i="${i}">
+function prodRows(){return S.products.map((r,i)=>{const auto=hasBom(r),op=bomOpen.has(i);
+  return `<tr data-i="${i}">
   <td><input data-f="n" value="${esc(r.n)}" aria-label="品項名稱"></td>
   <td class="r"><input data-f="p" type="number" min="0" value="${r.p}" aria-label="售價"></td>
-  <td class="r"><input data-f="c" type="number" min="0" value="${r.c}" aria-label="單位成本"></td>
+  <td class="r"><input data-f="c" type="number" min="0" value="${auto?Math.round(pcost(r)*10)/10:r.c}" aria-label="單位成本"${auto?' readonly class="auto" title="由成本拆解自動計算"':''}></td>
   <td class="r"><input data-f="m" type="number" min="0" value="${r.m}" aria-label="銷售占比"></td>
   <td class="r" data-o="gp"></td><td class="r" data-o="gm"></td>
-  <td><button class="x" type="button" aria-label="刪除">×</button></td></tr>`).join('')}
+  <td><button class="bomt-btn${op?' on':''}" type="button" data-bom="${i}">${auto?`拆解 ${r.bom.length} 項`:'拆解成本'} ${op?'▴':'▾'}</button></td>
+  <td><button class="x" type="button" aria-label="刪除">×</button></td></tr>`}).join('')}
+const bomPanel=()=>{const i=[...bomOpen][0];return i!=null&&S.products[i]?bomRow(S.products[i],i):''};
+function bomRow(r,i){
+  const cats=COMP[kind()];
+  return `<div class="bom"><h4>${esc(r.n||'這個品項')}的成本拆解：做出一份要用到什麼？</h4>
+  <div class="scroll"><table class="tbl bomt" data-p="${i}"><thead><tr><th>類別</th><th>項目</th><th class="r">進貨價</th><th class="r">進貨量</th><th>單位</th><th class="r">每份用量</th><th class="r">每份成本</th><th></th></tr></thead><tbody>
+  ${(r.bom||[]).map((b,j)=>`<tr data-j="${j}"><td><select data-b="c" aria-label="類別">${cats.concat(cats.includes(b.c)||!b.c?[]:[b.c]).map(c=>`<option${c===b.c?' selected':''}>${c}</option>`).join('')}</select></td>
+    <td><input class="nm" data-b="n" value="${esc(b.n)}" placeholder="${esc(b.ph||'')}" aria-label="項目"></td>
+    <td class="r"><input data-b="pr" type="number" min="0" value="${b.pr}" aria-label="進貨價"></td>
+    <td class="r"><input data-b="q" type="number" min="0" value="${b.q}" aria-label="進貨量"></td>
+    <td><input class="un" data-b="u" value="${esc(b.u||'')}" aria-label="單位"></td>
+    <td class="r"><input data-b="use" type="number" min="0" step="any" value="${b.use}" aria-label="每份用量"></td>
+    <td class="r" data-o="bc"></td><td><button class="x bx" type="button" aria-label="刪除">×</button></td></tr>`).join('')}
+  </tbody><tfoot><tr><td colspan="6">每份成本合計</td><td class="r" data-o="bt"></td><td></td></tr></tfoot></table></div>
+  <button class="add" type="button" data-addb="${i}">＋ 新增材料</button>
+  <small>例：茶葉一包 600 g 進價 300 元，一杯用 10 g → 300 ÷ 600 × 10 ＝ 每杯 5 元。填好後，上面的單位成本會自動帶入。</small></div>`;
+}
+function costBar(mix){
+  const cats=COMP[kind()],tot=Object.values(mix).reduce((a,v)=>a+v,0)||1;
+  return `<span class="cbar">${Object.entries(mix).map(([c,v])=>`<i style="width:${v/tot*100}%;background:${COMP_COL[Math.max(0,cats.indexOf(c))%COMP_COL.length]}" title="${esc(c)} ${pct(v/tot)}"></i>`).join('')}</span>`;
+}
+const mixText=mix=>{const tot=Object.values(mix).reduce((a,v)=>a+v,0)||1;return Object.entries(mix).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`${esc(c)} ${Math.round(v/tot*100)}%`).join('・')};
+const bomMix=r=>{const m={};(r.bom||[]).forEach(b=>{const v=bomCost(b);if(v>0)m[b.c]=(m[b.c]||0)+v});return m};
 const isLife=cats=>cats.includes('reno')||cats.includes('equip');
 function startRows(cats){
   const life=isLife(cats);
@@ -904,10 +968,14 @@ function refresh(){
   const o=last=calc(),st=cur();
   const lb=$('#live');if(lb)lb.innerHTML=st.live?st.live(o):'';
   document.querySelectorAll('#tProd tbody tr').forEach(tr=>{
-    const r=S.products[+tr.dataset.i];if(!r)return;const gp=n(r.p)-n(r.c);
+    const r=S.products[+tr.dataset.i];if(!r)return;const gp=n(r.p)-pcost(r);
+    const ci=tr.querySelector('[data-f=c]');if(hasBom(r)&&document.activeElement!==ci)ci.value=Math.round(pcost(r)*10)/10;
     tr.querySelector('[data-o=gp]').textContent=Math.round(gp).toLocaleString('zh-TW');
     const g=tr.querySelector('[data-o=gm]');g.textContent=n(r.p)?pct(gp/n(r.p)):'—';g.classList.toggle('neg',gp<0);
   });
+  document.querySelectorAll('.bomt').forEach(t=>{const r=S.products[+t.dataset.p];if(!r)return;
+    t.querySelectorAll('tbody tr').forEach(tr=>{const b=r.bom[+tr.dataset.j];if(b)tr.querySelector('[data-o=bc]').textContent=bomCost(b).toFixed(1)});
+    t.querySelector('[data-o=bt]').textContent=money(pcost(r))});
   const set=(id,t)=>{const el=document.getElementById(id);if(el)el.textContent=t};
   const cats=tCats();
   if(cats.length){
@@ -990,6 +1058,9 @@ function renderResult(o){
     <p class="explain">標準是常見的經驗法則，不同地段、客群差很多。紅燈不代表不能做，是代表要先想清楚。</p>`)}
   ${o.proj?sec('rIdle','生活開支與空窗期','living',`<div class="live" style="margin-top:0">${kpi('每月生活開支',money(o.living),'當作你的薪水')}${kpi('每月營運＋生活總支出',money(o.fixed),'')}</div>`+idleBox(o)):''}
   ${sec('rCost','開辦成本組成與回本週期',o.proj?'equip':'reno',costReport(o))}
+  ${sec('rProd','產品毛利與成本結構','products',`<div class="scroll"><table class="tbl"><thead><tr><th>品項</th><th class="r">售價</th><th class="r">單位成本</th><th class="r">毛利率</th><th>成本結構</th></tr></thead><tbody>
+    ${S.products.map(r=>{const c=pcost(r),m=bomMix(r);return `<tr><td>${esc(r.n||'未命名品項')}</td><td class="r">${money(n(r.p))}</td><td class="r">${money(c)}</td><td class="r${n(r.p)-c<0?' neg':''}">${n(r.p)?pct((n(r.p)-c)/n(r.p)):'—'}</td><td>${Object.keys(m).length?costBar(m)+`<span class="sm" style="font-size:12px;color:#8a8478">${mixText(m)}</span>`:'<span style="font-size:12.5px;color:#8a8478">未拆解</span>'}</td></tr>`}).join('')}</tbody></table></div>
+    ${Object.keys(o.costMix).length?`<p class="explain">已拆解的品項，依銷售占比加權後的材料成本結構：<b>${mixText(o.costMix)}</b>。占比最大的那一項，就是最值得去找更好進貨價的地方。</p>`:'<p class="explain">還沒有拆解單位成本。回到「產品毛利」按「拆解成本」，可以看出錢主要花在原料、包材還是其他地方。</p>'}`)}
   ${sec('rWhere','每賣 100 元，錢去了哪裡？','varcost',where(o)+`<p class="explain">實際貢獻率 <b>${pct(o.cm)}</b>：每賣 100 元，扣掉材料、抽成、損耗後剩 <b>${(o.cm*100).toFixed(0)} 元</b>，要拿來付租金、薪水和其他固定支出，剩下的才是利潤。</p>`)}
   <div class="two">
   ${sec('rPL','每月損益（穩定期）','other',`<table class="tbl pl">
@@ -1045,7 +1116,7 @@ function planHTML(o){
 <h4>二、負責人背景</h4><p>${t(P.exp,'相關工作經驗、專長、課程或證照')}</p>
 <h4>三、產品與服務</h4><p>${t(P.feature,'主力產品與特色')}</p>
 <table><tr><th>品項</th><th>售價</th><th>單位成本</th><th>毛利率</th><th>銷售占比</th></tr>
-${S.products.map(r=>`<tr><td>${esc(r.n||'未命名品項')}</td><td class="r">${money(n(r.p))}</td><td class="r">${money(n(r.c))}</td><td class="r">${n(r.p)?pct((n(r.p)-n(r.c))/n(r.p)):'—'}</td><td class="r">${n(r.m)}%</td></tr>`).join('')}</table>
+${S.products.map(r=>`<tr><td>${esc(r.n||'未命名品項')}</td><td class="r">${money(n(r.p))}</td><td class="r">${money(pcost(r))}</td><td class="r">${n(r.p)?pct((n(r.p)-pcost(r))/n(r.p)):'—'}</td><td class="r">${n(r.m)}%</td></tr>`).join('')}</table>
 <p>整體毛利率 <b>${pct(o.gm)}</b>${o.useReport?'（依實際營業報表）':''}，扣除收款手續費（${o.chFees.filter(c=>c.v>0).map(c=>esc(c.n)+' '+pct(c.v)).join('、')||'無'}，合計 ${pct(o.fee)}）、損耗${ec?'與廣告':''}後，實際貢獻率 <b>${pct(o.cm)}</b>。</p>
 <h4>四、市場分析與目標客群</h4><p><b>目標客群：</b>${t(P.target,'主要客群樣貌與消費時段')}</p><p><b>周邊競爭與優勢：</b>${t(P.comp,'周邊同類店家、價格帶與本店差異')}</p>
 <p class="hint">建議補充：實地人流計數（平日／假日、各時段）、周邊競品踩點紀錄。</p>
@@ -1148,9 +1219,14 @@ document.addEventListener('click',async e=>{
     case 'btnCopyPlan':{const ok=await copy($('#planDoc').innerText);toast(ok?'已複製計畫書文字，可以貼到 Word 或 Google 文件':'複製失敗，請改用列印存成 PDF');return}
     case 'btnReset':if(!confirm('清除所有填寫內容，從頭開始？'))return;try{localStorage.removeItem(KEY)}catch(e2){}S=JSON.parse(JSON.stringify(BASE));go('mode');return;
   }
+  if(t.dataset.bom!=null){const i=+t.dataset.bom,r=S.products[i];
+    if(bomOpen.has(i))bomOpen.clear();else{bomOpen.clear();bomOpen.add(i);if(!r.bom||!r.bom.length)r.bom=BOM_TPL[kind()].map(([c,ph,u])=>({c,n:'',ph,pr:'',q:'',u,use:''}))}
+    $('#tProd tbody').innerHTML=prodRows();$('#bomPanel').innerHTML=bomPanel();refresh();const bp=$('#bomPanel .bom');if(bp)bp.scrollIntoView({block:'nearest',behavior:'smooth'});return}
+  if(t.dataset.addb!=null){const i=+t.dataset.addb;S.products[i].bom.push({c:COMP[kind()][0],n:'',pr:'',q:'',u:'',use:''});$('#tProd tbody').innerHTML=prodRows();$('#bomPanel').innerHTML=bomPanel();refresh();return}
+  if(t.classList.contains('bx')){const i=+t.closest('.bomt').dataset.p;S.products[i].bom.splice(+t.closest('tr').dataset.j,1);$('#tProd tbody').innerHTML=prodRows();$('#bomPanel').innerHTML=bomPanel();refresh();return}
   if(t.classList.contains('x')){
     const tid=t.closest('table').id,arr=tid==='tProd'?S.products:tid==='tCh'?S.ch:S.startup;
-    arr.splice(+t.closest('tr').dataset.i,1);t.closest('tbody').innerHTML=tid==='tProd'?prodRows():tid==='tCh'?chRows():startRows(tCats());refresh();
+    arr.splice(+t.closest('tr').dataset.i,1);if(tid==='tProd'){bomOpen.clear();$('#bomPanel').innerHTML=''}t.closest('tbody').innerHTML=tid==='tProd'?prodRows():tid==='tCh'?chRows():startRows(tCats());refresh();
   }
 });
 document.addEventListener('input',e=>{
@@ -1162,6 +1238,10 @@ document.addEventListener('input',e=>{
     if(S.step==='result'){last=calc();updatePlan();save();return}
     refresh();return;
   }
+  if(el.dataset&&el.dataset.b){const r=S.products[+el.closest('.bomt').dataset.p],b=r.bom[+el.closest('tr').dataset.j],f=el.dataset.b;
+    const was=hasBom(r);b[f]=['pr','q','use'].includes(f)?(el.value===''?'':n(el.value)):el.value;
+    if(was!==hasBom(r)){const ci=$(`#tProd tr[data-i="${el.closest('.bomt').dataset.p}"] [data-f=c]`);if(ci)$(`#tProd tr[data-i="${el.closest('.bomt').dataset.p}"] .bomt-btn`).innerHTML=(hasBom(r)?`拆解 ${r.bom.length} 項`:'拆解成本')+' ▴';if(ci){ci.readOnly=hasBom(r);ci.classList.toggle('auto',hasBom(r));if(!hasBom(r))ci.value=r.c}}
+    refresh();return}
   const f=el.dataset&&el.dataset.f,tr=el.closest('tr');
   if(f&&tr&&el.tagName==='INPUT'){const tid=el.closest('table').id,arr=tid==='tProd'?S.products:tid==='tCh'?S.ch:S.startup;
     arr[+tr.dataset.i][f]=f==='n'?el.value:n(el.value);refresh();}
