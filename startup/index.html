@@ -194,7 +194,7 @@ details.help .hb b{color:var(--ink)}
 
 /* plan */
 .plan-doc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:30px;margin-top:16px;font-size:14.5px;line-height:1.85}
-@media(max-width:600px){.plan-doc{padding:18px 14px}}
+@media(max-width:600px){.plan-doc{padding:18px 14px;overflow-x:auto}.plan-doc table{font-size:12px}.plan-doc th,.plan-doc td{padding:4px 5px}.plan-doc td.r{white-space:normal}}
 .plan-doc h1{font-family:var(--serif);font-size:24px;text-align:center;margin-bottom:4px}
 .plan-doc .meta{text-align:center;color:var(--ink2);font-size:13px;margin-bottom:18px}
 .plan-doc h4{font-family:var(--serif);font-size:17px;margin:22px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--ink)}
@@ -272,18 +272,15 @@ footer a{color:rgba(243,238,226,.85)}
 
 <div id="result" hidden></div>
 
-<section class="consult" id="consult"><div class="wrap">
-  <div class="eb">BEYOND THE SPREADSHEET</div>
-  <h2>試算只能算到這裡，<br>剩下的要去現場看。</h2>
-  <p class="sub">「每日來客數」是整份試算最關鍵、也最容易高估的數字。它不是想出來的，是要站在店門口數出來的。</p>
+<section class="consult" id="homework"><div class="wrap">
+  <div class="eb">BEFORE YOU SIGN</div>
+  <h2>簽約之前，<br>自己再確認這幾件事。</h2>
+  <p class="sub">試算的數字只是起點。下面這幾件事線上算不出來，但每一件都可以自己做，做完再回來把數字改得更準。</p>
   <div class="cgrid">
-    <div><b>實地商圈人流</b><p>平日、假日、上下班與午晚餐時段實際計數，看經過的人裡有多少是你的客人，用真的數字取代猜測。</p></div>
-    <div><b>商業模式檢視</b><p>產品組合、定價、通路與回購設計，找出最賺錢的那條線，避免開了店才發現在做白工。</p></div>
-    <div><b>競品踩點</b><p>周邊同類店的價格帶、尖峰排隊狀況與客群，確認你的位置與差異在哪裡。</p></div>
-    <div><b>計畫書與面談</b><p>把試算整理成完整計畫書，模擬銀行常問的問題，讓你上場講得清楚、有把握。</p></div>
-  </div>
-  <div class="acts">
-    <a class="btn b-line" href="https://lin.ee/y8NnuAy" target="_blank" rel="noopener">LINE 預約完整諮詢</a>
+    <div><b>實地數人流</b><p>平日、假日、尖峰、離峰各去數 15 分鐘，用真的數字回頭修正「每日來客數」。接案的話，就是先問問身邊的人會不會找你、願意付多少。</p></div>
+    <div><b>競品踩點</b><p>去附近同類的店消費一次，記下價格帶、尖峰有沒有排隊、客人是什麼樣子；接案就看同行作品集的報價與案量。</p></div>
+    <div><b>至少三家報價</b><p>裝修、設備用這頁的明細表，請 2–3 家廠商逐項報價，不要只比總價。</p></div>
+    <div><b>問清楚貸款</b><p>帶著計畫書草稿去銀行或青創諮詢窗口，確認你符合哪些方案、額度、利率和要準備的文件。</p></div>
   </div>
 </div></section>
 </main>
@@ -293,7 +290,7 @@ footer a{color:rgba(243,238,226,.85)}
 
 <script>
 const $=s=>document.querySelector(s);
-const LINE='https://lin.ee/y8NnuAy', KEY='amei-startup-v2';
+const KEY='amei-startup-v2';
 const CAT={reno:'硬體裝修',equip:'設備器材',dep:'押金・保證金',open:'開辦費用'};
 /* 裝修總價依業態拆成常見工程項目（比例），方便逐項比價 */
 const RENO_SPLIT={
@@ -302,8 +299,8 @@ const RENO_SPLIT={
   service:[['拆除・泥作・地坪',.12],['水電・給排水',.22],['空調',.16],['木作・油漆・隔間',.4],['招牌・燈箱',.1]],
   lodging:[['水電・衛浴',.3],['空調',.15],['木作・油漆・地板',.35],['消防・安全設施',.1],['外觀・招牌',.1]]
 };
-const PER_PING={food:35000,retail:20000,service:25000,lodging:40000,ecom:8000};
-const RENO_HINT={food:'餐飲含水電、排煙約 3–6 萬／坪',retail:'零售約 1.5–3 萬／坪',service:'工作室約 1.5–3.5 萬／坪',lodging:'民宿含衛浴約 3–5 萬／坪',ecom:'工作室簡單整理約 0.5–1.5 萬／坪'};
+const PER_PING={food:35000,retail:20000,service:25000,lodging:40000,ecom:8000,project:8000};
+const RENO_HINT={food:'餐飲含水電、排煙約 3–6 萬／坪',retail:'零售約 1.5–3 萬／坪',service:'工作室約 1.5–3.5 萬／坪',lodging:'民宿含衛浴約 3–5 萬／坪',ecom:'工作室簡單整理約 0.5–1.5 萬／坪',project:'工作室簡單整理約 0.5–1.5 萬／坪'};
 function buildStartup(key){
   const T=TYPES[key],out=[];
   T.startup.forEach(([nm,c,v])=>{
@@ -313,7 +310,7 @@ function buildStartup(key){
     if(c==='cap'){out.push({n:nm,c:/裝潢|裝修/.test(nm)?'reno':'equip',v,y:/電腦|收銀/.test(nm)?3:5});return}
     out.push({n:nm.replace(/招牌與品牌設計|招牌設計/,'品牌設計（Logo、菜單、包裝）'),c:'open',v});
   });
-  if(!['ecom'].includes(T.kind)&&key!=='stall'&&!out.some(r=>/收銀/.test(r.n)))out.push({n:'POS 收銀系統・平板',c:'equip',v:25000,y:3});
+  if(!['ecom','project'].includes(T.kind)&&key!=='stall'&&!out.some(r=>/收銀/.test(r.n)))out.push({n:'POS 收銀系統・平板',c:'equip',v:25000,y:3});
   return out;
 }
 
@@ -381,35 +378,70 @@ const TYPES={
  bnb:{g:'服務・空間',label:'民宿・包棟',desc:'房價 × 住房率，平假日落差大',kind:'lodging',help:'room',
   lease:5,ticket:2800,cust:3.5,days:30,rent:60000,staffN:1,staffPay:30000,owner:35000,util:18000,mkt:6000,misc:8000,fee:15,waste:0,perOrder:250,invDays:0,arDays:14,apDays:0,ramp1:40,rampM:8,
   startup:[['裝修工程','cap',600000],['家具・寢具・家電','cap',300000],['租屋押金（2 個月）','open',120000],['首批備品','open',40000],['網站與房間攝影','open',50000],['民宿登記・消防・保險','open',30000],['開幕宣傳','open',30000]],
-  products:[['平日雙人房',2400,150,60],['假日雙人房',3200,150,30],['四人房',4200,250,10]]}
+  products:[['平日雙人房',2400,150,60],['假日雙人房',3200,150,30],['四人房',4200,250,10]]},
+ brand:{g:'接案・委託',label:'品牌・平面設計接案',desc:'時間就是產能，報價方式和修改次數決定實際時薪',kind:'project',help:'project',ph:25,
+  ticket:28000,cust:3,days:1,rent:0,staffN:0,staffPay:0,owner:40000,util:3000,mkt:5000,misc:5000,waste:3,perOrder:500,invDays:0,arDays:45,apDays:0,ramp1:30,rampM:9,
+  startup:[['電腦・螢幕','cap',80000],['繪圖板・周邊','cap',15000],['作品集網站','open',15000],['軟體年費（Adobe 等）','open',20000],['字型・素材授權','open',10000],['工商登記・報價合約範本','open',8000],['名片與宣傳','open',8000]],
+  products:[['Logo 設計',25000,2000,30],['名片・DM・海報',8000,1500,40],['品牌識別全套',60000,5000,30]]},
+ webui:{g:'接案・委託',label:'網站・UI 設計接案',desc:'案子大、週期長，收款天數是現金壓力來源',kind:'project',help:'project',ph:40,
+  ticket:50000,cust:2,days:1,rent:0,staffN:0,staffPay:0,owner:45000,util:3000,mkt:5000,misc:6000,waste:5,perOrder:0,invDays:0,arDays:60,apDays:0,ramp1:30,rampM:9,
+  startup:[['電腦・螢幕','cap',90000],['測試用手機・平板','cap',20000],['作品集網站','open',15000],['軟體・主機年費','open',20000],['工商登記・報價合約範本','open',8000],['名片與宣傳','open',10000]],
+  products:[['形象網站',45000,3000,50],['一頁式網站',15000,1000,30],['UI 設計（App、系統）',120000,5000,20]]},
+ illus:{g:'接案・委託',label:'插畫・影像製作接案',desc:'單價較低、案量要多，素材授權與器材是主要成本',kind:'project',help:'project',ph:12,
+  ticket:13000,cust:6,days:1,rent:0,staffN:0,staffPay:0,owner:38000,util:2500,mkt:4000,misc:5000,waste:3,perOrder:200,invDays:0,arDays:45,apDays:0,ramp1:30,rampM:9,
+  startup:[['電腦・螢幕','cap',70000],['繪圖螢幕','cap',45000],['相機・鏡頭','cap',60000],['作品集網站','open',10000],['軟體年費','open',18000],['素材・音樂授權','open',8000],['工商登記・報價合約範本','open',5000]],
+  products:[['商業插畫',8000,300,50],['影片剪輯',15000,800,35],['動態圖像',30000,1500,15]]}
 };
+/* 收款管道：占營收比例 × 手續費率；平台費用要疊加時，每一項占比都填 100 */
+const CH={
+  food:[['現金',50,0],['信用卡',20,2],['行動支付（LINE Pay、街口等）',20,2.5],['外送平台（Uber Eats、foodpanda）',10,32]],
+  retail:[['現金',35,0],['信用卡',45,2],['行動支付',20,2.5]],
+  service:[['現金・轉帳',45,0],['信用卡',35,2],['行動支付',20,2.5]],
+  ecom:[['信用卡金流',65,2.8],['超商取貨付款・ATM',35,1.5]],
+  lodging:[['訂房網站（Booking、Agoda 等）',60,16],['官網・自己接訂（刷卡）',25,2.5],['現金・轉帳',15,0]],
+  project:[['匯款・轉帳',80,0],['接案平台',20,10]]
+};
+const CH_TYPE={
+  drink:[['現金',40,0],['信用卡',10,2],['行動支付（LINE Pay、街口等）',25,2.5],['外送平台（Uber Eats、foodpanda）',25,32]],
+  cafe:[['現金',40,0],['信用卡',35,2],['行動支付',20,2.5],['外送平台',5,32]],
+  bistro:[['現金',30,0],['信用卡',50,2],['行動支付',20,2.5]],
+  stall:[['現金',70,0],['行動支付',30,2.5]],
+  bento:[['現金',60,0],['行動支付',25,2.5],['外送平台',10,32],['企業團訂（匯款）',5,0]],
+  eplat:[['平台成交手續費',100,6],['金流服務費',100,2],['免運・活動方案加收',60,6]]
+};
+const chFor=key=>(CH_TYPE[key]||CH[TYPES[key].kind]).map(([n,s,r])=>({n,s,r}));
 const WORD={
   food:{t:'客單價',c:'每日來客數',u:'人',n:'客人'},retail:{t:'客單價',c:'每日來客數',u:'人',n:'客人'},
   ecom:{t:'平均訂單金額',c:'每日訂單數',u:'筆',n:'訂單'},service:{t:'客單價',c:'每日服務人數',u:'人',n:'客人'},
-  lodging:{t:'平均房價',c:'每晚售出房間數',u:'間',n:'房間'}
+  lodging:{t:'平均房價',c:'每晚售出房間數',u:'間',n:'房間',per:'/晚',d:'每晚',one:'一晚'},
+  project:{t:'平均每案報價',c:'每月接案數',u:'案',n:'案件',per:'/月',d:'每月',one:'一個月'}
 };
-function W(){const T=TYPES[S.type];const w=Object.assign({},WORD[T.kind]);if(T.help==='class'){w.t='每人每堂收入';w.c='每日上課人次';w.u='人次';w.n='學員'}return w}
+/* 營業額算式的文字：接案以月計，其他以日計 */
+function revF(pre){const w=W();return kind()==='project'?`${pre} × 每月 ${n(S.cust)} 案`:`${pre} × ${w.d} ${n(S.cust)} ${w.u} × ${n(S.days)} 天`}
+function W(){const T=TYPES[S.type];const w=Object.assign({per:'/天',d:'每日',one:'一天'},WORD[T.kind]);if(T.help==='class'){w.t='每人每堂收入';w.c='每日上課人次';w.u='人次';w.n='學員'}return w}
 /* 健檢門檻：[綠燈, 黃燈] */
 const TH={
-  gm:{food:[.6,.5],retail:[.45,.35],ecom:[.5,.4],service:[.75,.6],lodging:[.85,.75]},
-  rent:{food:[.15,.2],retail:[.15,.2],ecom:[.05,.1],service:[.15,.2],lodging:[.25,.35]},
-  labor:{food:[.3,.4],retail:[.25,.35],ecom:[.25,.35],service:[.4,.5],lodging:[.3,.4]}
+  gm:{food:[.6,.5],retail:[.45,.35],ecom:[.5,.4],service:[.75,.6],lodging:[.85,.75],project:[.8,.65]},
+  rent:{food:[.15,.2],retail:[.15,.2],ecom:[.05,.1],service:[.15,.2],lodging:[.25,.35],project:[.1,.2]},
+  labor:{food:[.3,.4],retail:[.25,.35],ecom:[.25,.35],service:[.4,.5],lodging:[.3,.4],project:[.55,.7]}
 };
-const KN={food:'餐飲',retail:'零售',ecom:'電商',service:'服務業',lodging:'住宿業'};
+const KN={food:'餐飲',retail:'零售',ecom:'電商',service:'服務業',lodging:'住宿業',project:'接案'};
 
 const BASE={mode:'',type:'',step:'mode',seen:['mode'],gmMode:'items',
   rptRev:'',rptTx:'',rptDays:'',rptCogs:'',
   safety:3,self:400000,loanOverride:'',rate:1.8,years:7,grace:12,
-  h:{depM:2,ping:15,perPing:30000,items:1.3,foot:300,hours:8,avg:50,enter:3,visit:800,conv:1.5,rooms:5,occ:60,classes:3,seats:6,staff:2,per:5,book:70},
+  h:{wh:160,bill:60,ph:40,rate:800,buf:20,depM:2,ping:15,perPing:30000,items:1.3,foot:300,hours:8,avg:50,enter:3,visit:800,conv:1.5,rooms:5,occ:60,classes:3,seats:6,staff:2,per:5,book:70},
   plan:{name:'',owner:'',loc:'',open:'',why:'',exp:'',target:'',feature:'',comp:'',mkt:''}};
 
 function applyType(key){
   const T=TYPES[key];
   Object.assign(S,COMMON);
-  Object.keys(T).forEach(k=>{if(!['g','label','desc','kind','help','startup','products'].includes(k))S[k]=T[k]});
+  Object.keys(T).forEach(k=>{if(!['g','label','desc','kind','help','startup','products','ph'].includes(k))S[k]=T[k]});
   S.type=key;S.gmMode='items';
   S.startup=buildStartup(key);
-  if(T.kind==='ecom')S.lease=0;
+  if(['ecom','project'].includes(T.kind))S.lease=0;
+  if(T.ph)S.h.ph=T.ph;
+  S.ch=chFor(key);
   S.h.perPing=PER_PING[T.kind];
   const reno=S.startup.filter(r=>r.c==='reno').reduce((a,r)=>a+r.v,0);
   S.h.ping=reno?Math.max(1,Math.round(reno/S.h.perPing)):10;
@@ -421,7 +453,8 @@ function applyReport(){
   if(S.mode!=='open'||!S.type)return;
   const rev=n(S.rptRev),tx=n(S.rptTx),d=n(S.rptDays);
   if(rev>0&&tx>0)S.ticket=Math.round(rev/tx);
-  if(tx>0&&d>0){S.cust=Math.round(tx/d*10)/10;S.days=d}
+  if(TYPES[S.type].kind==='project'){if(tx>0){S.cust=tx;S.days=1}}
+  else if(tx>0&&d>0){S.cust=Math.round(tx/d*10)/10;S.days=d}
   S.gmMode=rev>0&&n(S.rptCogs)>0?'report':'items';
 }
 
@@ -434,6 +467,7 @@ if(S.type&&!TYPES[S.type])S.type='';
 /* 舊版只有「資本性支出／開辦費」兩類，轉成新的四類 */
 (S.startup||[]).forEach(r=>{if(r.c==='cap'){r.c=/裝潢|裝修/.test(r.n)?'reno':'equip';r.y=r.y||5}else if(r.c==='open'&&/押金/.test(r.n))r.c='dep'});
 if(S.lease==null)S.lease=3;
+if(S.type&&!Array.isArray(S.ch))S.ch=chFor(S.type);
 if(S.step==='startup')S.step='reno';
 if(!S.type&&S.step!=='mode')S.step=S.mode?'type':'mode';
 let saveT;
@@ -474,7 +508,9 @@ function calc(){
   o.useReport=open&&S.gmMode==='report'&&n(S.rptRev)>0;
   o.gm=o.useReport?o.gmReport:o.gmItems;
   o.poRate=n(S.ticket)>0?n(S.perOrder)/n(S.ticket):0;
-  o.varR=n(S.fee)/100+n(S.waste)/100+n(S.ads)/100+o.poRate;
+  o.chFees=(S.ch||[]).map(c=>({n:c.n,v:n(c.s)/100*n(c.r)/100}));
+  o.fee=o.chFees.reduce((a,c)=>a+c.v,0);
+  o.varR=o.fee+n(S.waste)/100+n(S.ads)/100+o.poRate;
   o.cm=o.gm-o.varR;
   o.rev=n(S.ticket)*n(S.cust)*n(S.days);
   o.staff=n(S.staffN)*n(S.staffPay)*(1+n(S.burden)/100);
@@ -535,9 +571,11 @@ function health(o){
   const k=kind(),kn=KN[k],gmT=TH.gm[k],rT=TH.rent[k],lT=TH.labor[k],L=[];
   L.push({t:'產品毛利率',v:pct(o.gm),l:gmL(o),d:`${kn}常見目標 ${gmT[0]*100}% 以上。`,
     a:'先檢查單位成本有沒有算漏（包材、配料、運費）；再看能否調價、調整份量、換供應商，或主推毛利高的品項。'});
+  if(k==='project'){const cap=custHelperVal(),u=cap>0?n(S.cust)/cap:Infinity;L.push({t:'接案量占產能',v:isFinite(u)?pct(u):'—',l:lv(u,[.85,1]),
+    d:`以你的工作時間，一個月約能做 ${cap.toFixed(1)} 案。超過 85% 就沒有餘裕處理修改和找新案。`,a:'提高報價、把常用流程做成模板縮短工時，或把部分工作外包。'})}
   if(k==='ecom')L.push({t:'廣告費占營業額',v:n(S.ads)+'%',l:lv(n(S.ads)/100,[.15,.25]),
     d:'電商的「店租」就是廣告費。超過 25% 通常代表回購太少，一直在花錢買新客。',a:'經營回購：會員、訂閱、加購組合；把一部分廣告費從拉新客移到留舊客。'});
-  if(n(S.rent)>0||k!=='ecom')L.push({t:'租金占營業額',v:pct(o.rentR),l:rentL(o),
+  if(n(S.rent)>0||!['ecom','project'].includes(k))L.push({t:'租金占營業額',v:pct(o.rentR),l:rentL(o),
     d:`${kn}一般建議 ${rT[0]*100}% 以內，超過 ${rT[1]*100}% 很容易被房租吃掉利潤。`,a:'評估更小的空間、次要街道或分租；或拉長營業時段，讓同一份租金賣更多。'});
   L.push({t:'人事（含老闆）占營業額',v:pct(o.laborR),l:laborL(o),
     d:`建議 ${lT[0]*100}% 以內。人太多或營業額太低都會讓這個數字變高。`,a:'用尖峰／離峰排班取代整天全職；簡化菜單或流程，讓一個人顧得來。'});
@@ -581,7 +619,7 @@ const STEPS=[
   body:()=>`<div class="grid">
     ${fld('rptRev','這個月的營業額','元','POS「銷售總額」或記帳的收入')}
     ${fld('rptTx',`這個月的交易筆數（${W().n}數）`,'筆','POS「交易筆數」或發票張數')}
-    ${fld('rptDays','這個月營業幾天','天','')}
+    ${kind()==='project'?'':fld('rptDays','這個月營業幾天','天','')}
     ${fld('rptCogs','這個月的材料・進貨成本','元','食材、原料、商品進貨、包材的總和')}</div>`
    +help('這些數字在哪裡找？',`<ul>
     <li><b>有 POS 系統</b>（iCHEF、肚肚、Square 等）：後台「營業報表／日結報表」選一整個月，看「營業額」與「交易筆數」。</li>
@@ -601,27 +639,33 @@ const STEPS=[
     <ul><li>餐飲：食材＋醬料＋<b>包材</b>（最常漏）。</li><li>零售、電商：商品進價＋<b>運到你手上的運費</b>。</li><li>服務業：每次用掉的耗材、產品。</li><li>品項很多時，挑銷量前 5 名就好，或把同價位的合成一類。</li></ul>`)
    +help('銷售占比不知道怎麼抓？','<p>還沒開店：想像一天賣 100 份，主力商品通常佔 4–6 成。已開店：POS 的「商品銷售排行」可以直接看到各品項份數。占比不用加起來剛好 100，系統會自動換算。</p>'),
   live:o=>kpi('加權平均單價',money(o.avgP),'依銷售占比')+kpi('毛利率',dot(gmL(o))+pct(o.gm),`${o.useReport?'採用報表數字，':''}${KN[kind()]}目標 ${TH.gm[kind()][0]*100}% 以上`)},
- {id:'ticket',chip:()=>S.type?W().t:'客單價',title:()=>`平均每${TYPES[S.type].help==='room'?'間房每晚':'筆'}收多少錢？`,why:()=>TYPES[S.type].help==='room'?'平日、假日、淡旺季平均起來，一間房一晚實際收到多少。':'一位客人（一筆訂單）平均付多少錢。不是菜單上最便宜的價格，而是大家實際買的平均。',
+ {id:'ticket',chip:()=>S.type?W().t:'客單價',title:()=>kind()==='project'?'平均一個案子報價多少？':`平均每${TYPES[S.type].help==='room'?'間房每晚':'筆'}收多少錢？`,why:()=>kind()==='project'?'把常接的案子平均起來，一個案子實際收到多少錢（含稅前、不含代墊的印刷費）。':TYPES[S.type].help==='room'?'平日、假日、淡旺季平均起來，一間房一晚實際收到多少。':'一位客人（一筆訂單）平均付多少錢。不是菜單上最便宜的價格，而是大家實際買的平均。',
   body:o=>`<div class="grid">${fld('ticket',W().t,'元','','lg')}</div>
-   <div class="calc"><h4>小算盤：從產品推算</h4><div class="grid">${fld('h.items',TYPES[S.type].help==='room'?'平均每間房住幾晚以上的組合':'每位客人平均買幾件','件','飲料店約 1.2–1.5；餐廳看人數與套餐')}</div>
+   ${kind()==='project'?`<div class="calc"><h4>小算盤：從時薪推算報價</h4><div class="grid">${fld('h.rate','希望的時薪','元／小時','至少要高於上班的時薪，因為接案沒有勞健保、年終')}${fld('h.ph','一個案子平均做幾小時','小時','含溝通、提案、修改的時間')}${fld('h.buf','修改與溝通緩衝','%','客戶多改幾次的預留，一般 20–30%')}</div>
+     <div class="res">時薪 × 工時 × (1＋緩衝) ≈ <b id="hQuote">${money(n(S.h.rate)*n(S.h.ph)*(1+n(S.h.buf)/100))}</b><button class="btn b-dark b-sm" type="button" data-apply="quote">用這個數字</button></div></div>`:''}
+   <div class="calc"${kind()==='project'?' hidden':''}><h4>小算盤：從產品推算</h4><div class="grid">${fld('h.items',TYPES[S.type].help==='room'?'平均每間房住幾晚以上的組合':'每位客人平均買幾件','件','飲料店約 1.2–1.5；餐廳看人數與套餐')}</div>
      <div class="res">平均單價 ${money(o.avgP)} × <span id="hItems">${n(S.h.items)}</span> 件 ≈ <b id="hTicketA">${money(o.avgP*n(S.h.items))}</b><button class="btn b-dark b-sm" type="button" data-apply="ticket">用這個數字</button></div></div>`
    +(S.mode==='open'&&n(S.rptTx)>0?`<p class="tip">營業報表：${money(n(S.rptRev))} ÷ ${n(S.rptTx)} 筆 ＝ <b>${money(n(S.rptRev)/n(S.rptTx))}</b></p>`:'')
    +help('怎麼估比較準？','<ul><li>去<b>同類型的店</b>消費一次，留意前後幾位客人的結帳金額。</li><li>Google 地圖評論、外送平台的照片，看得到大家都點什麼組合。</li><li>電商：有滿額免運時，平均訂單常落在免運門檻附近。</li><li>寧可<b>估低一點</b>，開店後超過預期是驚喜，反過來就是壓力。</li></ul>'),
-  live:o=>kpi('預估月營業額',money(o.rev),`× 每日 ${n(S.cust)} ${W().u} × ${n(S.days)} 天（下一題可以改）`)},
- {id:'cust',chip:()=>S.type?W().c:'來客數',title:()=>({room:'平均一晚賣出幾間房？',web:'平均一天有幾筆訂單？',class:'平均一天有幾人次來上課？',appt:'平均一天服務幾位客人？'})[TYPES[S.type].help]||'平均一天有幾位客人？',
+  live:o=>kpi('預估月營業額',money(o.rev),revF('')+'（下一題可以改）')},
+ {id:'cust',chip:()=>S.type?W().c:'來客數',title:()=>({project:'平均一個月接幾個案子？',room:'平均一晚賣出幾間房？',web:'平均一天有幾筆訂單？',class:'平均一天有幾人次來上課？',appt:'平均一天服務幾位客人？'})[TYPES[S.type].help]||'平均一天有幾位客人？',
   why:'這是整份試算最關鍵、也最容易高估的數字。用下面的小算盤，從實際觀察一步步推算，會比憑感覺準很多。',
-  body:o=>`<div class="grid">${fld('cust',W().c,W().u,'平日與假日平均','lg')}${fld('days','每月營業天數','天','')}</div>`+custCalc()
+  body:o=>`<div class="grid">${kind()==='project'?fld('cust',W().c,W().u,'一個月平均完成並收款的案子數','lg'):fld('cust',W().c,W().u,'平日與假日平均','lg')+fld('days','每月營業天數','天','')}</div>`+custCalc()
    +(S.mode==='open'&&n(S.rptTx)>0&&n(S.rptDays)>0?`<p class="tip">營業報表：${n(S.rptTx)} 筆 ÷ ${n(S.rptDays)} 天 ＝ 每天約 <b>${(n(S.rptTx)/n(S.rptDays)).toFixed(1)} ${W().u}</b></p>`:''),
-  live:o=>kpi('預估月營業額',money(o.rev),'')+kpi('損益兩平',isFinite(o.beCust)?Math.ceil(o.beCust)+' '+W().u+'/天':'無法打平','先用範例支出估算，後面會修正')+kpi('安全邊際',dot(lv(o.margin,[.2,0],true))+(isFinite(o.margin)?pct(o.margin):'—'),'比打平多出幾成')},
- {id:'varcost',chip:'抽成損耗',title:'每賣一筆，還會被扣掉哪些錢？',why:'刷卡、外送、電商平台會抽成；做壞、過期、退貨會損耗。這些會跟著營業額一起變大，要先扣掉才知道真正留下多少。',
-  body:()=>{const k=kind();return `<div class="grid">
-    ${fld('fee',k==='ecom'?'平台成交手續費＋金流費':k==='lodging'?'訂房平台抽成＋金流':'刷卡・行動支付・外送平台抽成','% 營收',k==='ecom'?'蝦皮、momo 等手續費加金流約 8–15%；自建官網金流約 2–3%':k==='lodging'?'訂房網站約 15–18%；自己接訂比例越高越省':'刷卡約 2%；外送平台約 30–35%，要用外送占營收的比例換算')}
-    ${fld('waste',k==='ecom'?'退貨・瑕疵損失':'損耗・試做・招待','% 營收',k==='ecom'?'服飾類退貨偏高，可抓 5–10%':'過期、做壞、試吃；餐飲常見 3–8%')}
+  live:o=>kpi('預估月營業額',money(o.rev),'')+kpi('損益兩平',isFinite(o.beCust)?Math.ceil(o.beCust)+' '+W().u+W().per:'無法打平','先用範例支出估算，後面會修正')+kpi('安全邊際',dot(lv(o.margin,[.2,0],true))+(isFinite(o.margin)?pct(o.margin):'—'),'比打平多出幾成')},
+ {id:'varcost',chip:'抽成損耗',title:'每賣一筆，還會被扣掉哪些錢？',why:'客人用什麼方式付錢，手續費差很多：現金 0%、刷卡約 2%、外送平台三成以上。把收款管道分開填，再加上損耗、退貨、包材，才知道每 100 元真正留下多少。',
+  body:()=>{const k=kind();return `<h3 style="margin-top:0">收款管道與手續費</h3>
+   <div class="scroll"><table class="tbl" id="tCh"><thead><tr><th>收款管道</th><th class="r">占營收 %</th><th class="r">手續費率 %</th><th class="r">等於營收的</th><th></th></tr></thead><tbody>${chRows()}</tbody>
+   <tfoot><tr><td>合計</td><td class="r" id="chShare"></td><td></td><td class="r" id="chFee"></td><td></td></tr></tfoot></table></div>
+   <button class="add" type="button" id="addCh">＋ 新增收款管道</button>
+   <h3>其他跟著營業額變動的成本</h3><div class="grid">
+    ${fld('waste',k==='ecom'?'退貨・瑕疵損失':k==='project'?'折讓・尾款收不到':'損耗・試做・招待','% 營收',k==='ecom'?'服飾類退貨偏高，可抓 5–10%':k==='project'?'追加修改不另收費、尾款打折或收不到':'過期、做壞、試吃；餐飲常見 3–8%')}
     ${k==='ecom'?fld('ads','廣告費','% 營收','FB、IG、Google、平台廣告；新品牌常在 15–30%'):''}
-    ${fld('perOrder',k==='lodging'?'每間房每晚的備品・洗滌':'每筆訂單的運費補貼・包材','元／筆',k==='ecom'?'免運補貼＋紙箱＋緩衝材':k==='lodging'?'布巾洗滌、盥洗備品、清潔':'外帶袋、外送包材；已算進產品成本就填 0')}</div>`
-   +help('外送平台的抽成怎麼換算？','<p>假設外送占你營業額 30%、平台抽 32%；刷卡占 40%、手續費 2%：</p><p>30% × 32% ＋ 40% × 2% ≈ <b>10.4%</b>，就填 10.4。</p><p>外送通常要另外調高售價或縮小份量，不然很容易做越多賠越多。</p>')},
-  live:o=>kpi('產品毛利率',pct(o.gm),'')+kpi('實際貢獻率',(o.cm<=0?dot('rd'):'')+pct(o.cm),'每賣 100 元，扣完材料、抽成、損耗後真正留下的','dark')},
- {id:'rent',chip:'租金',title:()=>kind()==='ecom'?'有沒有工作室或倉庫的租金？':'場地一個月租金多少？',why:()=>kind()==='ecom'?'在家做就填 0。倉儲、工作室、攝影棚都算。':'租金是每個月一定要付、賣多賣少都一樣的錢，是開店最大的固定壓力之一。',
+    ${fld('perOrder',k==='lodging'?'每間房每晚的備品・洗滌':k==='project'?'每案額外成本（打樣、交通、外包）':'每筆訂單的運費補貼・包材','元／筆',k==='ecom'?'免運補貼＋紙箱＋緩衝材':k==='lodging'?'布巾洗滌、盥洗備品、清潔':k==='project'?'印刷打樣、跑客戶的交通、找人協助的外包費':'外帶袋、外送包材；已算進產品成本就填 0')}</div>`
+   +help('收款管道怎麼填？',`<ul><li><b>占營收 %</b>：每 100 元營業額裡，有多少是用這個方式收的。一般收款方式加起來是 100。</li><li>已開店：POS 報表的「付款方式統計」可以直接看到各方式的金額。</li><li>常見費率：信用卡約 1.8–2.5%、行動支付約 2–3%、外送平台約 30–35%、訂房網站約 15–18%。實際以你簽的合約為準。</li><li>電商平台的成交手續費、金流費、活動方案是<b>疊加</b>的：每一項各占營收 100%（或參加活動的比例），分開列。</li></ul>`)
+   +(k==='food'?help('外送平台要注意什麼？','<p>外送抽成三成以上，很多店會把外送價格<b>調高 10–20%</b>，或做外送專用的小份量菜單。如果外送和店內同價，外送做越多，可能賠越多。</p>'):'')},
+  live:o=>kpi('收款手續費',pct(o.fee),'加權後占營收')+kpi('產品毛利率',pct(o.gm),'')+kpi('實際貢獻率',(o.cm<=0?dot('rd'):'')+pct(o.cm),'每賣 100 元，扣完材料、手續費、損耗後真正留下的','dark')},
+ {id:'rent',chip:'租金',title:()=>kind()==='ecom'?'有沒有工作室或倉庫的租金？':kind()==='project'?'有沒有工作室或共享辦公室的租金？':'場地一個月租金多少？',why:()=>['ecom','project'].includes(kind())?'在家做就填 0。倉儲、工作室、共享辦公室、攝影棚都算。':'租金是每個月一定要付、賣多賣少都一樣的錢，是開店最大的固定壓力之一。',
   body:()=>`<div class="grid">${fld('rent','每月租金（含管理費）','元','','lg')}</div>`
    +help('租金合不合理怎麼看？',`<ul><li>常見經驗法則：<b>租金不超過營業額的 ${TH.rent[kind()][0]*100}%</b>。反過來算，月租 4.5 萬，營業額最好有 30 萬以上。</li><li>同一條街，<b>轉角、騎樓、靠近捷運出口</b>差很多。</li><li>押金通常 2–3 個月，簽約前問清楚<b>免租裝潢期</b>、租約年限、能不能掛招牌、排煙與用電容量。</li><li>商圈人流與店面能見度，要到現場分時段看才準。</li></ul>`),
   live:o=>kpi('租金占營業額',dot(rentL(o))+pct(o.rentR),`建議 ${TH.rent[kind()][0]*100}% 以內`)},
@@ -636,11 +680,11 @@ const STEPS=[
  {id:'other',chip:'其他支出',title:'其他每個月固定要付的錢',why:'水電、網路、行銷、記帳、維修……一筆一筆不多，加起來常常比想像的大。',
   body:()=>`<div class="grid">
     ${fld('util','水電瓦斯・網路・電話','元','有冷凍冷藏、烤箱的，夏天電費會高很多')}
-    ${fld('mkt','固定行銷費','元',kind()==='ecom'?'官網平台月費、社群代操、攝影（廣告費上一題已算）':'社群廣告、傳單、外送平台曝光、會員系統')}
-    ${fld('misc','雜支・維修・記帳・保險','元','記帳士約 1,500–3,000／月；設備保養、清潔用品')}</div>`
+    ${fld('mkt','固定行銷費','元',kind()==='project'?'作品集網站、接案平台會員費、社群廣告':kind()==='ecom'?'官網平台月費、社群代操、攝影（廣告費上一題已算）':'社群廣告、傳單、外送平台曝光、會員系統')}
+    ${fld('misc',kind()==='project'?'軟體訂閱・記帳・保險':'雜支・維修・記帳・保險','元',kind()==='project'?'Adobe、Figma、雲端空間、記帳士':'記帳士約 1,500–3,000／月；設備保養、清潔用品')}</div>`
    +help('有哪些常被忘記的？','<ul><li>POS、預約系統、外送平台的<b>月費</b></li><li>垃圾清運、病媒防治、消防安檢</li><li>營業稅（小規模營業人約營業額 1%，按季繳）與所得稅</li><li>設備故障、冷氣保養、招牌燈箱維修</li></ul>'),
-  live:o=>kpi('每月固定支出',money(o.fixed),'不含貸款')+kpi('每月營業利益',money(o.op),o.rev?'營業利益率 '+pct(o.op/o.rev):'',o.op<0?'negv':'dark')+kpi('損益兩平',isFinite(o.beCust)?Math.ceil(o.beCust)+' '+W().u+'/天':'無法打平',isFinite(o.be)?'每月營業額 '+money(o.be):'')},
- {id:'reno',chip:'裝修',title:()=>S.mode==='open'?'店面裝修花了多少？':'店面裝修要花多少？',why:'裝修是開店最大筆、也最常超支的錢。拆成工程項目來看，比較好跟師傅比價，也看得出錢花在哪裡。會用好幾年的東西，用「使用年限」攤成每個月的成本（折舊）。',
+  live:o=>kpi('每月固定支出',money(o.fixed),'不含貸款')+kpi('每月營業利益',money(o.op),o.rev?'營業利益率 '+pct(o.op/o.rev):'',o.op<0?'negv':'dark')+kpi('損益兩平',isFinite(o.beCust)?Math.ceil(o.beCust)+' '+W().u+W().per:'無法打平',isFinite(o.be)?'每月營業額 '+money(o.be):'')},
+ {id:'reno',chip:'裝修',when:()=>!S.type||!['ecom','project'].includes(kind())||S.startup.some(r=>r.c==='reno'),title:()=>S.mode==='open'?'店面裝修花了多少？':'店面裝修要花多少？',why:'裝修是開店最大筆、也最常超支的錢。拆成工程項目來看，比較好跟師傅比價，也看得出錢花在哪裡。會用好幾年的東西，用「使用年限」攤成每個月的成本（折舊）。',
   body:()=>`<div class="calc"><h4>小算盤：用坪數估裝修總價</h4><div class="grid">${fld('h.ping','店面坪數','坪','')}${fld('h.perPing','每坪裝修單價','元／坪',RENO_HINT[kind()])}</div>
      <div class="res">估算約 <b id="hReno">${money(n(S.h.ping)*n(S.h.perPing))}</b><button class="btn b-dark b-sm" type="button" data-apply="reno">依比例分配到下面各項</button></div></div>
    <h3>裝修工程明細</h3>${costTable(['reno'])}`
@@ -653,15 +697,15 @@ const STEPS=[
    +help('設備怎麼省？','<ul><li>製冰機、冷藏櫃、烤箱、咖啡機可以找<b>二手</b>或租賃，省 3–6 成。</li><li>先買撐得住尖峰的規格就好，生意起來再升級。</li><li>注意保固與維修據點，壞了停業一天損失更大。</li></ul>'),
   live:o=>kpi('設備合計',money(o.cat.equip),'')+kpi('每月折舊',money(o.depM.equip),'設備攤到每個月的成本')},
  {id:'opencost',chip:'開辦費',title:()=>S.mode==='open'?'其他開辦費用與押金':'開門前還要花哪些錢？',why:'押金、首批進貨、品牌設計、登記、開幕宣傳⋯⋯這些是一次性的支出。押金退租時可以拿回來，所以不算進回本。',
-  body:()=>(kind()!=='ecom'||n(S.rent)>0?`<div class="calc"><h4>小算盤：押金</h4><div class="grid">${fld('h.depM','押金是幾個月租金','個月','一般 2–3 個月')}</div>
+  body:()=>(n(S.rent)>0?`<div class="calc"><h4>小算盤：押金</h4><div class="grid">${fld('h.depM','押金是幾個月租金','個月','一般 2–3 個月')}</div>
      <div class="res">月租 ${money(n(S.rent))} × <span id="hDepM">${n(S.h.depM)}</span> 個月 ＝ <b id="hDep">${money(n(S.rent)*n(S.h.depM))}</b><button class="btn b-dark b-sm" type="button" data-apply="dep">用這個數字</button></div></div>`:'')
    +`<h3>開辦費用明細</h3>${costTable(['dep','open'])}`
    +help('常被漏掉的開辦費','<ul><li>開幕前<b>試營運</b>的食材與人事（通常 1–2 週）</li><li>員工<b>訓練期薪資</b></li><li>證照申請、消防安檢、食品業者登錄、民宿登記</li><li>POS、外送平台、預約系統的開通費</li><li>制服、杯具餐具、清潔用品等小東西加起來也不少</li></ul>'),
   live:o=>kpi('開辦費用',money(o.cat.open),'一次性支出')+kpi('押金・保證金',money(o.cat.dep),'退租可拿回，不計入回本')+kpi('開辦總投入',money(o.startTotal),'裝修＋設備＋開辦＋押金','dark')},
  {id:'turnover',chip:'週轉',title:'錢會卡在哪裡、卡多久？',why:'有賺錢不代表有現金。貨放在架上、平台晚撥款，錢都會被卡住；能跟供應商月結，就能晚一點付錢。',
   body:()=>`<div class="grid">
-    ${fld('invDays','進一次貨大約能賣幾天','天','餐飲多為 3–10 天；零售常見 30–90 天')}
-    ${fld('arDays','賣出後幾天才收到錢','天',kind()==='ecom'?'平台多在買家確認收貨後撥款，約 7–14 天':'現金 0 天；刷卡、外送平台撥款要幾天')}
+    ${kind()==='project'?'':fld('invDays','進一次貨大約能賣幾天','天','餐飲多為 3–10 天；零售常見 30–90 天')}
+    ${fld('arDays',kind()==='project'?'交件後平均幾天收到款':'賣出後幾天才收到錢','天',kind()==='project'?'訂金＋尾款制可以縮短；公司客戶常月結 30–60 天':kind()==='ecom'?'平台多在買家確認收貨後撥款，約 7–14 天':'現金 0 天；刷卡、外送平台撥款要幾天')}
     ${fld('apDays','進貨後幾天才付錢給供應商','天','現結 0 天；月結約 30 天')}</div>`
    +help('為什麼這很重要？','<p><b>現金週轉天數 ＝ 庫存天數 ＋ 收款天數 − 付款天數。</b>數字越大，越多錢被卡住，需要越多週轉金。</p><p>例：選物店庫存 60 天、刷卡 2 天、月結 30 天 → 有 32 天的貨款要自己先墊。電商平台撥款慢，大檔期前常常缺現金。</p>'),
   live:o=>kpi('庫存週轉率',isFinite(o.turn)?o.turn.toFixed(1)+' 次/年':'—','一年賣完幾輪庫存')+kpi('現金週轉天數',dot(lv(o.ccc,[30,60]))+o.ccc+' 天','')+kpi('被卡住的營運資金',money(o.wc),'需要先準備的錢')},
@@ -684,21 +728,29 @@ const STEPS=[
   live:o=>kpi('總資金需求',money(o.need),'開辦費＋週轉金','dark')+kpi('貸款金額',money(o.loan),'占 '+pct(o.need?o.loan/o.need:0))+kpi('本息攤還每月',money(o.pay),o.hasGrace?'寬限期每月約 '+money(o.payG):'')+kpi('前 24 個月現金',dot(o.minBal<0?'rd':'g')+(o.minBal<0?'缺 '+wan(-o.minBal):'足夠'),o.minBal<0?`第 ${o.minM} 個月不夠付帳`:'每個月底都有現金')}
 ];
 const visible=()=>STEPS.filter(s=>!s.when||s.when());
+function chRows(){return (S.ch||[]).map((c,i)=>`<tr data-i="${i}">
+  <td><input data-f="n" value="${esc(c.n)}" aria-label="收款管道"></td>
+  <td class="r"><input data-f="s" type="number" min="0" max="100" value="${c.s}" aria-label="占營收比例" style="width:76px"></td>
+  <td class="r"><input data-f="r" type="number" min="0" step="0.1" value="${c.r}" aria-label="手續費率" style="width:76px"></td>
+  <td class="r" data-o="cf"></td>
+  <td><button class="x" type="button" aria-label="刪除">×</button></td></tr>`).join('')}
 
 function custHelperVal(){
   const H=S.h;
-  return {foot:n(H.foot)*n(H.hours)*n(H.avg)/100*n(H.enter)/100,web:n(H.visit)*n(H.conv)/100,room:n(H.rooms)*n(H.occ)/100,class:n(H.classes)*n(H.seats),appt:n(H.staff)*n(H.per)*n(H.book)/100}[TYPES[S.type].help];
+  return {foot:n(H.foot)*n(H.hours)*n(H.avg)/100*n(H.enter)/100,web:n(H.visit)*n(H.conv)/100,room:n(H.rooms)*n(H.occ)/100,class:n(H.classes)*n(H.seats),project:n(H.ph)>0?n(H.wh)*n(H.bill)/100/n(H.ph):0,appt:n(H.staff)*n(H.per)*n(H.book)/100}[TYPES[S.type].help];
 }
 function custCalc(){
   const C={
     foot:['從門口人流推算',[fld('h.foot','尖峰一小時經過幾個人','人','到店面前用手機計數器數 15 分鐘 × 4'),fld('h.hours','每天營業幾小時','小時',''),fld('h.avg','整天平均約是尖峰的幾成','%','一般 40–60%'),fld('h.enter','經過的人有幾 % 會進來買','%','路過型 2–5%；巷弄目的型靠回客')],
-      help('實地數人流的方法','<ul><li>選<b>平日與假日</b>各一天，在營業時段的<b>尖峰和離峰</b>各數 15 分鐘。</li><li>只數<b>會經過店門口、走路速度慢</b>的人；騎車呼嘯而過的不算。</li><li>同時觀察附近同類店家<b>一小時進出幾組客人</b>，是最好的參考。</li><li>這一步線上算不出來，也最容易估錯，可以找阿梅一起去現場數。</li></ul>')],
+      help('實地數人流的方法','<ul><li>選<b>平日與假日</b>各一天，在營業時段的<b>尖峰和離峰</b>各數 15 分鐘。</li><li>只數<b>會經過店門口、走路速度慢</b>的人；騎車呼嘯而過的不算。</li><li>同時觀察附近同類店家<b>一小時進出幾組客人</b>，是最好的參考。</li><li>這一步線上算不出來，也最容易估錯，建議不同時段多去數幾次。</li></ul>')],
     web:['從流量與轉換率推算',[fld('h.visit','每天有多少人逛你的網站／賣場','人','GA4、平台後台的「訪客數」'),fld('h.conv','逛的人有幾 % 會下單（轉換率）','%','一般 1–3%；新賣場抓 1% 比較保守')],
       help('流量從哪裡來？','<ul><li>流量 ≈ 廣告費 ÷ 每次點擊成本（常見 5–20 元）＋ 自然流量（社群、搜尋、回購）。</li><li>例：每月廣告 6 萬、點擊成本 10 元 → 每天約 200 人，轉換率 1.5% → 每天 3 筆。</li><li>新品牌還沒有回購前，訂單多半要靠廣告買，所以廣告費占比會偏高。</li></ul>')],
     room:['從房間數與住房率推算',[fld('h.rooms','總共幾間房','間',''),fld('h.occ','平均住房率','%','平日常見 30–50%、假日 80–100%')],
       help('住房率怎麼估？','<p>平日與假日分開估再平均：例如一週 5 個平日 40%、2 個假日 90% → (5×40＋2×90) ÷ 7 ≈ <b>54%</b>。觀光地區還要考慮淡旺季。</p>')],
     class:['從課表推算',[fld('h.classes','每天開幾堂課','堂',''),fld('h.seats','每堂平均幾位學員','人','不是滿班人數，是平均實際來的人')],
       help('學員數怎麼估？','<p>用滿班人數 × 平均出席率（新開約 4–6 成）。月卡、堂數卡的學員，把收入換算成「每人每堂收入」填在上一題。</p>')],
+    project:['從可以工作的時間推算',[fld('h.wh','每月可以工作幾小時','小時','一週 40 小時約 170 小時'),fld('h.bill','真正在做案子的時間比例','%','其他時間花在找案、提案、行政；一般 50–70%'),fld('h.ph','一個案子平均做幾小時','小時','含溝通、提案、修改')],
+      help('接案量的上限在哪？','<p>接案的營業額上限是<b>你的時間</b>：可工作時數 × 做案子的比例 ÷ 每案工時。超過這個數字就會開始熬夜、拖件。要成長，就要提高報價、縮短每案工時（模板、流程），或找人分工。</p>')],
     appt:['從可服務的人力推算',[fld('h.staff','可以服務客人的人數（含你）','人',''),fld('h.per','每人每天最多服務幾位','位','看單次服務時間，例如 2 小時一位 → 約 4 位'),fld('h.book','預約滿檔率','%','新店 40–60%，熟客多可到 80%')],
       help('服務業的上限在哪？','<p>服務業的營業額上限是<b>時間</b>：人數 × 每天可服務數 × 滿檔率。要成長，就要加人、縮短單次服務時間，或提高客單價。</p>')]
   }[TYPES[S.type].help];
@@ -807,18 +859,28 @@ function refresh(){
   set('loanAuto',money(o.loanAuto));
   set('hReno',money(n(S.h.ping)*n(S.h.perPing)));set('hDepM',n(S.h.depM));set('hDep',money(n(S.rent)*n(S.h.depM)));
   const pb=$('#pbBox');if(pb)pb.innerHTML=paybackBox(o);
+  document.querySelectorAll('#tCh tbody tr').forEach(tr=>{const c=S.ch[+tr.dataset.i];if(c)tr.querySelector('[data-o=cf]').textContent=pct(n(c.s)/100*n(c.r)/100)});
+  if($('#tCh')){const sh=S.ch.filter(c=>n(c.s)<100).reduce((a,c)=>a+n(c.s),0);set('chShare',sh?sh+'%':'—');set('chFee',pct(o.fee))}
+  set('hQuote',money(n(S.h.rate)*n(S.h.ph)*(1+n(S.h.buf)/100)));
   set('hItems',n(S.h.items));set('hTicketA',money(o.avgP*n(S.h.items)));
   if($('#hCust'))set('hCust',custHelperVal().toFixed(1));
-  $('#strip').innerHTML=`<span>${esc(TYPES[S.type].label)}</span><span>月營業額 <b>${wan(o.rev)}</b></span><span>每月營業利益 <b class="${o.op<0?'neg':''}">${wan(o.op)}</b></span><span>損益兩平 <b>${isFinite(o.beCust)?Math.ceil(o.beCust)+' '+W().u+'/天':'—'}</b></span>`;
+  $('#strip').innerHTML=`<span>${esc(TYPES[S.type].label)}</span><span>月營業額 <b>${wan(o.rev)}</b></span><span>每月營業利益 <b class="${o.op<0?'neg':''}">${wan(o.op)}</b></span><span>損益兩平 <b>${isFinite(o.beCust)?Math.ceil(o.beCust)+' '+W().u+W().per:'—'}</b></span>`;
   save();
 }
 
 /* ================= 報告 ================= */
+function varRows(o,plain){
+  const row=(a,v)=>`<tr><td>${a}</td><td class="r">${plain?money(v):money(-v)}</td></tr>`;
+  return o.chFees.filter(c=>c.v>0).map(c=>row(esc(c.n)+' 手續費',o.rev*c.v)).join('')
+   +(n(S.waste)?row(kind()==='ecom'?'退貨・瑕疵損失':kind()==='project'?'折讓・尾款損失':'損耗・試做・招待',o.rev*n(S.waste)/100):'')
+   +(n(S.ads)?row('廣告費',o.rev*n(S.ads)/100):'')
+   +(n(S.perOrder)?row(kind()==='lodging'?'備品・洗滌':kind()==='project'?'每案額外成本':'運費補貼・包材',o.rev*o.poRate):'');
+}
 function where(o){
   if(!o.rev)return '<p class="explain">先填營業額相關的數字，才算得出來。</p>';
-  const r=o.rev,segs=[['材料成本',1-o.gm,'#8A6D3B'],['抽成・損耗'+(kind()==='ecom'?'・廣告':''),o.varR,'#B98E4E'],
+  const r=o.rev,segs=[['材料成本',1-o.gm,'#8A6D3B'],['收款手續費',o.fee,'#B98E4E'],[kind()==='ecom'?'退貨・損耗':'損耗',n(S.waste)/100,'#D2B07A'],['廣告費',n(S.ads)/100,'#A0522D'],['每筆額外成本',o.poRate,'#C8B89A'],
     ['租金',n(S.rent)/r,'#5C5850'],['人事',o.labor/r,'#2F6B5A'],['其他固定支出',o.other/r,'#7FA393']];
-  const profit=o.op/r,all=segs.concat(profit>0?[['利潤',profit,'#C9A45C']]:[]);
+  const profit=o.op/r,all=segs.filter(x=>x[1]>0).concat(profit>0?[['利潤',profit,'#C9A45C']]:[]);
   const tot=all.reduce((a,s)=>a+Math.max(0,s[1]),0)||1;
   return `<div class="where">${all.map(s=>`<div style="width:${Math.max(0,s[1])/tot*100}%;background:${s[2]}" title="${s[0]} ${(s[1]*100).toFixed(0)} 元">${s[1]/tot>.07?Math.round(s[1]*100):''}</div>`).join('')}</div>
    <div class="wlegend">${all.map(s=>`<span><i style="background:${s[2]}"></i>${s[0]} <b>${(s[1]*100).toFixed(0)} 元</b></span>`).join('')}${profit<=0?`<span class="neg">每 100 元<b class="neg"> 虧 ${(-profit*100).toFixed(0)} 元</b></span>`:''}</div>`;
@@ -853,16 +915,16 @@ function renderResult(o){
   const T=TYPES[S.type],H=health(o),cnt={g:0,y:0,rd:0};H.forEach(h=>cnt[h.l]++);
   const w=W(),ratio=o.need?o.loan/o.need:0,open=S.mode==='open';
   const sens=[1.1,1,.85,.7,.5].map(f=>{const op=o.rev*f*o.cm-o.fixed;return {f,op,nt:op-o.pay}});
-  const verdict=cnt.rd===0&&cnt.y<=1?'整體體質不錯。接下來最重要的，是確認「每日來客數」在現場是不是真的做得到。'
+  const verdict=cnt.rd===0&&cnt.y<=1?`整體體質不錯。接下來最重要的，是確認「${w.c}」在現實中是不是真的做得到。`
     :cnt.rd===0?'大方向可行，有幾個黃燈值得再調整，下面有具體建議。'
-    :`有 ${cnt.rd} 個紅燈要優先處理。建議先調整，或找人一起看商業模式再決定。`;
+    :`有 ${cnt.rd} 個紅燈要優先處理。建議先把數字調整到沒有紅燈，再決定要不要開。`;
   $('#result').innerHTML=`
   <div class="rhead"><div class="eb">${open?'OPERATION CHECK-UP':'STARTUP REPORT'}</div>
     <h2 id="rTitle">${esc(S.plan.name||'你的店')}的${open?'營運健檢報告':'開店試算報告'}</h2>
     <p class="sub">${esc(T.label)}　·　${verdict}</p>
     <div class="score"><span><i style="background:#5FBF8F"></i>綠燈 ${cnt.g}</span><span><i style="background:#E0A84A"></i>黃燈 ${cnt.y}</span><span><i style="background:#E07A6A"></i>紅燈 ${cnt.rd}</span></div>
-    <div class="live">${kpi(open?'建議準備資金':'開店總資金需求',money(o.need),'自備 '+wan(n(S.self))+'／貸款 '+wan(o.loan))}${kpi('每月營業額',money(o.rev),'')}${kpi('每月營業利益',money(o.op),o.rev?'營業利益率 '+pct(o.op/o.rev):'',o.op<0?'negv':'')}${kpi('損益兩平',isFinite(o.beCust)?Math.ceil(o.beCust)+' '+w.u+'/天':'無法打平','你預估 '+n(S.cust)+' '+w.u)}${kpi('預估回本',o.payback?o.payback+' 個月':'10 年以上','')}</div>
-    <div class="acts noprint"><button class="btn b-line" type="button" id="btnSend">複製報告摘要，傳給阿梅</button><button class="btn b-ghost b-sm" type="button" id="btnPrintR">列印・存成 PDF</button><button class="btn b-ghost b-sm" type="button" data-go="type">從頭修改</button></div>
+    <div class="live">${kpi(open?'建議準備資金':'開店總資金需求',money(o.need),'自備 '+wan(n(S.self))+'／貸款 '+wan(o.loan))}${kpi('每月營業額',money(o.rev),'')}${kpi('每月營業利益',money(o.op),o.rev?'營業利益率 '+pct(o.op/o.rev):'',o.op<0?'negv':'')}${kpi('損益兩平',isFinite(o.beCust)?Math.ceil(o.beCust)+' '+w.u+w.per:'無法打平','你預估 '+n(S.cust)+' '+w.u)}${kpi('預估回本',o.payback?o.payback+' 個月':'10 年以上','')}</div>
+    <div class="acts noprint"><button class="btn b-line" type="button" id="btnSend">複製報告摘要</button><button class="btn b-ghost b-sm" type="button" id="btnPrintR">列印・存成 PDF</button><button class="btn b-ghost b-sm" type="button" data-go="type">從頭修改</button></div>
   </div>
   ${sec('rHealth','營運健檢','',`<ul class="hl">${H.map(h=>`<li class="${h.l}"><i></i><div><b>${h.t}</b><p>${h.d}</p>${h.l!=='g'?`<p class="adv">${h.a}</p>`:''}</div><em>${h.v}</em></li>`).join('')}</ul>
     <p class="explain">標準是常見的經驗法則，不同地段、客群差很多。紅燈不代表不能做，是代表要先想清楚。</p>`)}
@@ -870,9 +932,9 @@ function renderResult(o){
   ${sec('rWhere','每賣 100 元，錢去了哪裡？','varcost',where(o)+`<p class="explain">實際貢獻率 <b>${pct(o.cm)}</b>：每賣 100 元，扣掉材料、抽成、損耗後剩 <b>${(o.cm*100).toFixed(0)} 元</b>，要拿來付租金、薪水和其他固定支出，剩下的才是利潤。</p>`)}
   <div class="two">
   ${sec('rPL','每月損益（穩定期）','other',`<table class="tbl pl">
-    <tr><td>營業額<br><span class="sm">${w.t} ${money(n(S.ticket))} × ${n(S.cust)} ${w.u} × ${n(S.days)} 天</span></td><td class="r">${money(o.rev)}</td></tr>
+    <tr><td>營業額<br><span class="sm">${revF(w.t+' '+money(n(S.ticket)))}</span></td><td class="r">${money(o.rev)}</td></tr>
     <tr><td>材料成本</td><td class="r">${money(-o.rev*(1-o.gm))}</td></tr>
-    <tr><td>抽成・損耗${kind()==='ecom'?'・廣告':''}・每筆成本</td><td class="r">${money(-o.rev*o.varR)}</td></tr>
+    ${varRows(o)}
     <tr><td>租金</td><td class="r">${money(-n(S.rent))}</td></tr>
     <tr><td>人事（含勞健保、老闆薪水）</td><td class="r">${money(-o.labor)}</td></tr>
     <tr><td>水電、行銷、雜支</td><td class="r">${money(-o.other)}</td></tr>
@@ -880,9 +942,9 @@ function renderResult(o){
     <tr><td>貸款月付</td><td class="r">${money(-o.pay)}</td></tr>
     <tr class="tot"><td>還款後結餘</td><td class="r${o.net<0?' neg':''}">${money(o.net)}</td></tr></table>
     <p class="explain">另外，裝修與設備每月折舊約 ${money(o.depr)}（不用付現金，但代表東西在耗損、將來要換）；扣掉後帳面淨利約 <b class="${o.acct<0?'neg':''}">${money(o.acct)}</b>。</p>`)}
-  ${sec('rBE','損益兩平','cust',`<p class="explain" style="margin-top:0">每月固定要付 <b>${money(o.fixed)}</b>，每賣 100 元能留下 <b>${(o.cm*100).toFixed(0)} 元</b>，${isFinite(o.be)?`所以要賣到 <b>${money(o.be)}</b> 才打平，也就是一天至少 <b>${Math.ceil(o.beCust)} ${w.u}</b>。你預估一天 ${n(S.cust)} ${w.u}，${o.margin>=0?`比打平多 ${pct(o.margin)}。`:`<b class="neg">還差 ${Math.ceil(o.beCust-n(S.cust))} ${w.u}</b>。`}`:'<b class="neg">每賣一份都在賠錢</b>，請先調整定價或成本。'}</p>
+  ${sec('rBE','損益兩平','cust',`<p class="explain" style="margin-top:0">每月固定要付 <b>${money(o.fixed)}</b>，每賣 100 元能留下 <b>${(o.cm*100).toFixed(0)} 元</b>，${isFinite(o.be)?`所以要賣到 <b>${money(o.be)}</b> 才打平，也就是${w.one}至少 <b>${Math.ceil(o.beCust)} ${w.u}</b>。你預估${w.one} ${n(S.cust)} ${w.u}，${o.margin>=0?`比打平多 ${pct(o.margin)}。`:`<b class="neg">還差 ${Math.ceil(o.beCust-n(S.cust))} ${w.u}</b>。`}`:'<b class="neg">每賣一份都在賠錢</b>，請先調整定價或成本。'}</p>
     <h3>如果生意沒有想像中好？</h3>
-    <div class="scroll"><table class="tbl"><thead><tr><th>達成</th><th class="r">每日</th><th class="r">營業利益</th><th class="r">還款後</th></tr></thead><tbody>${sens.map(s=>`<tr${s.f===1?' style="font-weight:700"':''}><td>${Math.round(s.f*100)}%</td><td class="r">${(n(S.cust)*s.f).toFixed(n(S.cust)<20?1:0)}</td><td class="r${s.op<0?' neg':''}">${money(s.op)}</td><td class="r${s.nt<0?' neg':''}">${money(s.nt)}</td></tr>`).join('')}</tbody></table></div>`)}
+    <div class="scroll"><table class="tbl"><thead><tr><th>達成</th><th class="r">${w.d}</th><th class="r">營業利益</th><th class="r">還款後</th></tr></thead><tbody>${sens.map(s=>`<tr${s.f===1?' style="font-weight:700"':''}><td>${Math.round(s.f*100)}%</td><td class="r">${(n(S.cust)*s.f).toFixed(n(S.cust)<20?1:0)}</td><td class="r${s.op<0?' neg':''}">${money(s.op)}</td><td class="r${s.nt<0?' neg':''}">${money(s.nt)}</td></tr>`).join('')}</tbody></table></div>`)}
   </div>
   ${sec('rCash','現金流：前 24 個月','turnover',`<div class="chart">${drawChart(o)}</div>
     <div class="legend"><span><i style="background:#2F6B5A"></i>月底現金餘額</span><span><i style="background:#B5402F"></i>現金不足</span><span><i style="background:#C9A45C"></i>單月現金流</span></div>
@@ -923,7 +985,7 @@ function planHTML(o){
 <h4>三、產品與服務</h4><p>${t(P.feature,'主力產品與特色')}</p>
 <table><tr><th>品項</th><th>售價</th><th>單位成本</th><th>毛利率</th><th>銷售占比</th></tr>
 ${S.products.map(r=>`<tr><td>${esc(r.n||'未命名品項')}</td><td class="r">${money(n(r.p))}</td><td class="r">${money(n(r.c))}</td><td class="r">${n(r.p)?pct((n(r.p)-n(r.c))/n(r.p)):'—'}</td><td class="r">${n(r.m)}%</td></tr>`).join('')}</table>
-<p>整體毛利率 <b>${pct(o.gm)}</b>${o.useReport?'（依實際營業報表）':''}，扣除抽成、損耗${ec?'與廣告':''}後，實際貢獻率 <b>${pct(o.cm)}</b>。</p>
+<p>整體毛利率 <b>${pct(o.gm)}</b>${o.useReport?'（依實際營業報表）':''}，扣除收款手續費（${o.chFees.filter(c=>c.v>0).map(c=>esc(c.n)+' '+pct(c.v)).join('、')||'無'}，合計 ${pct(o.fee)}）、損耗${ec?'與廣告':''}後，實際貢獻率 <b>${pct(o.cm)}</b>。</p>
 <h4>四、市場分析與目標客群</h4><p><b>目標客群：</b>${t(P.target,'主要客群樣貌與消費時段')}</p><p><b>周邊競爭與優勢：</b>${t(P.comp,'周邊同類店家、價格帶與本店差異')}</p>
 <p class="hint">建議補充：實地人流計數（平日／假日、各時段）、周邊競品踩點紀錄。</p>
 <h4>五、行銷策略</h4><p>${t(P.mkt,'開幕活動、社群經營、會員經營等')}</p><p>每月固定行銷預算 ${money(n(S.mkt))}${n(S.ads)?`，另投入營業額 ${n(S.ads)}% 作為廣告費`:''}。</p>
@@ -936,20 +998,21 @@ ${S.products.map(r=>`<tr><td>${esc(r.n||'未命名品項')}</td><td class="r">${
 <tr><td>申請貸款</td><td class="r">${money(o.loan)}</td><td class="r">${pct(o.need?o.loan/o.need:0)}</td></tr></table>
 <h4>七、財務預估</h4>
 <table><tr><th>項目（穩定營運後每月）</th><th>金額</th></tr>
-<tr><td>營業額（${w.t} ${money(n(S.ticket))} × 每日 ${n(S.cust)} ${w.u} × ${n(S.days)} 天）</td><td class="r">${money(o.rev)}</td></tr>
-<tr><td>變動成本（材料、抽成、損耗${ec?'、廣告':''}）</td><td class="r">${money(o.rev*(1-o.cm))}</td></tr>
+<tr><td>營業額（${revF(w.t+' '+money(n(S.ticket)))}）</td><td class="r">${money(o.rev)}</td></tr>
+<tr><td>材料成本</td><td class="r">${money(o.rev*(1-o.gm))}</td></tr>
+${varRows(o,true)}
 <tr><td>租金</td><td class="r">${money(n(S.rent))}</td></tr>
 <tr><td>人事（員工 ${n(S.staffN)} 人含勞健保、負責人薪資）</td><td class="r">${money(o.labor)}</td></tr>
 <tr><td>水電、行銷、雜支</td><td class="r">${money(o.other)}</td></tr>
 <tr><th>營業利益</th><th class="r">${money(o.op)}</th></tr></table>
-<p>損益兩平營業額每月 <b>${money(o.be)}</b>，約每日 <b>${isFinite(o.beCust)?Math.ceil(o.beCust):'—'}</b> ${w.u}；安全邊際 ${isFinite(o.margin)?pct(o.margin):'—'}。</p>
+<p>損益兩平營業額每月 <b>${money(o.be)}</b>，約${w.d} <b>${isFinite(o.beCust)?Math.ceil(o.beCust):'—'}</b> ${w.u}；安全邊際 ${isFinite(o.margin)?pct(o.margin):'—'}。</p>
 <p>${S.mode==='open'?'':`考量開幕初期來客約為穩定期的 ${n(S.ramp1)}%、第 ${Math.max(1,Math.round(n(S.rampM)))} 個月達穩定，`}第一年預估營業額 ${money(o.year1Rev)}、營業利益 ${money(o.year1OP)}。</p>
 <p>開辦投入（不含押金）${money(o.invest)}，以穩定期營業利益計約 ${isFinite(o.paySimple)?o.paySimple.toFixed(1)+' 個月':'—'}回本；考量開幕期與營運資金，預估第 ${o.payback?o.payback+' 個月':'10 年以上'}回收${o.leaseM?`（租約 ${n(S.lease)} 年）`:''}。裝修與設備每月折舊約 ${money(o.depr)}。</p>
 <h4>八、還款計畫</h4>
 <p>申貸 ${money(o.loan)}，年利率 ${n(S.rate)}%，期間 ${n(S.years)} 年${o.hasGrace?`，寬限期 ${n(S.grace)} 個月（每月繳息約 ${money(o.payG)}）`:''}，本息攤還每月約 <b>${money(o.pay)}</b>。</p>
 <p>還款來源為營業利益，穩定期每月營業利益 ${money(o.op)}，為月付金額的 <b>${o.pay>0?(o.op/o.pay).toFixed(1)+' 倍':'—'}</b>，還款後每月結餘約 ${money(o.net)}。</p>
 <h4>九、風險評估與因應</h4>
-<ul><li>來客僅達預估 85%：每月營業利益 ${money(sens[1])}；僅達 70%：${money(sens[0])}。因應：預留 ${n(S.safety)} 個月固定支出作為安全準備金，並以${ec?'會員回購與組合加購':['service','lodging'].includes(kind())?'熟客回訪與預約方案':'會員回購與多元通路'}穩定營收。</li>
+<ul><li>來客僅達預估 85%：每月營業利益 ${money(sens[1])}；僅達 70%：${money(sens[0])}。因應：預留 ${n(S.safety)} 個月固定支出作為安全準備金，並以${ec?'會員回購與組合加購':kind()==='project'?'老客戶回流與轉介紹':['service','lodging'].includes(kind())?'熟客回訪與預約方案':'會員回購與多元通路'}穩定營收。</li>
 <li>成本上漲：定期檢視產品成本，毛利率低於目標時調整配方、份量、供應商或售價。</li>
 <li>現金壓力：控管進貨量與人力排班，現金週轉天數維持在 ${o.ccc} 天以內，週轉金專款專用。</li></ul>
 <p class="hint">本草稿由 AMEI 小資開店試算產生，數字為估算，正式送件前請依實際報價、租約與商圈調查修正。</p>`;
@@ -967,15 +1030,16 @@ function summary(){
   const o=last,H=health(o),w=W();
   return [`【${S.mode==='open'?'營運健檢':'開店試算'}】${S.plan.name||''}（${TYPES[S.type].label}）`,
     S.plan.loc?'地點：'+S.plan.loc:null,
-    `${w.t} ${n(S.ticket)} × 每日 ${n(S.cust)} ${w.u} × ${n(S.days)} 天＝月營業額 ${money(o.rev)}`,
+    `${revF(w.t+' '+n(S.ticket))}＝月營業額 ${money(o.rev)}`,
+    `收款手續費 ${pct(o.fee)}（${o.chFees.filter(c=>c.v>0).map(c=>c.n+' '+pct(c.v)).join('、')||'無'}）`,
     `毛利率 ${pct(o.gm)}，實際貢獻率 ${pct(o.cm)}`,
     `每月固定支出 ${money(o.fixed)}，營業利益 ${money(o.op)}`,
-    `損益兩平每日 ${isFinite(o.beCust)?Math.ceil(o.beCust):'—'} ${w.u}`,
+    `損益兩平${w.d} ${isFinite(o.beCust)?Math.ceil(o.beCust):'—'} ${w.u}`,
     `開辦投入 ${money(o.startTotal)}（裝修 ${wan(o.cat.reno)}、設備 ${wan(o.cat.equip)}、開辦費 ${wan(o.cat.open)}、押金 ${wan(o.cat.dep)}），預估第 ${o.payback?o.payback+' 個月':'10 年以上'}回本${o.leaseM?`，租約 ${n(S.lease)} 年`:''}`,
     `總資金需求 ${money(o.need)}（自備 ${money(n(S.self))}／貸款 ${money(o.loan)}，月付 ${money(o.pay)}）`,
     '紅燈：'+(H.filter(h=>h.l==='rd').map(h=>h.t).join('、')||'無'),
     '黃燈：'+(H.filter(h=>h.l==='y').map(h=>h.t).join('、')||'無'),
-    '','想請阿梅幫我看商業模式和商圈！'].filter(x=>x!==null).join('\n');
+    ].filter(x=>x!==null).join('\n');
 }
 function doPrint(cls){document.body.classList.add(cls);window.print();setTimeout(()=>document.body.classList.remove(cls),500)}
 
@@ -993,6 +1057,7 @@ document.addEventListener('click',async e=>{
   if(t.dataset.apply){
     if(t.dataset.apply==='ticket')S.ticket=Math.round(last.avgP*n(S.h.items));
     if(t.dataset.apply==='cust')S.cust=Math.round(custHelperVal()*10)/10;
+    if(t.dataset.apply==='quote')S.ticket=Math.round(n(S.h.rate)*n(S.h.ph)*(1+n(S.h.buf)/100)/100)*100;
     if(t.dataset.apply==='reno'){
       const tot=n(S.h.ping)*n(S.h.perPing),items=S.startup.filter(r=>r.c==='reno'),sum=items.reduce((a,r)=>a+n(r.v),0);
       if(!items.length)S.startup.push({n:'裝修工程',c:'reno',v:tot,y:5});
@@ -1012,16 +1077,17 @@ document.addEventListener('click',async e=>{
     case 'bPrev':prev();return;
     case 'bSkip':S.rptRev=S.rptTx=S.rptDays=S.rptCogs='';S.gmMode='items';next();return;
     case 'addProd':S.products.push({n:'',p:0,c:0,m:0});$('#tProd tbody').innerHTML=prodRows();refresh();$('#tProd tbody tr:last-child input').focus();return;
+    case 'addCh':S.ch.push({n:'',s:0,r:0});$('#tCh tbody').innerHTML=chRows();refresh();$('#tCh tbody tr:last-child input').focus();return;
     case 'addStart':{const c=t.dataset.cat;S.startup.push(isLife([c])?{n:'',c,v:0,y:5}:{n:'',c,v:0});}$('#tStart tbody').innerHTML=startRows(tCats());refresh();$('#tStart tbody tr:last-child input').focus();return;
-    case 'btnSend':{const ok=await copy(summary());toast(ok?'已複製報告摘要，到 LINE 貼上就好':'複製失敗，請截圖傳給阿梅');setTimeout(()=>window.open(LINE,'_blank','noopener'),700);return}
+    case 'btnSend':{const ok=await copy(summary());toast(ok?'已複製報告摘要，可以貼到記事本或傳給合夥人':'複製失敗，請改用截圖');return}
     case 'btnPrintR':doPrint('pr-report');return;
     case 'btnPrintP':doPrint('pr-plan');return;
     case 'btnCopyPlan':{const ok=await copy($('#planDoc').innerText);toast(ok?'已複製計畫書文字，可以貼到 Word 或 Google 文件':'複製失敗，請改用列印存成 PDF');return}
     case 'btnReset':if(!confirm('清除所有填寫內容，從頭開始？'))return;try{localStorage.removeItem(KEY)}catch(e2){}S=JSON.parse(JSON.stringify(BASE));go('mode');return;
   }
   if(t.classList.contains('x')){
-    const tid=t.closest('table').id,arr=tid==='tProd'?S.products:S.startup;
-    arr.splice(+t.closest('tr').dataset.i,1);t.closest('tbody').innerHTML=tid==='tProd'?prodRows():startRows(tCats());refresh();
+    const tid=t.closest('table').id,arr=tid==='tProd'?S.products:tid==='tCh'?S.ch:S.startup;
+    arr.splice(+t.closest('tr').dataset.i,1);t.closest('tbody').innerHTML=tid==='tProd'?prodRows():tid==='tCh'?chRows():startRows(tCats());refresh();
   }
 });
 document.addEventListener('input',e=>{
@@ -1034,8 +1100,8 @@ document.addEventListener('input',e=>{
     refresh();return;
   }
   const f=el.dataset&&el.dataset.f,tr=el.closest('tr');
-  if(f&&tr&&el.tagName==='INPUT'){const arr=el.closest('table').id==='tProd'?S.products:S.startup;
-    arr[+tr.dataset.i][f]=['p','c','m','v','y'].includes(f)?n(el.value):el.value;refresh();}
+  if(f&&tr&&el.tagName==='INPUT'){const tid=el.closest('table').id,arr=tid==='tProd'?S.products:tid==='tCh'?S.ch:S.startup;
+    arr[+tr.dataset.i][f]=f==='n'?el.value:n(el.value);refresh();}
 });
 document.addEventListener('change',e=>{
   const el=e.target;if(el.tagName==='SELECT'&&el.dataset.f){S.startup[+el.closest('tr').dataset.i].c=el.value;refresh()}
