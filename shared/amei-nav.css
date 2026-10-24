@@ -1,4 +1,4 @@
-/* AMEI 共用頂部導覽列：四個頁面共用，改這裡就會全部一起改 */
+/* AMEI 共用頂部導覽列：各頁共用，改這裡就會全部一起改 */
 .amei-top{position:sticky;inset:auto;top:0;z-index:200;margin:0;padding:0;background:#FAF8F3;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid #E3DDD0;box-shadow:none;font-family:'Noto Sans TC','Noto Sans CJK TC','Microsoft JhengHei',sans-serif;color:#1F1D1A;line-height:1.5}
 .amei-top .in{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:16px;height:62px}
 .amei-top .lg{display:flex;align-items:baseline;gap:8px;font-family:'Noto Serif TC','Noto Serif CJK TC',serif;font-weight:900;font-size:18px;letter-spacing:.04em;color:#1F1D1A;text-decoration:none;white-space:nowrap}
