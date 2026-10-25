@@ -248,6 +248,7 @@ footer a{color:rgba(243,238,226,.85)}
   .rs{break-inside:avoid;border-color:#CFC7B6}
   #rPlan{break-before:page}
   body.pr-plan #result>*:not(#rPlan){display:none!important}
+  #rAI{display:none!important}
   body.pr-plan #rPlan{border:0;padding:0;margin:0;break-before:auto}
   body.pr-plan #rPlan>header{display:none}
   .plan-doc{border:0;padding:0;font-size:12pt}
@@ -274,7 +275,7 @@ footer a{color:rgba(243,238,226,.85)}
 <section class="hero"><div class="wrap">
   <div class="eb">STARTUP CHECK-UP</div>
   <h1>一題一題，<br>算出<em>你的店</em>。</h1>
-  <p class="sub">不用一次面對密密麻麻的表格。跟著問題走，每題都有「怎麼填」的說明和小算盤；填完會拿到你自己的<b>營運報告、健檢燈號</b>和<b>創業貸款計畫書草稿</b>。已經開店的，也可以直接拿營業報表來填。資料只存在你的瀏覽器。</p>
+  <p class="sub">不用一次面對密密麻麻的表格。跟著問題走，每題都有「怎麼填」的說明和小算盤；填完會拿到你自己的<b>營運報告、健檢燈號</b>和<b>創業貸款計畫書草稿</b>。已經開店的，也可以直接拿營業報表來填。資料只存在你的瀏覽器。這是開店前的<b>前導練習</b>：最後可以把整份報告交給你自己的 AI（ChatGPT、Claude、Gemini 等）再檢查、分析一次。</p>
 </div></section>
 
 <div id="wizard">
@@ -1052,10 +1053,11 @@ function renderResult(o){
     <p class="sub">${esc(T.label)}　·　${verdict}</p>
     <div class="score"><span><i style="background:#5FBF8F"></i>綠燈 ${cnt.g}</span><span><i style="background:#E0A84A"></i>黃燈 ${cnt.y}</span><span><i style="background:#E07A6A"></i>紅燈 ${cnt.rd}</span></div>
     <div class="live">${kpi(open?'建議準備資金':'開店總資金需求',money(o.need),'自備 '+wan(n(S.self))+'／貸款 '+wan(o.loan))}${kpi('每月營業額',money(o.rev),'')}${kpi('每月營業利益',money(o.op),o.rev?'營業利益率 '+pct(o.op/o.rev):'',o.op<0?'negv':'')}${kpi('損益兩平',isFinite(o.beCust)?Math.ceil(o.beCust)+' '+w.u+w.per:'無法打平','你預估 '+n(S.cust)+' '+w.u)}${kpi('預估回本',o.payback?o.payback+' 個月':'10 年以上','')}</div>
-    <div class="acts noprint"><button class="btn b-line" type="button" id="btnSend">複製報告摘要</button><button class="btn b-ghost b-sm" type="button" id="btnPrintR">列印・存成 PDF</button><button class="btn b-ghost b-sm" type="button" data-go="type">從頭修改</button></div>
+    <div class="acts noprint"><button class="btn b-line" type="button" id="btnSend">複製報告摘要</button><button class="btn b-ghost b-sm" type="button" data-jump="rAI">交給 AI 分析</button><button class="btn b-ghost b-sm" type="button" id="btnPrintR">列印・存成 PDF</button><button class="btn b-ghost b-sm" type="button" data-go="type">從頭修改</button></div>
   </div>
   ${sec('rHealth','營運健檢','',`<ul class="hl">${H.map(h=>`<li class="${h.l}"><i></i><div><b>${h.t}</b><p>${h.d}</p>${h.l!=='g'?`<p class="adv">${h.a}</p>`:''}</div><em>${h.v}</em></li>`).join('')}</ul>
     <p class="explain">標準是常見的經驗法則，不同地段、客群差很多。紅燈不代表不能做，是代表要先想清楚。</p>`)}
+  ${sec('rCombo','改善組合建議','',comboBox(o))}
   ${o.proj?sec('rIdle','生活開支與空窗期','living',`<div class="live" style="margin-top:0">${kpi('每月生活開支',money(o.living),'當作你的薪水')}${kpi('每月營運＋生活總支出',money(o.fixed),'')}</div>`+idleBox(o)):''}
   ${sec('rCost','開辦成本組成與回本週期',o.proj?'equip':'reno',costReport(o))}
   ${sec('rProd','產品毛利與成本結構','products',`<div class="scroll"><table class="tbl"><thead><tr><th>品項</th><th class="r">售價</th><th class="r">單位成本</th><th class="r">毛利率</th><th>成本結構</th></tr></thead><tbody>
@@ -1086,6 +1088,11 @@ function renderResult(o){
     <h3>貸款用途拆分</h3><div class="scroll"><table class="tbl"><thead><tr><th>用途</th><th class="r">需求</th><th class="r">建議貸款</th><th>常見方案參考上限</th></tr></thead><tbody>
     ${[['準備金及開辦費用（含押金）',o.startOpen,'青創約 200 萬'],['週轉性支出',o.reserve,'青創約 400 萬'],['資本性支出（裝修、設備）',o.startCap,'青創約 1,200 萬']].map(([a,b,c])=>`<tr><td>${a}</td><td class="r">${money(b)}</td><td class="r">${money(b*ratio)}</td><td>${c}</td></tr>`).join('')}</tbody></table></div>
     <p class="explain">額度、資格與利率每年調整，請以主管機關與承貸銀行最新公告為準。</p>`)}
+  ${sec('rAI','交給你的 AI 再看一次','',`<p class="explain" style="margin-top:0">這份試算是<b>前導練習</b>，幫你把數字整理清楚。下一步，把下面的內容整段複製，貼到你習慣用的 AI（ChatGPT、Claude、Gemini 等），請它幫你檢查數字、找出風險、給改善建議。</p>
+    <ol class="explain" style="margin:10px 0 0 20px"><li>按「複製給 AI 的內容」。</li><li>打開你的 AI，貼上送出。</li><li>接著追問，例如：「如果我的店在○○商圈，來客數合理嗎？」「哪一項成本最值得先砍？」「幫我把計畫書的市場分析寫完整」。</li></ol>
+    <textarea id="aiText" readonly rows="10" style="margin-top:14px;font-size:13px" aria-label="給 AI 的內容"></textarea>
+    <div class="acts-row noprint"><button class="btn b-dark" type="button" id="btnAI">複製給 AI 的內容</button></div>
+    <p class="explain">內容包含你填的數字和計畫書文字。貼到 AI 之前，確認你願意分享這些資料；店名、姓名可以先刪掉。</p>`)}
   ${sec('rPlan','創業貸款計畫書草稿','',`<p class="sub noprint">把店的故事補上，前面的數字會自動帶入。完成後可以列印、存成 PDF 或複製到 Word。</p>
     <div class="noprint" style="margin-top:14px"><div class="grid">
       <div class="fld"><label for="pName">店名</label><input id="pName" data-k="plan.name" placeholder="例：小島茶室"></div>
@@ -1104,6 +1111,7 @@ function renderResult(o){
   fillFields();updatePlan();
 }
 function updatePlan(){
+  const ai=$('#aiText');if(ai)ai.value=aiPrompt();
   const d=$('#planDoc');if(d)d.innerHTML=planHTML(last);
   const t=$('#rTitle');if(t)t.textContent=(S.plan.name||'你的店')+'的'+(S.mode==='open'?'營運健檢報告':'開店試算報告');
 }
@@ -1159,6 +1167,109 @@ async function copy(text){
     let ok=false;try{ok=document.execCommand('copy')}catch(e2){}ta.remove();return ok;
   }
 }
+/* ================= 改善組合 =================
+   每個槓桿：觸發條件（看診斷）＋對資料的調整；用複製的資料重算，比較前後差異 */
+function withS(mod){const bak=S;S=JSON.parse(JSON.stringify(S));try{mod(S);return calc()}finally{S=bak}}
+function levers(o){
+  const H=health(o),lvOf=t=>(H.find(h=>h.t===t)||{}).l,bad=t=>['y','rd'].includes(lvOf(t)),k=kind(),L=[];
+  const scaleCost=(x,f)=>{x.products.forEach(r=>{if(hasBom(r))r.bom.forEach(b=>{if(b.pr!=='')b.pr=n(b.pr)*f});else r.c=n(r.c)*f});if(x.gmMode==='report')x.rptCogs=n(x.rptCogs)*f};
+  const scalePrice=(x,f)=>{x.ticket=n(x.ticket)*f;x.products.forEach(r=>r.p=n(r.p)*f)};
+  if(k==='project'){
+    if(o.opAvg<o.fixed*.1||bad('接案量占產能')||bad('預估回本時間')||bad('把投入的錢賺回來'))L.push({side:'rev',t:'報價提高 15%',d:'整理作品集與報價單，按案件規模分級報價',m:x=>scalePrice(x,1.15)});
+    if(n(S.idle)>0&&(bad('全年平均夠不夠生活')||bad('沒接到案能撐幾個月')))L.push({side:'rev',t:'空窗少 1 個月',d:'經營 1–2 個月費型客戶（社群圖、網站維護）當底薪',m:x=>{x.idle=Math.max(0,n(x.idle)-1)}});
+    if(bad('沒接到案能撐幾個月')||o.opAvg<0)L.push({side:'cost',t:'生活開支 −10%',d:'先檢查訂閱、保險與娛樂開支',m:x=>{Object.keys(x.lv).forEach(q=>x.lv[q]=n(x.lv[q])*.9)}});
+    if(bad('現金週轉天數'))L.push({side:'cost',t:'收訂金，收款快 15 天',d:'簽約收 30–50% 訂金，尾款交件後 7 天內付清',m:x=>{x.arDays=Math.max(0,n(x.arDays)-15)}});
+  }
+  if(bad('產品毛利率')){
+    L.push({side:'cost',t:'材料成本 −8%',d:'比價換供應商、調整份量、減少高成本配料',m:x=>scaleCost(x,.92)});
+    L.push({side:'rev',t:'售價 +5%',d:'主力品項小幅調價，或推出升級版',m:x=>scalePrice(x,1.05)});
+  }
+  const hi=(S.ch||[]).filter(c=>n(c.r)>=15&&n(c.s)>0&&n(c.s)<100);
+  if(o.fee>.05&&hi.length)L.push({side:'cost',t:'高抽成訂單減半',d:`${hi.map(c=>c.n).join('、')}的比例減半，導回店內、自有官網或自己接訂`,m:x=>{const lo=x.ch.reduce((a,c)=>n(c.r)<n(a.r)?c:a,x.ch[0]);x.ch.forEach(c=>{if(n(c.r)>=15&&n(c.s)<100){const mv=n(c.s)/2;c.s=n(c.s)-mv;lo.s=n(lo.s)+mv}})}});
+  if(n(S.waste)>=5)L.push({side:'cost',t:'損耗 −2 個百分點',d:'控管備料量、先進先出、賣剩的做成優惠組合',m:x=>{x.waste=Math.max(0,n(x.waste)-2)}});
+  if(k==='ecom'&&n(S.ads)>=15)L.push({side:'cost',t:'廣告費 −5 個百分點',d:'經營會員與回購，把預算從拉新客移到留舊客',m:x=>{x.ads=Math.max(0,n(x.ads)-5)}});
+  if(bad('租金占營業額'))L.push({side:'cost',t:'租金 −15%',d:'談租金、找次要街道或小一點的店面',m:x=>{x.rent=n(x.rent)*.85}});
+  if(bad('人事（含老闆）占營業額')&&n(S.staffN)>=1)L.push({side:'cost',t:'人力 −0.5 人',d:'用尖峰／離峰排班取代整天全職',m:x=>{x.staffN=Math.max(0,n(x.staffN)-.5)}});
+  if(k!=='project'&&(bad('安全邊際')||o.op<0))L.push({side:'rev',t:'客單價 +8%',d:'推套餐、加購、第二件優惠',m:x=>{x.ticket=n(x.ticket)*1.08}});
+  if(bad('預估回本時間')||bad('把投入的錢賺回來')||bad('回本 vs 租約'))L.push({side:'cost',t:'開辦投入 −20%',d:'設備找二手或租賃、裝修只做必要的',m:x=>{x.startup.forEach(r=>{if(r.c==='reno'||r.c==='equip')r.v=n(r.v)*.8})}});
+  return L;
+}
+function combos(o){
+  const L=levers(o),cost=L.filter(l=>l.side==='cost').slice(0,3),rev=L.filter(l=>l.side==='rev').slice(0,2),C=[];
+  if(cost.length)C.push({name:'省成本組合',sub:'不動售價，先把花出去的錢省下來',ls:cost});
+  if(rev.length)C.push({name:'拉營收組合',sub:'從價格與客單價下手',ls:rev});
+  if(cost.length&&rev.length)C.push({name:'全面調整組合',sub:'兩邊一起做，效果最明顯',ls:cost.concat(rev)});
+  return C.map(c=>Object.assign(c,{o:withS(x=>c.ls.forEach(l=>l.m(x)))}));
+}
+function comboBox(o){
+  const C=combos(o),w=W(),be=x=>isFinite(x.beCust)?(x.beCust<10?x.beCust.toFixed(1):Math.ceil(x.beCust))+' '+w.u+w.per:'無法打平';
+  const pb=x=>x.payback?x.payback+' 個月':'10 年以上',d=(a,b)=>{const v=a-b;return v?`<small class="${v>0?'':'neg'}" style="color:${v>0?'#2F8A5F':''}">${v>0?'+':''}${money(v).replace('NT$ ','')}</small>`:''};
+  if(!C.length)return '<p class="explain" style="margin-top:0">目前沒有明顯需要調整的地方。下一步是到現場確認「'+w.c+'」做不做得到。</p>';
+  const opKey=o.proj?'opAvg':'op',opLabel=o.proj?'全年平均每月結餘':'每月營業利益';
+  return `<div class="scroll"><table class="tbl"><thead><tr><th>方案</th><th>做法</th><th class="r">${opLabel}</th><th class="r">損益兩平</th><th class="r">回本</th></tr></thead><tbody>
+   <tr><td><b>目前</b></td><td style="font-size:13px;color:#8a8478">照現在的數字</td><td class="r">${money(o[opKey])}</td><td class="r">${be(o)}</td><td class="r">${pb(o)}</td></tr>
+   ${C.map(c=>`<tr><td><b>${c.name}</b><br><span style="font-size:12px;color:#8a8478">${c.sub}</span></td><td style="font-size:13px">${c.ls.map(l=>`<b>${l.t}</b>：${esc(l.d)}`).join('<br>')}</td><td class="r"><b>${money(c.o[opKey])}</b><br>${d(c.o[opKey],o[opKey])}</td><td class="r">${be(c.o)}</td><td class="r">${pb(c.o)}</td></tr>`).join('')}
+  </tbody></table></div>
+  <p class="explain">組合是依照上面的黃燈、紅燈挑出來的做法，數字是把這些調整套進你的試算重算的結果。每一項都要確認自己做得到，例如漲價後客人會不會變少。</p>`;
+}
+
+/* ================= 給 AI 的提示詞 ================= */
+function aiPrompt(){
+  const o=last,T=TYPES[S.type],w=W(),H=health(o),P=S.plan,line=(a,b)=>`- ${a}：${b}`;
+  const prod=S.products.map(r=>{const m=bomMix(r);return `- ${r.n||'未命名'}：售價 ${n(r.p)}、單位成本 ${Math.round(pcost(r)*10)/10}、銷售占比 ${n(r.m)}%`+(hasBom(r)?`（成本拆解：${r.bom.filter(b=>bomCost(b)>0).map(b=>`${b.n||b.c} ${bomCost(b).toFixed(1)} 元`).join('、')}）`:'')}).join('\n');
+  const C=combos(o);
+  return `你是一位熟悉台灣小型創業與店家營運的顧問。以下是我用「小資開店試算」整理的${S.mode==='open'?'營運健檢':'開店試算'}數字，這些數字都是我自己估的。請幫我：
+1. 檢查數字是否合理，有沒有明顯漏掉或估太樂觀的成本與營收。
+2. 依照我的業態${P.loc?'與地點':''}，指出最大的三個風險。
+3. 針對下面的紅燈、黃燈，給我具體、可以執行的改善建議，並估算影響。
+4. 列出我還需要去現場或找資料確認的事項。
+5. ${S.mode==='open'?'如果要申請貸款擴充或週轉，還需要準備什麼':'如果要申請創業貸款，計畫書還缺什麼'}。
+請用繁體中文、條列回答，數字請註明是估算。
+
+【基本資料】
+${line('業態',T.label)}
+${line('狀態',S.mode==='open'?'已開店':'規劃中')}
+${P.name?line('店名',P.name)+'\n':''}${P.loc?line('地點',P.loc)+'\n':''}${P.target?line('目標客群',P.target)+'\n':''}${P.feature?line('產品特色',P.feature)+'\n':''}${P.comp?line('周邊競爭',P.comp)+'\n':''}
+【產品與成本】
+${prod}
+${line('加權毛利率',pct(o.gm))}
+
+【營收】
+${line('營業額算式',revF(w.t+' '+n(S.ticket))+' ＝ 每月 '+Math.round(o.rev)+' 元')}
+${S.mode==='plan'?line('開幕期','第一個月來客約穩定期的 '+n(S.ramp1)+'%，第 '+n(S.rampM)+' 個月穩定')+'\n':''}
+【變動成本（占營收）】
+${(S.ch||[]).map(c=>`- ${c.n}：占營收 ${n(c.s)}%，手續費率 ${n(c.r)}%`).join('\n')}
+${line('損耗／退貨',n(S.waste)+'%')}${n(S.ads)?'\n'+line('廣告費',n(S.ads)+'%'):''}${n(S.perOrder)?'\n'+line('每筆額外成本',n(S.perOrder)+' 元'):''}
+${line('實際貢獻率',pct(o.cm))}
+
+【每月固定支出】
+${line('租金',n(S.rent))}
+${o.proj?line('生活開支（當作薪水）',Math.round(o.living)):line('員工',n(S.staffN)+' 人 × '+n(S.staffPay)+' 元（雇主負擔 '+n(S.burden)+'%）')+'\n'+line('老闆薪水',n(S.owner))}
+${line('水電網路',n(S.util))}
+${line('固定行銷',n(S.mkt))}
+${line('雜支',n(S.misc))}
+${line('合計',Math.round(o.fixed))}
+${o.proj?`\n【接案空窗】\n${line('一年空窗月數',n(S.idle))}\n${line('空窗月收入',n(S.idleLvl)+'%')}\n`:''}
+【開辦投入】
+${S.startup.map(r=>`- ${r.n||'未命名'}（${CAT[r.c]}）：${n(r.v)}`+(r.c==='reno'||r.c==='equip'?`，使用 ${n(r.y)||5} 年`:'')).join('\n')}
+${line('租約',S.lease?n(S.lease)+' 年':'無')}
+
+【週轉與資金】
+${line('庫存天數／收款天數／付款天數',`${n(S.invDays)}／${n(S.arDays)}／${n(S.apDays)}`)}
+${line('自備款',n(S.self))}
+${line('貸款',Math.round(o.loan)+' 元，年利率 '+n(S.rate)+'%、'+n(S.years)+' 年、寬限期 '+n(S.grace)+' 個月')}
+
+【試算結果】
+${line('每月營業利益（穩定期）',Math.round(o.op))}${o.proj?'\n'+line('全年平均每月結餘',Math.round(o.opAvg)):''}
+${line('損益兩平',isFinite(o.beCust)?o.beCust.toFixed(1)+' '+w.u+w.per+'（每月營業額 '+Math.round(o.be)+'）':'無法打平')}
+${line('安全邊際',isFinite(o.margin)?pct(o.margin):'—')}
+${line('總資金需求',Math.round(o.need))}
+${line('預估回本',o.payback?o.payback+' 個月':'10 年以上')}
+
+【健檢燈號】
+${H.map(h=>`- ${{g:'綠燈',y:'黃燈',rd:'紅燈'}[h.l]}｜${h.t}：${h.v}`).join('\n')}
+${C.length?`\n【試算裡建議的改善組合】\n${C.map(c=>`- ${c.name}：${c.ls.map(l=>l.t).join('、')} → ${o.proj?'全年平均每月結餘':'每月營業利益'} ${Math.round(o.proj?c.o.opAvg:c.o.op)}`).join('\n')}\n`:''}`;
+}
 function summary(){
   const o=last,H=health(o),w=W();
   return [`【${S.mode==='open'?'營運健檢':'開店試算'}】${S.plan.name||''}（${TYPES[S.type].label}）`,
@@ -1187,6 +1298,7 @@ document.addEventListener('click',async e=>{
     next();return;
   }
   if(t.dataset.go){go(t.dataset.go);return}
+  if(t.dataset.jump){const el=document.getElementById(t.dataset.jump);if(el)window.scrollTo({top:el.getBoundingClientRect().top+scrollY-76,behavior:'smooth'});return}
   if(t.dataset.gm){S.gmMode=t.dataset.gm;render();return}
   if(t.dataset.apply){
     if(t.dataset.apply==='ticket')S.ticket=Math.round(last.avgP*n(S.h.items));
@@ -1213,6 +1325,7 @@ document.addEventListener('click',async e=>{
     case 'addProd':S.products.push({n:'',p:0,c:0,m:0});$('#tProd tbody').innerHTML=prodRows();refresh();$('#tProd tbody tr:last-child input').focus();return;
     case 'addCh':S.ch.push({n:'',s:0,r:0});$('#tCh tbody').innerHTML=chRows();refresh();$('#tCh tbody tr:last-child input').focus();return;
     case 'addStart':{const c=t.dataset.cat;S.startup.push(isLife([c])?{n:'',c,v:0,y:5}:{n:'',c,v:0});}$('#tStart tbody').innerHTML=startRows(tCats());refresh();$('#tStart tbody tr:last-child input').focus();return;
+    case 'btnAI':{const ok=await copy(aiPrompt());toast(ok?'已複製，貼到你的 AI 就可以開始問':'複製失敗，請在文字框裡全選後複製');if(!ok){const a=$('#aiText');a.focus();a.select()}return}
     case 'btnSend':{const ok=await copy(summary());toast(ok?'已複製報告摘要，可以貼到記事本或傳給合夥人':'複製失敗，請改用截圖');return}
     case 'btnPrintR':doPrint('pr-report');return;
     case 'btnPrintP':doPrint('pr-plan');return;
