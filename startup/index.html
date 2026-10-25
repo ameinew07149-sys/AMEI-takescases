@@ -47,6 +47,38 @@ h3{font-family:var(--serif);font-size:17px;margin:18px 0 8px}
 .hero h1 em{font-style:normal;color:var(--gold);background:linear-gradient(transparent 72%,rgba(201,164,92,.3) 72%)}
 .hero p{max-width:640px}
 
+/* 手機：可編輯的表格改成一列一張小卡，不用左右滑 */
+@media(max-width:640px){
+  .rt thead{display:none}
+  .rt,.rt tbody,.rt tfoot{display:block;width:100%}
+  .rt tbody tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 10px;padding:12px 0;border-bottom:1px solid var(--line);position:relative}
+  .tbl.rt td{display:block;padding:0;border:0;text-align:left!important;white-space:normal!important;min-width:0}
+  .rt td[data-l]::before{content:attr(data-l);display:block;font-size:11.5px;color:#8a8478;font-weight:700;margin-bottom:3px}
+  .rt td.full{grid-column:1/-1;padding-right:34px}
+  .rt td.span2{grid-column:span 2}
+  .rt td.del{position:absolute;top:10px;right:0}
+  .rt td[data-o]{font-weight:700;padding-top:2px}
+  .rt input,.rt select{width:100%!important;min-width:0!important}
+  .rt tfoot tr{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 14px;padding-top:10px}
+  .tbl.rt tfoot td{display:block;padding:0;border:0}
+  .rt tfoot td:empty{display:none}
+  .rt tfoot td[data-l]::before{content:attr(data-l)'　';font-weight:400;color:#8a8478}
+  .rt.ro tbody tr{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .rt.ro td.full{padding-right:0}
+  .bom{padding:10px 12px}
+}
+.combo{display:grid;gap:10px}
+.combo>div{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--paper);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;align-items:start}
+.combo>div.now{background:transparent;border-style:dashed}
+.combo h4{font-family:var(--serif);font-size:17px;margin:0}
+.combo h4 small{display:block;font-family:var(--sans);font-size:12.5px;font-weight:400;color:#8a8478}
+.combo ul{grid-column:1/-1;list-style:none;display:grid;gap:4px;font-size:13.5px;color:var(--ink2)}
+.combo ul b{color:var(--ink)}
+.combo .val{text-align:right;font-family:var(--serif);font-weight:900;font-size:20px;line-height:1.2}
+.combo .val small{display:block;font-family:var(--sans);font-size:12.5px;font-weight:700;color:#2F8A5F}
+.combo .meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--ink2);border-top:1px dashed var(--line);padding-top:8px}
+.combo .meta b{color:var(--ink)}
+
 /* quick */
 #quick{padding-bottom:60px}
 .qk{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);border-radius:24px;overflow:hidden;border:1px solid var(--line);box-shadow:0 18px 40px rgba(40,35,25,.07)}
@@ -144,6 +176,7 @@ details.help .hb b{color:var(--ink)}
 
 /* kpi */
 .live{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+@media(max-width:640px){.live{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.kpi{padding:10px 12px}.kpi b{font-size:18px;white-space:normal}}
 .live:empty{display:none}
 .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:11px 14px}
 .kpi span{display:block;font-size:12.5px;color:var(--ink2);font-weight:700}
@@ -739,7 +772,7 @@ const STEPS=[
   skipLabel:'沒有報表，用估的'},
  {id:'products',chip:'產品毛利',title:'你賣什麼？每一份賺多少？',why:'毛利是一切的基礎：售價扣掉「做出一份要花的材料錢」。銷售占比是預估每 100 份裡，各品項大概佔幾份。',
   body:o=>(S.mode==='open'&&n(S.rptRev)>0&&n(S.rptCogs)>0?`<div class="seg"><button type="button" data-gm="report" class="${S.gmMode==='report'?'on':''}">用報表的毛利率（${pct(o.gmReport)}）</button><button type="button" data-gm="items" class="${S.gmMode==='items'?'on':''}">用下面的品項計算</button></div>`:'')
-   +`<div class="scroll"><table class="tbl" id="tProd"><thead><tr><th>品項</th><th class="r">售價</th><th class="r">單位成本</th><th class="r">占比 %</th><th class="r">毛利</th><th class="r">毛利率</th><th></th><th></th></tr></thead><tbody>${prodRows()}</tbody></table></div>
+   +`<div class="scroll"><table class="tbl rt" id="tProd"><thead><tr><th>品項</th><th class="r">售價</th><th class="r">單位成本</th><th class="r">占比 %</th><th class="r">毛利</th><th class="r">毛利率</th><th></th><th></th></tr></thead><tbody>${prodRows()}</tbody></table></div>
     <div id="bomPanel">${bomPanel()}</div>
     <button class="add" type="button" id="addProd">＋ 新增品項</button>`
    +help('「單位成本」怎麼算？',`<p>按每個品項的<b>「拆解成本」</b>，把做出一份要用到的東西一項一項列出來：<b>進貨價 ÷ 進貨量 × 每份用量</b>，系統會自動加總。範例「招牌奶茶」已經拆好，可以打開來看。</p>
@@ -763,8 +796,8 @@ const STEPS=[
   live:o=>kpi('預估月營業額',money(o.rev),'')+kpi('損益兩平',isFinite(o.beCust)?Math.ceil(o.beCust)+' '+W().u+W().per:'無法打平','先用範例支出估算，後面會修正')+kpi('安全邊際',dot(lv(o.margin,[.2,0],true))+(isFinite(o.margin)?pct(o.margin):'—'),'比打平多出幾成')},
  {id:'varcost',chip:'抽成損耗',title:'每賣一筆，還會被扣掉哪些錢？',why:'客人用什麼方式付錢，手續費差很多：現金 0%、刷卡約 2%、外送平台三成以上。把收款管道分開填，再加上損耗、退貨、包材，才知道每 100 元真正留下多少。',
   body:()=>{const k=kind();return `<h3 style="margin-top:0">收款管道與手續費</h3>
-   <div class="scroll"><table class="tbl" id="tCh"><thead><tr><th>收款管道</th><th class="r">占營收 %</th><th class="r">手續費率 %</th><th class="r">等於營收的</th><th></th></tr></thead><tbody>${chRows()}</tbody>
-   <tfoot><tr><td>合計</td><td class="r" id="chShare"></td><td></td><td class="r" id="chFee"></td><td></td></tr></tfoot></table></div>
+   <div class="scroll"><table class="tbl rt" id="tCh"><thead><tr><th>收款管道</th><th class="r">占營收 %</th><th class="r">手續費率 %</th><th class="r">等於營收的</th><th></th></tr></thead><tbody>${chRows()}</tbody>
+   <tfoot><tr><td>合計</td><td class="r" id="chShare" data-l="占比"></td><td></td><td class="r" id="chFee" data-l="手續費"></td><td></td></tr></tfoot></table></div>
    <button class="add" type="button" id="addCh">＋ 新增收款管道</button>
    <h3>其他跟著營業額變動的成本</h3><div class="grid">
     ${fld('waste',k==='ecom'?'退貨・瑕疵損失':k==='project'?'折讓・尾款收不到':'損耗・試做・招待','% 營收',k==='ecom'?'服飾類退貨偏高，可抓 5–10%':k==='project'?'追加修改不另收費、尾款打折或收不到':'過期、做壞、試吃；餐飲常見 3–8%')}
@@ -872,11 +905,11 @@ function drawYear(o){
   return `<svg viewBox="0 0 ${Wd} ${Hh}" role="img" aria-label="一年 12 個月的接案收入與每月開支">${g}</svg>`;
 }
 function chRows(){return (S.ch||[]).map((c,i)=>`<tr data-i="${i}">
-  <td><input data-f="n" value="${esc(c.n)}" aria-label="收款管道"></td>
-  <td class="r"><input data-f="s" type="number" min="0" max="100" value="${c.s}" aria-label="占營收比例" style="width:76px"></td>
-  <td class="r"><input data-f="r" type="number" min="0" step="0.1" value="${c.r}" aria-label="手續費率" style="width:76px"></td>
-  <td class="r" data-o="cf"></td>
-  <td><button class="x" type="button" aria-label="刪除">×</button></td></tr>`).join('')}
+  <td class="full" data-l="收款管道"><input data-f="n" value="${esc(c.n)}" aria-label="收款管道"></td>
+  <td class="r" data-l="占營收 %"><input data-f="s" type="number" min="0" max="100" value="${c.s}" aria-label="占營收比例" style="width:76px"></td>
+  <td class="r" data-l="手續費率 %"><input data-f="r" type="number" min="0" step="0.1" value="${c.r}" aria-label="手續費率" style="width:76px"></td>
+  <td class="r" data-l="等於營收的" data-o="cf"></td>
+  <td class="del"><button class="x" type="button" aria-label="刪除">×</button></td></tr>`).join('')}
 
 function custHelperVal(){
   const H=S.h;
@@ -902,25 +935,25 @@ function custCalc(){
 }
 function prodRows(){return S.products.map((r,i)=>{const auto=hasBom(r),op=bomOpen.has(i);
   return `<tr data-i="${i}">
-  <td><input data-f="n" value="${esc(r.n)}" aria-label="品項名稱"></td>
-  <td class="r"><input data-f="p" type="number" min="0" value="${r.p}" aria-label="售價"></td>
-  <td class="r"><input data-f="c" type="number" min="0" value="${auto?Math.round(pcost(r)*10)/10:r.c}" aria-label="單位成本"${auto?' readonly class="auto" title="由成本拆解自動計算"':''}></td>
-  <td class="r"><input data-f="m" type="number" min="0" value="${r.m}" aria-label="銷售占比"></td>
-  <td class="r" data-o="gp"></td><td class="r" data-o="gm"></td>
+  <td class="full" data-l="品項"><input data-f="n" value="${esc(r.n)}" aria-label="品項名稱"></td>
+  <td class="r" data-l="售價"><input data-f="p" type="number" min="0" value="${r.p}" aria-label="售價"></td>
+  <td class="r" data-l="單位成本"><input data-f="c" type="number" min="0" value="${auto?Math.round(pcost(r)*10)/10:r.c}" aria-label="單位成本"${auto?' readonly class="auto" title="由成本拆解自動計算"':''}></td>
+  <td class="r" data-l="占比 %"><input data-f="m" type="number" min="0" value="${r.m}" aria-label="銷售占比"></td>
+  <td class="r" data-l="毛利" data-o="gp"></td><td class="r" data-l="毛利率" data-o="gm"></td>
   <td><button class="bomt-btn${op?' on':''}" type="button" data-bom="${i}">${auto?`拆解 ${r.bom.length} 項`:'拆解成本'} ${op?'▴':'▾'}</button></td>
-  <td><button class="x" type="button" aria-label="刪除">×</button></td></tr>`}).join('')}
+  <td class="del"><button class="x" type="button" aria-label="刪除">×</button></td></tr>`}).join('')}
 const bomPanel=()=>{const i=[...bomOpen][0];return i!=null&&S.products[i]?bomRow(S.products[i],i):''};
 function bomRow(r,i){
   const cats=COMP[kind()];
   return `<div class="bom"><h4>${esc(r.n||'這個品項')}的成本拆解：做出一份要用到什麼？</h4>
-  <div class="scroll"><table class="tbl bomt" data-p="${i}"><thead><tr><th>類別</th><th>項目</th><th class="r">進貨價</th><th class="r">進貨量</th><th>單位</th><th class="r">每份用量</th><th class="r">每份成本</th><th></th></tr></thead><tbody>
-  ${(r.bom||[]).map((b,j)=>`<tr data-j="${j}"><td><select data-b="c" aria-label="類別">${cats.concat(cats.includes(b.c)||!b.c?[]:[b.c]).map(c=>`<option${c===b.c?' selected':''}>${c}</option>`).join('')}</select></td>
-    <td><input class="nm" data-b="n" value="${esc(b.n)}" placeholder="${esc(b.ph||'')}" aria-label="項目"></td>
-    <td class="r"><input data-b="pr" type="number" min="0" value="${b.pr}" aria-label="進貨價"></td>
-    <td class="r"><input data-b="q" type="number" min="0" value="${b.q}" aria-label="進貨量"></td>
-    <td><input class="un" data-b="u" value="${esc(b.u||'')}" aria-label="單位"></td>
-    <td class="r"><input data-b="use" type="number" min="0" step="any" value="${b.use}" aria-label="每份用量"></td>
-    <td class="r" data-o="bc"></td><td><button class="x bx" type="button" aria-label="刪除">×</button></td></tr>`).join('')}
+  <div class="scroll"><table class="tbl bomt rt" data-p="${i}"><thead><tr><th>類別</th><th>項目</th><th class="r">進貨價</th><th class="r">進貨量</th><th>單位</th><th class="r">每份用量</th><th class="r">每份成本</th><th></th></tr></thead><tbody>
+  ${(r.bom||[]).map((b,j)=>`<tr data-j="${j}"><td data-l="類別"><select data-b="c" aria-label="類別">${cats.concat(cats.includes(b.c)||!b.c?[]:[b.c]).map(c=>`<option${c===b.c?' selected':''}>${c}</option>`).join('')}</select></td>
+    <td class="span2" data-l="項目" style="padding-right:30px"><input class="nm" data-b="n" value="${esc(b.n)}" placeholder="${esc(b.ph||'')}" aria-label="項目"></td>
+    <td class="r" data-l="進貨價"><input data-b="pr" type="number" min="0" value="${b.pr}" aria-label="進貨價"></td>
+    <td class="r" data-l="進貨量"><input data-b="q" type="number" min="0" value="${b.q}" aria-label="進貨量"></td>
+    <td data-l="單位"><input class="un" data-b="u" value="${esc(b.u||'')}" aria-label="單位"></td>
+    <td class="r" data-l="每份用量"><input data-b="use" type="number" min="0" step="any" value="${b.use}" aria-label="每份用量"></td>
+    <td class="r span2" data-l="每份成本（元）" data-o="bc"></td><td class="del"><button class="x bx" type="button" aria-label="刪除">×</button></td></tr>`).join('')}
   </tbody><tfoot><tr><td colspan="6">每份成本合計</td><td class="r" data-o="bt"></td><td></td></tr></tfoot></table></div>
   <button class="add" type="button" data-addb="${i}">＋ 新增材料</button>
   <small>例：茶葉一包 600 g 進價 300 元，一杯用 10 g → 300 ÷ 600 × 10 ＝ 每杯 5 元。填好後，上面的單位成本會自動帶入。</small></div>`;
@@ -935,15 +968,15 @@ const isLife=cats=>cats.includes('reno')||cats.includes('equip');
 function startRows(cats){
   const life=isLife(cats);
   return S.startup.map((r,i)=>[r,i]).filter(([r])=>cats.includes(r.c)).map(([r,i])=>`<tr data-i="${i}">
-  <td><input data-f="n" value="${esc(r.n)}" aria-label="項目名稱"></td>
-  ${life?'':`<td><select data-f="c" aria-label="類別">${cats.map(k=>`<option value="${k}"${r.c===k?' selected':''}>${CAT[k]}</option>`).join('')}</select></td>`}
-  <td class="r"><input data-f="v" type="number" min="0" step="1000" value="${r.v}" aria-label="金額"></td>
-  ${life?`<td class="r"><input data-f="y" type="number" min="1" max="20" value="${r.y||5}" aria-label="使用年限" style="width:64px"></td><td class="r" data-o="dm"></td>`:''}
-  <td><button class="x" type="button" aria-label="刪除">×</button></td></tr>`).join('')}
+  <td class="full" data-l="項目"><input data-f="n" value="${esc(r.n)}" aria-label="項目名稱"></td>
+  ${life?'':`<td data-l="類別"><select data-f="c" aria-label="類別">${cats.map(k=>`<option value="${k}"${r.c===k?' selected':''}>${CAT[k]}</option>`).join('')}</select></td>`}
+  <td class="r${life?'':' span2'}" data-l="金額（元）"><input data-f="v" type="number" min="0" step="1000" value="${r.v}" aria-label="金額"></td>
+  ${life?`<td class="r" data-l="使用年限"><input data-f="y" type="number" min="1" max="20" value="${r.y||5}" aria-label="使用年限" style="width:64px"></td><td class="r" data-l="每月折舊" data-o="dm"></td>`:''}
+  <td class="del"><button class="x" type="button" aria-label="刪除">×</button></td></tr>`).join('')}
 function costTable(cats){
   const life=isLife(cats);
-  return `<div class="scroll"><table class="tbl" id="tStart" data-cats="${cats.join(',')}"><thead><tr><th>項目</th>${life?'':'<th>類別</th>'}<th class="r">金額（元）</th>${life?'<th class="r">使用年限</th><th class="r">每月折舊</th>':''}<th></th></tr></thead>
-    <tbody>${startRows(cats)}</tbody><tfoot><tr><td${life?'':' colspan="2"'}>小計</td><td class="r" id="startSub"></td>${life?'<td></td><td class="r" id="startDep"></td>':''}<td></td></tr></tfoot></table></div>
+  return `<div class="scroll"><table class="tbl rt" id="tStart" data-cats="${cats.join(',')}"><thead><tr><th>項目</th>${life?'':'<th>類別</th>'}<th class="r">金額（元）</th>${life?'<th class="r">使用年限</th><th class="r">每月折舊</th>':''}<th></th></tr></thead>
+    <tbody>${startRows(cats)}</tbody><tfoot><tr><td${life?'':' colspan="2"'}>小計</td><td class="r" id="startSub"></td>${life?'<td></td><td class="r" id="startDep" data-l="每月折舊"></td>':''}<td></td></tr></tfoot></table></div>
     <button class="add" type="button" id="addStart" data-cat="${cats[cats.length-1]}">＋ 新增項目</button>`;
 }
 const tCats=()=>{const t=$('#tStart');return t?t.dataset.cats.split(','):[]};
@@ -1081,9 +1114,9 @@ function costReport(o){
   const rows=[['reno',CAT.reno,o.cat.reno],['equip',CAT.equip,o.cat.equip],['open',CAT.open,o.cat.open],['dep',CAT.dep,o.cat.dep],['res','營運週轉金',o.reserve]];
   const tot=rows.reduce((a,r)=>a+r[2],0)||1;
   return `<div class="where">${rows.map(r=>`<div style="width:${r[2]/tot*100}%;background:${col[r[0]]}">${r[2]/tot>.08?Math.round(r[2]/tot*100)+'%':''}</div>`).join('')}</div>
-  <div class="scroll" style="margin-top:12px"><table class="tbl"><thead><tr><th>類別</th><th class="r">金額</th><th class="r">占比</th><th class="r">每月折舊</th><th>說明</th></tr></thead><tbody>
-  ${rows.map(r=>`<tr><td><span class="dot" style="background:${col[r[0]]}"></span>${r[1]}</td><td class="r">${money(r[2])}</td><td class="r">${pct(r[2]/tot)}</td><td class="r">${r[0]==='reno'||r[0]==='equip'?money(o.depM[r[0]]):'—'}</td><td class="sm" style="font-size:12.5px;color:#8a8478">${{reno:'帶不走，最好在租約內攤完',equip:'可以帶走或轉賣',open:'一次性支出',dep:'退租可拿回，不計入回本',res:'開幕期缺口＋安全準備金'}[r[0]]}</td></tr>`).join('')}
-  <tr style="font-weight:900"><td>總資金需求</td><td class="r">${money(o.need)}</td><td class="r">100%</td><td class="r">${money(o.depr)}</td><td></td></tr></tbody></table></div>
+  <div class="scroll" style="margin-top:12px"><table class="tbl rt ro"><thead><tr><th>類別</th><th class="r">金額</th><th class="r">占比</th><th class="r">每月折舊</th><th>說明</th></tr></thead><tbody>
+  ${rows.map(r=>`<tr><td class="full"><span class="dot" style="background:${col[r[0]]}"></span><b>${r[1]}</b></td><td class="r" data-l="金額">${money(r[2])}</td><td class="r" data-l="占比">${pct(r[2]/tot)}</td><td class="r" data-l="每月折舊">${r[0]==='reno'||r[0]==='equip'?money(o.depM[r[0]]):'—'}</td><td class="sm full" style="font-size:12.5px;color:#8a8478">${{reno:'帶不走，最好在租約內攤完',equip:'可以帶走或轉賣',open:'一次性支出',dep:'退租可拿回，不計入回本',res:'開幕期缺口＋安全準備金'}[r[0]]}</td></tr>`).join('')}
+  <tr style="font-weight:900"><td class="full">總資金需求</td><td class="r" data-l="金額">${money(o.need)}</td><td class="r" data-l="占比">100%</td><td class="r" data-l="每月折舊">${money(o.depr)}</td><td></td></tr></tbody></table></div>
   <h3>回本週期</h3>${paybackBox(o)}`;
 }
 function renderResult(o){
@@ -1106,8 +1139,8 @@ function renderResult(o){
   ${sec('rCombo','改善組合建議','',comboBox(o))}
   ${o.proj?sec('rIdle','生活開支與空窗期','living',`<div class="live" style="margin-top:0">${kpi('每月生活開支',money(o.living),'當作你的薪水')}${kpi('每月營運＋生活總支出',money(o.fixed),'')}</div>`+idleBox(o)):''}
   ${sec('rCost','開辦成本組成與回本週期',o.proj?'equip':'reno',costReport(o))}
-  ${sec('rProd','產品毛利與成本結構','products',`<div class="scroll"><table class="tbl"><thead><tr><th>品項</th><th class="r">售價</th><th class="r">單位成本</th><th class="r">毛利率</th><th>成本結構</th></tr></thead><tbody>
-    ${S.products.map(r=>{const c=pcost(r),m=bomMix(r);return `<tr><td>${esc(r.n||'未命名品項')}</td><td class="r">${money(n(r.p))}</td><td class="r">${money(c)}</td><td class="r${n(r.p)-c<0?' neg':''}">${n(r.p)?pct((n(r.p)-c)/n(r.p)):'—'}</td><td>${Object.keys(m).length?costBar(m)+`<span class="sm" style="font-size:12px;color:#8a8478">${mixText(m)}</span>`:'<span style="font-size:12.5px;color:#8a8478">未拆解</span>'}</td></tr>`}).join('')}</tbody></table></div>
+  ${sec('rProd','產品毛利與成本結構','products',`<div class="scroll"><table class="tbl rt ro"><thead><tr><th>品項</th><th class="r">售價</th><th class="r">單位成本</th><th class="r">毛利率</th><th>成本結構</th></tr></thead><tbody>
+    ${S.products.map(r=>{const c=pcost(r),m=bomMix(r);return `<tr><td class="full"><b>${esc(r.n||'未命名品項')}</b></td><td class="r" data-l="售價">${money(n(r.p))}</td><td class="r" data-l="單位成本">${money(c)}</td><td class="r${n(r.p)-c<0?' neg':''}" data-l="毛利率">${n(r.p)?pct((n(r.p)-c)/n(r.p)):'—'}</td><td class="full">${Object.keys(m).length?costBar(m)+`<span class="sm" style="font-size:12px;color:#8a8478">${mixText(m)}</span>`:'<span style="font-size:12.5px;color:#8a8478">未拆解</span>'}</td></tr>`}).join('')}</tbody></table></div>
     ${Object.keys(o.costMix).length?`<p class="explain">已拆解的品項，依銷售占比加權後的材料成本結構：<b>${mixText(o.costMix)}</b>。占比最大的那一項，就是最值得去找更好進貨價的地方。</p>`:'<p class="explain">還沒有拆解單位成本。回到「產品毛利」按「拆解成本」，可以看出錢主要花在原料、包材還是其他地方。</p>'}`)}
   ${sec('rWhere','每賣 100 元，錢去了哪裡？','varcost',where(o)+`<p class="explain">實際貢獻率 <b>${pct(o.cm)}</b>：每賣 100 元，扣掉材料、抽成、損耗後剩 <b>${(o.cm*100).toFixed(0)} 元</b>，要拿來付租金、薪水和其他固定支出，剩下的才是利潤。</p>`)}
   <div class="two">
@@ -1131,8 +1164,8 @@ function renderResult(o){
     <p class="explain">${open?'自備款與貸款扣掉這次投入後':'開店當天扣掉開辦費後'}，手上有 <b>${money(o.bal0)}</b>。${o.minBal<0?`<b class="neg">第 ${o.minM} 個月現金最低，缺 ${money(-o.minBal)}</b>，要增加自備款或貸款，或降低開辦費。`:`現金最低點${o.minM?`在第 ${o.minM} 個月`:'就在一開始'}，還有 ${money(o.minBal)}。`}
     現金週轉天數 <b>${o.ccc} 天</b>，約有 <b>${money(o.wc)}</b> 卡在庫存與帳款上。</p>`)}
   ${sec('rFund','資金需求與貸款','money',`<div class="live" style="margin-top:0">${kpi('開辦總投入',money(o.startTotal),'含押金 '+wan(o.cat.dep))}${kpi('建議週轉金',money(o.reserve),'開幕期缺口 '+wan(o.deficit)+' ＋ '+n(S.safety)+' 個月準備')}${kpi('總資金需求',money(o.need),'','dark')}${kpi('貸款月付',money(o.pay),n(S.years)+' 年、年利率 '+n(S.rate)+'%'+(o.hasGrace?'；寬限期月繳 '+money(o.payG):''))}</div>
-    <h3>貸款用途拆分</h3><div class="scroll"><table class="tbl"><thead><tr><th>用途</th><th class="r">需求</th><th class="r">建議貸款</th><th>常見方案參考上限</th></tr></thead><tbody>
-    ${[['準備金及開辦費用（含押金）',o.startOpen,'青創約 200 萬'],['週轉性支出',o.reserve,'青創約 400 萬'],['資本性支出（裝修、設備）',o.startCap,'青創約 1,200 萬']].map(([a,b,c])=>`<tr><td>${a}</td><td class="r">${money(b)}</td><td class="r">${money(b*ratio)}</td><td>${c}</td></tr>`).join('')}</tbody></table></div>
+    <h3>貸款用途拆分</h3><div class="scroll"><table class="tbl rt ro"><thead><tr><th>用途</th><th class="r">需求</th><th class="r">建議貸款</th><th>常見方案參考上限</th></tr></thead><tbody>
+    ${[['準備金及開辦費用（含押金）',o.startOpen,'青創約 200 萬'],['週轉性支出',o.reserve,'青創約 400 萬'],['資本性支出（裝修、設備）',o.startCap,'青創約 1,200 萬']].map(([a,b,c])=>`<tr><td class="full"><b>${a}</b></td><td class="r" data-l="需求">${money(b)}</td><td class="r" data-l="建議貸款">${money(b*ratio)}</td><td data-l="參考上限">${c}</td></tr>`).join('')}</tbody></table></div>
     <p class="explain">額度、資格與利率每年調整，請以主管機關與承貸銀行最新公告為準。</p>`)}
   ${sec('rAI','交給你的 AI 再看一次','',`<p class="explain" style="margin-top:0">這份試算是<b>前導練習</b>，幫你把數字整理清楚。下一步，把下面的內容整段複製，貼到你習慣用的 AI（ChatGPT、Claude、Gemini 等），請它幫你檢查數字、找出風險、給改善建議。</p>
     <ol class="explain" style="margin:10px 0 0 20px"><li>按「複製給 AI 的內容」。</li><li>打開你的 AI，貼上送出。</li><li>接著追問，例如：「如果我的店在○○商圈，來客數合理嗎？」「哪一項成本最值得先砍？」「幫我把計畫書的市場分析寫完整」。</li></ol>
@@ -1253,13 +1286,14 @@ function combos(o){
 }
 function comboBox(o){
   const C=combos(o),w=W(),be=x=>isFinite(x.beCust)?(x.beCust<10?x.beCust.toFixed(1):Math.ceil(x.beCust))+' '+w.u+w.per:'無法打平';
-  const pb=x=>x.payback?x.payback+' 個月':'10 年以上',d=(a,b)=>{const v=a-b;return v?`<small class="${v>0?'':'neg'}" style="color:${v>0?'#2F8A5F':''}">${v>0?'+':''}${money(v).replace('NT$ ','')}</small>`:''};
+  const pb=x=>x.payback?x.payback+' 個月':'10 年以上',d=(a,b)=>{const v=a-b;return v?`<small class="${v>0?'':'neg'}">${v>0?'比目前多 ':'比目前少 '}${money(Math.abs(v)).replace('NT$ ','')}</small>`:''};
   if(!C.length)return '<p class="explain" style="margin-top:0">目前沒有明顯需要調整的地方。下一步是到現場確認「'+w.c+'」做不做得到。</p>';
   const opKey=o.proj?'opAvg':'op',opLabel=o.proj?'全年平均每月結餘':'每月營業利益';
-  return `<div class="scroll"><table class="tbl"><thead><tr><th>方案</th><th>做法</th><th class="r">${opLabel}</th><th class="r">損益兩平</th><th class="r">回本</th></tr></thead><tbody>
-   <tr><td><b>目前</b></td><td style="font-size:13px;color:#8a8478">照現在的數字</td><td class="r">${money(o[opKey])}</td><td class="r">${be(o)}</td><td class="r">${pb(o)}</td></tr>
-   ${C.map(c=>`<tr><td><b>${c.name}</b><br><span style="font-size:12px;color:#8a8478">${c.sub}</span></td><td style="font-size:13px">${c.ls.map(l=>`<b>${l.t}</b>：${esc(l.d)}`).join('<br>')}</td><td class="r"><b>${money(c.o[opKey])}</b><br>${d(c.o[opKey],o[opKey])}</td><td class="r">${be(c.o)}</td><td class="r">${pb(c.o)}</td></tr>`).join('')}
-  </tbody></table></div>
+  const card=(name,sub,ls,x,now)=>`<div class="${now?'now':''}"><h4>${name}<small>${sub}</small></h4>
+    <div class="val">${money(x[opKey])}${now?'':d(x[opKey],o[opKey])}</div>
+    ${ls.length?`<ul>${ls.map(l=>`<li><b>${l.t}</b>：${esc(l.d)}</li>`).join('')}</ul>`:''}
+    <div class="meta"><span>損益兩平 <b>${be(x)}</b></span><span>回本 <b>${pb(x)}</b></span></div></div>`;
+  return `<p class="explain" style="margin:0 0 10px">右上角的數字是${opLabel}。</p><div class="combo">${card('目前','照現在的數字',[],o,true)}${C.map(c=>card(c.name,c.sub,c.ls,c.o)).join('')}</div>
   <p class="explain">組合是依照上面的黃燈、紅燈挑出來的做法，數字是把這些調整套進你的試算重算的結果。每一項都要確認自己做得到，例如漲價後客人會不會變少。</p>`;
 }
 
