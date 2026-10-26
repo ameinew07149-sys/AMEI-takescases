@@ -99,6 +99,9 @@ h3{font-family:var(--serif);font-size:17px;margin:18px 0 8px}
 .qk-out dl div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid rgba(243,238,226,.14);font-size:14px}
 .qk-out dt{color:rgba(243,238,226,.75)}
 .qk-out dd{font-weight:900;text-align:right}
+.qk-out dd .dsub{display:block;font-size:12px;font-weight:400;opacity:.7}
+.qk-out .after{font-size:14px;margin-top:6px;color:rgba(243,238,226,.85)}
+.qk-out .after b{color:#F3EEE2}
 .qk-out .acts{display:grid;gap:8px;margin-top:auto}
 .qk-out .b-gold{background:var(--gold2);color:var(--ink)}
 .qk-out .lnk{background:none;border:0;color:rgba(243,238,226,.8);font-family:inherit;font-size:13px;text-decoration:underline;cursor:pointer}
@@ -1477,14 +1480,17 @@ function renderQuick(){
 }
 function quickOut(){
   const {o,w,proj}=quickCalc(S.q),v=proj?o.opAvg:o.op,be=isFinite(o.beCust)?(o.beCust<10?o.beCust.toFixed(1):Math.ceil(o.beCust)):null;
+  const net=v-o.pay;
   const say=v<0?'照這組數字，<b>每個月會虧錢</b>。先看看客單價、來客數或租金能不能調整。'
+    :net<0?'營業有賺，但<b>扣掉貸款月付就不夠了</b>。開店預算或要借的錢要再想想。'
     :!be?'':n(S.q.cust)<be*1.2?'有賺，但離打平很近，生意稍差就會虧。'
     :!o.payback||o.payback>36?`有賺，但回本要${o.payback?' '+o.payback+' 個月':'很久'}，預算或每月結餘要再調整。`
     :`看起來可行，接下來最重要的是確認「${w.c}」真的做得到。`;
-  $('#qOut').innerHTML=`<div><div class="lab">${proj?'全年平均，每月扣完生活與營運開支後':'穩定之後，每月大約'}${v<0?'虧':'賺'}</div><div class="big${v<0?' neg':''}">${money(Math.abs(v))}</div></div>
+  $('#qOut').innerHTML=`<div><div class="lab">${proj?'全年平均，每月扣完生活與營運開支後':'穩定之後，每月大約'}${v<0?'虧':'賺'}</div><div class="big${v<0?' neg':''}">${money(Math.abs(v))}</div>${o.pay>0?`<div class="after">還完貸款後${net<0?'每月不夠':'約剩'} <b class="${net<0?'neg':''}">${money(Math.abs(net))}</b>／月</div>`:''}</div>
     <p class="say">${say}</p>
     <dl><div><dt>${proj?'一個月至少要接':'一天至少要'}</dt><dd>${be!=null?be+' '+w.u:'無法打平'}<span style="font-weight:400;opacity:.7">（你填 ${n(S.q.cust)}）</span></dd></div>
-    <div><dt>${proj?'開始接案要準備':'開店要準備'}</dt><dd>${wan(o.need)}<span style="font-weight:400;opacity:.7">（含週轉金）</span></dd></div>
+    <div><dt>${proj?'開始接案要準備':'開店要準備'}</dt><dd>${wan(o.need)}<small class="dsub">開辦 ${wan(o.startTotal)}＋週轉金 ${wan(o.reserve)}</small></dd></div>
+    <div><dt>每月還貸款</dt><dd>${o.pay>0?money(o.pay):'不用借'}<small class="dsub">${o.loan>0?`假設自備 ${wan(n(BASE.self))}，借 ${wan(o.loan)}、${BASE.years} 年`:'自備款就夠了'}</small></dd></div>
     <div><dt>預計回本</dt><dd>${o.payback?o.payback+' 個月':'10 年以上'}</dd></div></dl>
     <div class="acts"><button class="btn b-gold" type="button" id="btnFull">進入完整版，算得更準 →</button><button class="lnk" type="button" id="btnFullBlank">已經開店？用營業報表做完整健檢</button></div>`;
 }
