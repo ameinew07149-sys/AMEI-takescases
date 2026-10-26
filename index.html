@@ -637,6 +637,26 @@ footer a{color:#9ED0BB}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+/* ===== 懂核銷的活動攝影：放在作品展示區 ===== */
+.ph-svc{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:0;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--bg2);margin:0 auto 3.5rem;max-width:1080px}
+.ph-why{padding:2rem 2.2rem}
+.ph-price{padding:2rem 1.8rem;border-left:1px solid var(--border);display:flex;flex-direction:column;gap:.5rem;background:rgba(143,196,174,.06)}
+.ph-k{font-size:.78rem;letter-spacing:.2em;font-weight:700;color:var(--accent)}
+.ph-why h3{font-size:1.55rem;line-height:1.4;margin:.4rem 0 .7rem}
+.ph-why>p{color:var(--text-light);font-size:.95rem;line-height:1.8;margin:0 0 1.3rem;max-width:38em}
+.ph-pts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.4rem}
+.ph-pts li{padding-left:1.7rem;position:relative}
+.ph-pts li::before{content:'';position:absolute;left:0;top:.35rem;width:1rem;height:1rem;border-radius:50%;border:1.5px solid var(--accent);background:radial-gradient(circle,var(--accent) 35%,transparent 40%)}
+.ph-pts b{display:block;font-size:1rem;margin-bottom:.15rem}
+.ph-pts span{font-size:.86rem;color:var(--text-light);line-height:1.65}
+.ph-price .pr{font-family:var(--serif);font-size:2.1rem;font-weight:700;line-height:1.1;margin-top:.3rem}
+.ph-price .pr small{font-size:.45em;color:var(--text-light);margin-left:.2em}
+.ph-price p{margin:0;color:var(--text-light);font-size:.9rem}
+.ph-btn{display:block;text-align:center;margin-top:.8rem;padding:.7rem 0;border-radius:6px;font-weight:700;background:var(--accent);color:#1B2624}
+.ph-btn:hover{background:var(--accent-hover);color:#1B2624}
+.ph-note{font-size:.8rem;color:var(--text-light);line-height:1.6;margin-top:.4rem}
+.ph-sub{text-align:center;font-size:1.3rem;margin:0 0 1.8rem;color:var(--text)}
+@media (max-width:860px){.ph-svc{grid-template-columns:1fr}.ph-price{border-left:0;border-top:1px solid var(--border)}.ph-pts{grid-template-columns:1fr}.ph-why,.ph-price{padding:1.5rem 1.3rem}}
 </style>
 <link rel="stylesheet" href="shared/amei-nav.css">
 <style>.hero{padding-top:4.5rem}@media (max-width:768px){.hero{padding-top:2.5rem}}.faq-list details{border-bottom:1px solid var(--border);padding:1.1rem 0}
@@ -738,7 +758,6 @@ footer a{color:#9ED0BB}
   <div class="sv-grid">
     <article class="card sv rv hot"><span class="rib">主力服務</span><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5h17l9 9v29H12z"/><path d="M29 5v9h9M18 22h14M18 29h14M18 36h8"/></svg><span class="k">政府標案</span><h3>標案企劃書</h3><p>對照評選配分，交付 PDF 成果檔</p><div class="pr">NT$7,000<small>起／件</small></div><div class="pn">預算 150 萬以上：預算 1–2%</div><div class="go"><a class="p" href="#contact" onclick="selectService('政府標案企劃')">預約諮詢</a></div></article>
     <article class="card sv rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24L24 9l18 15"/><path d="M11 21v19h26V21"/><path d="M20 40V29h8v11"/></svg><span class="k">社區發展</span><h3>社區・補助案企劃</h3><p>含現況調查，經費一筆筆對上活動</p><div class="pr">NT$5,000<small>起／件</small></div><div class="pn">依社區規模與調查範圍調整</div><div class="go"><a class="p" href="#contact" onclick="selectService('社區發展・補助案企劃')">預約諮詢</a></div></article>
-    <article class="card sv rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15h9l3-5h12l3 5h9v24H6z"/><circle cx="24" cy="26" r="8"/></svg><span class="k">加值服務</span><h3>懂核銷的活動攝影</h3><p>成果報告用照片，快速交件</p><div class="pr">NT$4,000<small>起／場</small></div><div class="pn">南高屏・原民文化活動另有優惠</div><div class="go"><a class="p" href="#contact" onclick="selectService('活動攝影')">預約諮詢</a></div></article>
     <article class="card sv rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="13" height="13" rx="2"/><rect x="28" y="7" width="13" height="13" rx="2"/><rect x="7" y="28" width="13" height="13" rx="2"/><path d="M28 28h5v5h-5zM36 36h5v5h-5zM28 38v3M38 28h3"/></svg><span class="k">活動互動</span><h3>活動互動APP製作</h3><p>市集集章・走讀導覽・教學問答・問卷抽獎</p><div class="pr">NT$8,000<small>起</small></div><div class="pn">提案用 DEMO NT$2,000</div><div class="go"><a href="seaside/">看介紹</a><a class="p" href="#contact" onclick="selectService('網站・互動遊戲・app')">預約諮詢</a></div></article>
     <article class="card sv rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40S7 30 7 18a8.5 8.5 0 0 1 17-2.5A8.5 8.5 0 0 1 41 18c0 12-17 22-17 22z"/><path d="M16 18h4l2-3 3 6 2-3h5"/></svg><span class="k">婚禮・尾牙</span><h3>三端連動互動套組</h3><p>祝福牆・即時問答・手機燈海</p><div class="pr">NT$3,800<small>起</small></div><div class="pn">6 款風格模板</div><div class="go"><a href="party/">看介紹</a><a class="p" href="#contact" onclick="selectService('網站・互動遊戲・app')">預約諮詢</a></div></article>
     <article class="card sv rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="38" height="30" rx="3"/><path d="M5 17h38M19 25l-5 4 5 4M29 25l5 4-5 4"/></svg><span class="k">網站製作</span><h3>一頁式網站</h3><p>先搭框架再設計，可加專屬後台</p><div class="pr">NT$8,000<small>起</small></div><div class="pn">架構健檢・提案 DEMO 各 NT$2,000</div><div class="go"><a href="web/">看介紹</a><a class="p" href="#contact" onclick="selectService('網站・互動遊戲・app')">預約諮詢</a></div></article>
@@ -747,6 +766,27 @@ footer a{color:#9ED0BB}
 <section id="projects"><div class="container">
   <h2 class="section-title">活動與文化紀錄</h2>
   <p class="lead-c">寫企劃的人自己拍，知道成果報告需要哪些畫面。</p>
+  <div class="ph-svc rv">
+    <div class="ph-why">
+      <span class="ph-k">懂核銷的活動攝影</span>
+      <h3>照片不只要好看，還要核銷得掉</h3>
+      <p>一般攝影拍的是好看的畫面；成果報告和核銷要的，是能證明「這件事有做到」的畫面。因為自己寫企劃、也跑過結案核銷，拍照前會先對照計畫書，知道每個工作項目、每一筆經費需要哪些照片。</p>
+      <ul class="ph-pts">
+        <li><b>對照計畫書拍</b><span>先看工作項目和經費表，列好要拍的畫面清單，現場不漏拍。</span></li>
+        <li><b>一張照片對上一筆經費</b><span>講師授課、學員參與、物資發放、餐點、布條與單位標誌，對應每個核銷項目。</span></li>
+        <li><b>參與規模看得出來</b><span>簽到、全景、分組實作都會拍，審查的人一看就知道活動規模和參與狀況。</span></li>
+        <li><b>整理好再交件</b><span>照片依活動項目分類，挑好成果報告可以直接放的畫面，快速交件。</span></li>
+      </ul>
+    </div>
+    <div class="ph-price">
+      <span class="ph-k">拍攝方案</span>
+      <div class="pr">NT$4,000<small>起／場</small></div>
+      <p>南高屏・原民文化活動另有優惠</p>
+      <a class="ph-btn" href="#contact" onclick="selectService('活動攝影')">預約諮詢</a>
+      <span class="ph-note">也可以和標案企劃、社區補助案一起委託，從寫計畫到結案照片一次到位。</span>
+    </div>
+  </div>
+  <h3 class="ph-sub">拍攝作品</h3>
   <div class="photo-grid" id="project-grid"><p class="grid-note">載入作品中…</p></div>
 </div></section>
 
