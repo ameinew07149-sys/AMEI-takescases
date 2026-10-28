@@ -334,9 +334,11 @@ section.sec{padding:84px 0}
 .hero h1 em{font-style:normal;color:var(--sea)}
 .vid{border-radius:18px;overflow:hidden;background:var(--sheet);box-shadow:0 0 0 1px var(--line),0 30px 60px -28px rgba(28,63,75,.6)}
 .vid video{display:block;width:100%;height:auto}
-.hero-grid.v2{grid-template-columns:.85fr 1.15fr}
-.tagline{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.tagline span{font-size:.88rem;padding:.25em .9em;border-radius:99px;background:var(--sheet);border:1px solid var(--line);color:var(--soft)}
+.hero-grid.v2{grid-template-columns:.8fr 1.2fr;gap:56px}
+.hero-grid.v2 h1{font-size:clamp(2.3rem,4.2vw,3.3rem)}
+.hero-grid.v2 .lead{font-size:1.02rem;margin:14px 0 22px}
+.tagline{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.tagline span{font-size:.8rem;padding:.2em .8em;border-radius:99px;background:var(--sheet);border:1px solid var(--line);color:var(--soft)}
 @media (max-width:860px){.hero-grid.v2{grid-template-columns:1fr}.vid{max-width:420px;margin:0 auto}}
 
 /* 三端連動 */
@@ -545,7 +547,6 @@ footer .r{margin-left:auto}
 <section class="hero">
   <div class="wrap hero-grid v2">
     <div>
-      <div class="note"><b>示範作品</b>情境皆為假想，非實際委託案</div>
       <div class="stamp">Market ． Tour ． Class ． Festival</div>
       <h1><span class="q">市集、走讀、教學、節慶活動，</span>一套手機互動<br><em>四種活動用途</em></h1>
       <p class="lead">市集集章、走讀導覽、教學問答、問卷抽獎，參加者掃 QR code 就能玩，不用下載 App。參加者的每一個動作，主辦後台即時同步。</p>
