@@ -1,7 +1,8 @@
 /* AMEI 現場實績：婚禮・尾牙頁與活動互動 APP 頁共用。
-   新增一場：在 CASES 最上面加一筆；照片放在 party/img/cases/<資料夾>/，路徑從網站根目錄寫起；最後的 1 代表直式照片。 */
+   新增一場：在 CASES 最上面加一筆，pages 寫要出現在哪一頁（'party' 婚禮・尾牙、'seaside' 活動互動 APP，可以兩個都寫）；照片放在 party/img/cases/<資料夾>/，路徑從網站根目錄寫起；最後的 1 代表直式照片。 */
 const CASES = [
-  {title:'高雄女中校友會「三十而遇・四十重聚」回娘家', when:'2026.11.07', where:'高雄・宴會廳',
+  {pages:['party','seaside'],
+   title:'高雄女中校友會「三十而遇・四十重聚」回娘家', when:'2026.11.07', where:'高雄・宴會廳',
    desc:'校友先回母校「追憶巡禮」，在校內五個美拍地點拍照、加上互動貼紙與留言，照片即時上傳到晚宴會場的大螢幕照片牆；晚宴中再由大螢幕輪播、頒發趣味獎項。',
    tags:['校內定點拍照任務','照片裝飾與留言','大螢幕即時照片牆','趣味獎項輪播','專屬主視覺立牌'],
    dir:'party/img/cases/kghs-2026/',
@@ -14,11 +15,12 @@ const CASES = [
      ['06-award.webp','趣味獎項輪播','主持人一鍵放大單張照片，頒發「最佳青春熱血獎」等獎項。']
    ]}
 ];
-function renderCases(el, root){
-  el.innerHTML = CASES.map(c => `<article class="case reveal">
+function renderCases(el, root, page){
+  const list = CASES.filter(c => !c.pages || c.pages.includes(page));
+  el.innerHTML = list.map(c => `<article class="case reveal">
   <div class="case-hd"><h3>${c.title}</h3><span class="when">${c.when}・${c.where}</span></div>
   <p>${c.desc}</p><div class="tags">${c.tags.map(t => `<span>${t}</span>`).join('')}</div>
-  <div class="shots">${c.shots.map(([f,t,d,tall]) => `<figure class="${tall?'tall':''}"><img src="${root}${c.dir}${f}" alt="${t}" loading="lazy"><figcaption><b>${t}</b>${d}</figcaption></figure>`).join('')}</div>
-  <p class="case-note">畫面中的 QR code 與參加者照片已模糊處理。</p>
+  <div class="shots">${c.shots.map(([f,t,d]) => `<a href="${root}${c.dir}${f}" target="_blank" rel="noopener" title="${t}：${d}"><img src="${root}${c.dir}${f}" alt="${t}：${d}" loading="lazy"><span>${t}</span></a>`).join('')}</div>
+  <p class="case-note">點照片可以看大圖。畫面中的 QR code 與參加者照片已模糊處理。</p>
 </article>`).join('');
 }
